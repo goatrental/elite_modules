@@ -333,7 +333,7 @@
                         <!-- Položky navigace se berou z menu webu (Odoo: Web -> Upravit -> Menu),
                              takže se dají měnit bez zásahu do kódu stránky. -->
                         <t t-foreach="website.menu_id.child_id" t-as="ev_m">
-                            <a t-att-href="ev_m.url" t-attf-class="#{'ev-nav-active' if ev_m.url == request.httprequest.path else ''}"><t t-esc="ev_m.name"/></a>
+                            <a t-att-href="ev_m.url" t-attf-class="#{'ev-nav-active' if ev_m.url == request.httprequest.path else ''}"><span t-field="ev_m.name"/></a>
                         </t>
                         <details class="ev-lang">
                             <summary>
@@ -375,7 +375,7 @@
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="9 18 15 12 9 6"/>
                                         </svg>
-                                        <t t-esc="ev_m.name"/>
+                                        <span t-field="ev_m.name"/>
                                     </a>
                                 </t>
                             </div>
