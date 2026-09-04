@@ -180,6 +180,7 @@
 
             .rs-slot { display: flex; align-items: flex-start; min-width: 0; }
             .rs-cell-note { font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--ev-closed); line-height: 1.4; }
+            /* barva textu prichazi z typu smeny jako inline styl */
             .rs-cell-event { font-size: 12px; font-weight: 700; color: var(--ev-accent-dark); line-height: 1.4; background: var(--ev-accent-light); border-radius: 9px; padding: 7px 9px; }
 
             /* jméno lékařky + bublina s hodinami (pure CSS, bez JS) */
@@ -427,7 +428,7 @@
                         <!-- Vysvětlivky se generují z typů směn (Odoo: Rozpis služeb -> Typy směn),
                              takže změna času nebo barvy je vidět tady i v kalendáři níž. -->
                         <t t-set="ev_has_t" t-value="'elite.vet.shift.type' in request.env"/>
-                        <t t-set="ev_types" t-value="request.env['elite.vet.shift.type'].sudo().search([('is_closed', '=', False)]) if ev_has_t else []"/>
+                        <t t-set="ev_types" t-value="request.env['elite.vet.shift.type'].sudo().search([('is_note', '=', False)]) if ev_has_t else []"/>
                         <t t-foreach="ev_types" t-as="ev_t">
                             <div class="rs-leg">
                                 <span class="rs-leg-dot" t-attf-style="background: #{ev_t.color_hex};"></span>
@@ -508,8 +509,8 @@
                                                     <div class="rs-cell-top"><span class="rs-num" t-esc="ev_d.day"/></div>
                                                     <t t-foreach="ev_recs" t-as="ev_r">
                                                         <t t-if="ev_r.date == ev_d">
-                                                            <t t-if="ev_r.type_id.is_closed">
-                                                                <div class="rs-cell-note"><t t-esc="ev_r.note or ev_r.type_id.name"/></div>
+                                                            <t t-if="ev_r.type_id.is_note">
+                                                                <div class="rs-cell-note" t-attf-style="color: #{ev_r.type_id.color_hex};"><t t-esc="ev_r.note or ev_r.type_id.name"/></div>
                                                             </t>
                                                             <t t-else="">
                                                                 <div class="rs-slot">

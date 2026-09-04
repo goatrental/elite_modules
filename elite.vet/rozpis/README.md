@@ -19,9 +19,10 @@ Vyplní se tři věci a je hotovo:
 (klik do řádku, vyplnit, Enter na další), nebo se vpravo nahoře přepne na
 **kalendář** a kliká se do dní.
 
-**Zavřeno / svátek:** vybere se směna `Zavřeno`, lékařka se nevyplňuje a do
-**Poznámky** se napíše text (například `Státní svátek`). Na webu se vypíše
-červeně přes celou buňku.
+**Zavřeno, svátek, den otevřených dveří:** vybere se typ, který má zaškrtnutou
+**Celodenní poznámku**. Lékařka se nevyplňuje — pole samo zmizí — a do
+**Poznámky** se napíše text, například `Státní svátek`. Na webu se vypíše přes
+celou buňku barvou toho typu. Když poznámku necháte prázdnou, použije se název typu.
 
 ## Lékařky
 
@@ -43,14 +44,16 @@ Předvyplněno při instalaci:
 | Odpolední služba | 14:00 | 20:00 | oranžová |
 | Noční služba | 20:00 | 8:00 | fialová |
 | Víkendová služba | 10:00 | 18:00 | růžová |
-| Zavřeno | — | — | červená |
+| Zavřeno *(celodenní poznámka)* | — | — | červená |
 
-Typ směny jde i přidat — třeba `Sanitární den`. Barva se vybírá ze seznamu,
-takže se v ní nedá udělat překlep. Přetažením za úchyt vlevo se mění pořadí
-ve vysvětlivkách.
+Typ směny jde i přidat — `Sanitární den`, `Den otevřených dveří`. Barva se vybírá
+ze seznamu, takže se v ní nedá udělat překlep. Přetažením za úchyt vlevo se mění
+pořadí ve vysvětlivkách. Typy s celodenní poznámkou se ve vysvětlivkách na webu
+nezobrazují.
 
-Zaškrtnutí **Zavřeno** znamená, že typ není služba: nevybírá se lékařka, časy
-se nepoužijí a na webu se vypíše červený text z poznámky.
+Zaškrtnutí **Celodenní poznámky** znamená, že typ není služba lékařky — zavřeno,
+státní svátek, sanitární den, den otevřených dveří. Nevybírá se u něj lékařka
+ani čas (pole se schovají) a na webu se vypíše přes celou buňku barvou typu.
 
 ## Co se objeví na webu
 

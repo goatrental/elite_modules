@@ -1,3 +1,6 @@
+
+„Zavřeno" má zaškrtnutou **Celodenní poznámku**, takže se u něj nezadává lékařka
+ani čas. Stejně se dá založit i `Den otevřených dveří` nebo `Sanitární den`.
 # modules
 
 Odoo 18 moduly a Docker sestava, která je používá. Moduly jsou seřazené
@@ -59,6 +62,10 @@ do vysvětlivek i do bublin u jmen.
 | Odpolední služba | 14:00 | 20:00 | oranžová |
 | Noční služba | 20:00 | 8:00 | fialová |
 | Víkendová služba | 10:00 | 18:00 | růžová |
-| Zavřeno | — | — | červená |
+| Zavřeno *(celodenní poznámka)* | — | — | červená |
+
+Typ se zaškrtnutou **Celodenní poznámkou** není služba lékařky — nezadává se u něj
+lékařka ani čas a na webu se vypíše přes celou buňku. Stejně se dá založit
+`Den otevřených dveří` nebo `Sanitární den`, každý ve své barvě.
 
 Detaily v [elite.vet/rozpis/README.md](elite.vet/rozpis/README.md).

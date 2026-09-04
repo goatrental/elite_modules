@@ -7,18 +7,56 @@
             <list string="Typy směn" editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="name" string="Název"/>
-                <field name="time_from" string="Od" widget="float_time" readonly="is_closed"/>
-                <field name="time_to" string="Do" widget="float_time" readonly="is_closed"/>
+                <field name="time_from" string="Od" widget="float_time" invisible="is_note"/>
+                <field name="time_to" string="Do" widget="float_time" invisible="is_note"/>
                 <field name="color" string="Barva na webu"/>
-                <field name="is_closed" string="Zavřeno"/>
+                <field name="is_note" string="Celodenní poznámka"/>
             </list>
+        </field>
+    </record>
+
+    <record id="view_vet_shift_type_form" model="ir.ui.view">
+        <field name="name">elite.vet.shift.type.form</field>
+        <field name="model">elite.vet.shift.type</field>
+        <field name="arch" type="xml">
+            <form string="Typ směny">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Název směny"/>
+                        <h1><field name="name" placeholder="např. Ranní služba"/></h1>
+                    </div>
+                    <group>
+                        <group string="Čas" invisible="is_note">
+                            <field name="time_from" string="Od" widget="float_time"/>
+                            <field name="time_to" string="Do" widget="float_time"/>
+                            <field name="time_display" string="Na webu se vypíše"/>
+                        </group>
+                        <group string="Zobrazení">
+                            <field name="color" string="Barva na webu"/>
+                            <field name="sequence" string="Pořadí ve vysvětlivkách"/>
+                            <field name="is_note" string="Celodenní poznámka (bez lékařky)"/>
+                            <field name="active" string="Aktivní"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status" invisible="not is_note">
+                        Typ označený jako <b>zavřeno</b> není služba, proto se u něj nezadává
+                        čas ani lékařka. Na webu se v takový den vypíše červeně text, který
+                        napíšete do pole <b>Poznámka</b> u konkrétního dne v Rozpisu —
+                        například <i>Státní svátek</i> nebo <i>Sanitární den</i>.
+                    </div>
+                    <div class="alert alert-warning" role="status" invisible="is_note">
+                        Změna času se hned projeví na webu, a to na obou místech najednou —
+                        ve vysvětlivkách nahoře i v bublině u jména lékařky.
+                    </div>
+                </sheet>
+            </form>
         </field>
     </record>
 
     <record id="action_vet_shift_type" model="ir.actions.act_window">
         <field name="name">Typy směn</field>
         <field name="res_model">elite.vet.shift.type</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Přidejte typ směny</p>
             <p>Změna času nebo barvy se hned promítne na web — do vysvětlivek

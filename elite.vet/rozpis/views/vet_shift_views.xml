@@ -11,9 +11,9 @@
         <field name="model">elite.vet.shift</field>
         <field name="arch" type="xml">
             <list string="Rozpis služeb" editable="bottom" multi_edit="1">
-                <field name="is_closed" column_invisible="1"/>
+                <field name="is_note" column_invisible="1"/>
                 <field name="date" string="Datum"/>
-                <field name="doctor_id" string="Lékařka" readonly="is_closed"/>
+                <field name="doctor_id" string="Lékařka" readonly="is_note"/>
                 <field name="type_id" string="Směna"/>
                 <field name="note" string="Poznámka" optional="hide"/>
             </list>
@@ -27,11 +27,11 @@
             <form string="Směna">
                 <sheet>
                     <group>
-                        <field name="is_closed" invisible="1"/>
+                        <field name="is_note" invisible="1"/>
                         <field name="date"/>
                         <field name="type_id"/>
-                        <field name="doctor_id" invisible="is_closed"/>
-                        <field name="note" invisible="not is_closed" placeholder="např. Státní svátek"/>
+                        <field name="doctor_id" invisible="is_note"/>
+                        <field name="note" invisible="not is_note" placeholder="např. Státní svátek"/>
                     </group>
                 </sheet>
             </form>

@@ -43,21 +43,22 @@ class VetShiftType(models.Model):
         required=True,
         default="green",
     )
-    is_closed = fields.Boolean(
-        string="Zavřeno",
-        help="Zaškrtněte u typu, který neznamená službu (zavřeno, svátek). "
-             "Nevybírá se u něj lékařka, časy se nepoužijí a na webu se "
-             "vypíše červený text z poznámky.",
+    is_note = fields.Boolean(
+        string="Celodenní poznámka",
+        help="Zaškrtněte u typu, který není služba lékařky — zavřeno, státní "
+             "svátek, sanitární den, den otevřených dveří. Nevybírá se u něj "
+             "lékařka ani čas; na webu se přes celou buňku vypíše text "
+             "z pole Poznámka, a když je prázdné, název typu.",
     )
     active = fields.Boolean(string="Aktivní", default=True)
 
     time_display = fields.Char(string="Čas", compute="_compute_time_display")
     color_hex = fields.Char(compute="_compute_color_hex")
 
-    @api.depends("time_from", "time_to", "is_closed")
+    @api.depends("time_from", "time_to", "is_note")
     def _compute_time_display(self):
         for rec in self:
-            if rec.is_closed:
+            if rec.is_note:
                 rec.time_display = ""
             else:
                 rec.time_display = "%s–%s" % (
