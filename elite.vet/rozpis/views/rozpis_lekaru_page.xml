@@ -174,8 +174,9 @@
             .rs-cell--empty { background: var(--ev-muted); }
             .rs-cell--empty:hover { background: var(--ev-muted); }
 
-            .rs-cell-top { display: flex; align-items: baseline; gap: 8px; }
-            .rs-num { font-size: 13.5px; font-weight: 800; color: var(--ev-primary); }
+            .rs-cell-top { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+            .rs-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 2px solid transparent; border-radius: 9999px; font-size: 13.5px; font-weight: 800; line-height: 1; color: var(--ev-primary); }
+            .rs-num--today { border-color: var(--ev-primary); background: #fff; color: var(--ev-primary) !important; box-shadow: 0 0 0 2px rgba(26,39,68,.08); }
             .rs-cell--we .rs-num { color: var(--ev-we); }
 
             .rs-slot { display: flex; align-items: flex-start; min-width: 0; }
@@ -473,7 +474,13 @@
                         <t t-set="ev_recs" t-value="request.env['elite.vet.shift'].sudo().search([
                                 ('date', '&gt;=', ev_first.strftime('%Y-%m-%d')),
                                 ('date', '&lt;', ev_next.strftime('%Y-%m-%d'))
-                            ], order='date asc') if ev_has else []"/>
+                            ], order='date asc').sorted(key=lambda r: (
+                                r.date,
+                                1 if r.type_id.is_note else 0,
+                                r.type_id.time_from,
+                                r.type_id.sequence,
+                                r.id
+                            )) if ev_has else []"/>
 
                         <!-- Prázdný měsíc se nezobrazuje; první přidaná směna jej automaticky zpřístupní. -->
                         <div class="rs-month" t-if="ev_recs">
@@ -508,7 +515,7 @@
                                             <t t-set="ev_in" t-value="ev_d.month == ev_first.month"/>
                                             <div t-attf-class="rs-cell#{' rs-cell--we' if ev_we else ''}#{'' if ev_in else ' rs-cell--empty'}">
                                                 <t t-if="ev_in">
-                                                    <div class="rs-cell-top"><span class="rs-num" t-esc="ev_d.day"/></div>
+                                                    <div class="rs-cell-top"><span t-attf-class="rs-num#{' rs-num--today' if ev_d == datetime.date.today() else ''}" t-esc="ev_d.day"/></div>
                                                     <t t-foreach="ev_recs" t-as="ev_r">
                                                         <t t-if="ev_r.date == ev_d">
                                                             <t t-if="ev_r.type_id.is_note">
