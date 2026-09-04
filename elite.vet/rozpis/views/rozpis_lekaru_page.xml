@@ -445,7 +445,8 @@
             <section class="rs-sec o_colored_level">
                 <div class="ev-container">
                     <!--
-                        Vykreslí dva měsíce (aktuální + následující) ze zázmamů elite.vet.shift.
+                        Nabídne aktuální a následující měsíc, ale vykreslí jen ty,
+                        ve kterých je alespoň jeden záznam elite.vet.shift.
 
                         Jeden záznam = jeden den, jedna lékařka, jedna směna. Typ směny nese
                         barvu i časy, takže se v Odoo nezadává nic než datum, jméno a typ.
@@ -470,11 +471,12 @@
                         <t t-set="ev_cells" t-value="ev_span + ((7 - ev_span % 7) % 7)"/>
                         <t t-set="ev_gend" t-value="ev_gstart + datetime.timedelta(days=ev_cells)"/>
                         <t t-set="ev_recs" t-value="request.env['elite.vet.shift'].sudo().search([
-                                ('date', '&gt;=', ev_gstart.strftime('%Y-%m-%d')),
-                                ('date', '&lt;', ev_gend.strftime('%Y-%m-%d'))
+                                ('date', '&gt;=', ev_first.strftime('%Y-%m-%d')),
+                                ('date', '&lt;', ev_next.strftime('%Y-%m-%d'))
                             ], order='date asc') if ev_has else []"/>
 
-                        <div class="rs-month">
+                        <!-- Prázdný měsíc se nezobrazuje; první přidaná směna jej automaticky zpřístupní. -->
+                        <div class="rs-month" t-if="ev_recs">
                             <div class="rs-month-head">
                                 <h2><t t-esc="ev_months[ev_first.month - 1]"/> <t t-esc="ev_first.year"/></h2>
                             </div>
