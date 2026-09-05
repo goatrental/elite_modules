@@ -11,8 +11,8 @@ modules/
 ├── docker-compose.yml     Odoo 18 + PostgreSQL
 ├── config/odoo.conf       addons_path, připojení k databázi
 └── elite.vet/             klinika Elite Vet
-    ├── rozpis/            Rozpis služeb lékařů
-    └── tym/               Stránka Náš tým
+    ├── elite_vet_calendar/   Rozpis služeb lékařů
+    └── elite_vet_team/       Stránka Náš tým
 ```
 
 Celý repozitář je v kontejneru namountovaný do `/mnt/modules`.
@@ -39,7 +39,7 @@ v [DOCKER.md](DOCKER.md).
 
 ## elite.vet — klinika Elite Vet
 
-### `rozpis` — Rozpis služeb
+### `elite_vet_calendar` — Rozpis služeb
 
 Aplikace **Rozpis služeb** a veřejná stránka `/rozpis-lekaru` s měsíčním
 kalendářem. Aplikace má tři položky a nic víc.
@@ -69,9 +69,9 @@ Typ se zaškrtnutou **Celodenní poznámkou** není služba lékařky — nezad�
 lékařka ani čas a na webu se vypíše přes celou buňku. Stejně se dá založit
 `Den otevřených dveří` nebo `Sanitární den`, každý ve své barvě.
 
-Detaily v [elite.vet/rozpis/README.md](elite.vet/rozpis/README.md).
+Detaily v [elite.vet/elite_vet_calendar/README.md](elite.vet/elite_vet_calendar/README.md).
 
-### `tym` — Náš tým
+### `elite_vet_team` — Náš tým
 
 Aplikace **Náš tým** a veřejná stránka `/nas-tym`. Klinika si sama spravuje lidi
 včetně fotek, přeskládává je a zakládá sekce — do kódu se kvůli příchodu nebo
@@ -90,4 +90,4 @@ archivovat.
 Po instalaci je stránka naplněná tím, co na ní bylo předtím: 4 sekce, 8 lidí,
 38 podrobností.
 
-Detaily v [elite.vet/tym/README.md](elite.vet/tym/README.md).
+Detaily v [elite.vet/elite_vet_team/README.md](elite.vet/elite_vet_team/README.md).

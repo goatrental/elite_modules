@@ -16,7 +16,7 @@ docker compose up -d
 Odoo naběhne na `http://localhost:8069`. Instalace modulu:
 
 ```bash
-docker compose exec odoo odoo -d NAZEV_DATABAZE -i rozpis --stop-after-init
+docker compose exec odoo odoo -d NAZEV_DATABAZE -i elite_vet_calendar --stop-after-init
 docker compose restart odoo
 ```
 
@@ -82,14 +82,14 @@ sudo chown -R 101:101 modules
 
 ```bash
 docker compose up -d
-docker compose exec odoo odoo -d NAZEV_DATABAZE -i rozpis --stop-after-init
+docker compose exec odoo odoo -d NAZEV_DATABAZE -i elite_vet_calendar --stop-after-init
 docker compose restart odoo
 ```
 
 Aktualizace po změně kódu — místo `-i` použít `-u`:
 
 ```bash
-docker compose exec odoo odoo -d NAZEV_DATABAZE -u rozpis --stop-after-init
+docker compose exec odoo odoo -d NAZEV_DATABAZE -u elite_vet_calendar --stop-after-init
 docker compose restart odoo
 ```
 
