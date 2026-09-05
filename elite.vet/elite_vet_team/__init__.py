@@ -1,4 +1,5 @@
 from . import models
+from .preklady import PREKLADY
 
 
 def _seed_team(env):
@@ -48,6 +49,7 @@ def _seed_team(env):
                     for i, (popisek, text) in enumerate(clen["facts"], start=1)
                 ],
             })
+    _seed_preklady(env)
 
 
 # Popisky podrobnosti. True = u noveho cloveka se radek predvyplni prazdny.
@@ -209,3 +211,54 @@ SEKCE = [
         ],
     },
 ]
+
+
+# Pole, ktera nesou text a daji se prelozit. Jmeno a e-mail zamerne chybi.
+PREKLADANA_POLE = {
+    "elite.vet.team.section": ["name"],
+    "elite.vet.team.fact.label": ["name"],
+    "elite.vet.team.member": ["role", "badge", "perex"],
+    "elite.vet.team.fact": ["value"],
+}
+
+
+def _seed_preklady(env):
+    """Doplni k zalozenemu obsahu nemcinu, anglictinu a rustinu.
+
+    Puvodni rucni stranka /nas-tym mela preklady ulozene v archu. Kdyz se
+    smaze a nahradi timhle modulem, preklady by zmizely a musely by se delat
+    znovu. Proto si je modul pri instalaci naplni sam ze zalohy.
+
+    Pouziva se update_field_translations, ne write s jazykovym kontextem.
+    Write totiz umi sahnout na zdrojovy text a prepsat cestinu prekladem -
+    coz se pri vyvoji tohohle modulu stalo.
+
+    Prekladaji se jen jazyky, ktere jsou v databazi opravdu nainstalovane.
+    Kdyz klinika prida jazyk az pozdeji, preklady se timhle nedoplni; da se
+    to dohnat preinstalaci modulu na cistem webu, nebo rucne v rezimu
+    Prelozit.
+    """
+    env.flush_all()
+
+    jazyky = set(env["res.lang"].search([("active", "=", True)]).mapped("code"))
+    jazyky &= {"de_DE", "en_US", "ru_RU"}
+    if not jazyky:
+        return
+
+    for model, pole in PREKLADANA_POLE.items():
+        zaznamy = env[model].with_context(active_test=False).search([])
+        for zaznam in zaznamy:
+            for nazev_pole in pole:
+                zdroj = zaznam[nazev_pole]
+                if not zdroj:
+                    continue
+                preklad = PREKLADY.get(zdroj)
+                if not preklad:
+                    continue
+                hodnoty = {
+                    kod: text
+                    for kod, text in preklad.items()
+                    if kod in jazyky and text
+                }
+                if hodnoty:
+                    zaznam.update_field_translations(nazev_pole, hodnoty)
