@@ -8,8 +8,8 @@ po projektech, `elite.vet/` jsou moduly Elite Vet. Nic se nikam nekopíruje.
 ## A) Nová instalace na čistém stroji
 
 ```bash
-git clone https://github.com/goatrental/modules.git
-cd modules
+git clone https://github.com/goatrental/elite_modules.git
+cd elite_modules
 docker compose up -d
 ```
 
@@ -41,7 +41,7 @@ Na téhle stránce nejsou žádné překlady, takže se smazáním nic neztratí
 Kamkoli, kde na něj kontejner dosáhne, například vedle `docker-compose.yml`:
 
 ```bash
-git clone https://github.com/goatrental/modules.git
+git clone https://github.com/goatrental/elite_modules.git
 ```
 
 ### Krok 2 — namountovat a přidat do addons_path
@@ -50,7 +50,7 @@ Do `docker-compose.yml` běžícího Odoo přidat volume:
 
 ```yaml
 volumes:
-  - ./modules:/mnt/modules:ro
+  - ./elite_modules:/mnt/modules:ro
 ```
 
 A do `odoo.conf` cestu ke složce projektu:
@@ -65,7 +65,7 @@ addons_path = /mnt/modules/elite.vet,/mnt/extra-addons,/usr/lib/python3/dist-pac
 Aktualizace později:
 
 ```bash
-cd modules
+cd elite_modules
 git pull
 ```
 
@@ -75,7 +75,7 @@ Odoo v oficiálním image běží pod UID 101. Pokud se modul v seznamu aplikac�
 neobjeví, bývá to právy:
 
 ```bash
-sudo chown -R 101:101 modules
+sudo chown -R 101:101 elite_modules
 ```
 
 ### Krok 4 — instalace

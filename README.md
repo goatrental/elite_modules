@@ -1,13 +1,13 @@
 
 „Zavřeno" má zaškrtnutou **Celodenní poznámku**, takže se u něj nezadává lékařka
 ani čas. Stejně se dá založit i `Den otevřených dveří` nebo `Sanitární den`.
-# modules
+# elite_modules
 
 Odoo 18 moduly a Docker sestava, která je používá. Moduly jsou seřazené
 po projektech.
 
 ```
-modules/
+elite_modules/
 ├── docker-compose.yml     Odoo 18 + PostgreSQL
 ├── config/odoo.conf       addons_path, připojení k databázi
 └── elite.vet/             klinika Elite Vet
@@ -29,8 +29,8 @@ addons_path = /mnt/modules/elite.vet,/mnt/modules/dalsi-projekt,/usr/lib/python3
 ## Spuštění
 
 ```bash
-git clone https://github.com/goatrental/modules.git
-cd modules
+git clone https://github.com/goatrental/elite_modules.git
+cd elite_modules
 docker compose up -d
 ```
 
