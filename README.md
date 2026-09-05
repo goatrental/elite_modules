@@ -11,7 +11,8 @@ modules/
 ├── docker-compose.yml     Odoo 18 + PostgreSQL
 ├── config/odoo.conf       addons_path, připojení k databázi
 └── elite.vet/             klinika Elite Vet
-    └── rozpis/            Rozpis služeb lékařů
+    ├── rozpis/            Rozpis služeb lékařů
+    └── tym/               Stránka Náš tým
 ```
 
 Celý repozitář je v kontejneru namountovaný do `/mnt/modules`.
@@ -69,3 +70,24 @@ lékařka ani čas a na webu se vypíše přes celou buňku. Stejně se dá zalo
 `Den otevřených dveří` nebo `Sanitární den`, každý ve své barvě.
 
 Detaily v [elite.vet/rozpis/README.md](elite.vet/rozpis/README.md).
+
+### `tym` — Náš tým
+
+Aplikace **Náš tým** a veřejná stránka `/nas-tym`. Klinika si sama spravuje lidi
+včetně fotek, přeskládává je a zakládá sekce — do kódu se kvůli příchodu nebo
+odchodu člověka nesahá.
+
+| Položka | K čemu |
+|---|---|
+| Členové týmu | kanban s fotkami; přetažením se mění pořadí i sekce |
+| Sekce | nadpisy na stránce; kotva do odkazu se dopočítá z názvu |
+| Popisky podrobností | číselník pro Vzdělání, Praxe, Specializace… |
+
+Fotka není povinná — bez ní se vykreslí kolečko s iniciálami, které se spočítají
+ze jména (tituly se přeskakují). Kdo odejde, se nemusí mazat, stačí ho
+archivovat.
+
+Po instalaci je stránka naplněná tím, co na ní bylo předtím: 4 sekce, 8 lidí,
+38 podrobností.
+
+Detaily v [elite.vet/tym/README.md](elite.vet/tym/README.md).

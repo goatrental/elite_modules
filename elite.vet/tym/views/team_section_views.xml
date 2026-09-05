@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_team_section_list" model="ir.ui.view">
+        <field name="name">elite.vet.team.section.list</field>
+        <field name="model">elite.vet.team.section</field>
+        <field name="arch" type="xml">
+            <list string="Sekce týmu" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" string="Název sekce"/>
+                <field name="anchor" string="Kotva"/>
+                <field name="member_count" string="Lidí"/>
+                <field name="active" string="Aktivní"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_team_section_form" model="ir.ui.view">
+        <field name="name">elite.vet.team.section.form</field>
+        <field name="model">elite.vet.team.section</field>
+        <field name="arch" type="xml">
+            <form string="Sekce týmu">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Název sekce"/>
+                        <h1><field name="name" placeholder="např. Veterinární lékařky"/></h1>
+                    </div>
+                    <group>
+                        <field name="anchor" placeholder="lekarky"/>
+                        <field name="sequence" string="Pořadí na stránce"/>
+                        <field name="active" string="Aktivní"/>
+                    </group>
+                    <field name="member_ids" string="Lidé v sekci">
+                        <list>
+                            <field name="sequence" widget="handle"/>
+                            <field name="name" string="Jméno"/>
+                            <field name="role" string="Pozice"/>
+                        </list>
+                    </field>
+                    <div class="alert alert-info" role="status">
+                        Kotva je krátký text bez diakritiky a mezer. Použije se v odkazu
+                        na stránce, takže se dá poslat rovnou odkaz na tuhle část:
+                        <b>/nas-tym#lekarky</b>. Odkazy nahoře na stránce se z kotev
+                        vytvoří samy.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_team_section" model="ir.actions.act_window">
+        <field name="name">Sekce</field>
+        <field name="res_model">elite.vet.team.section</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte sekci</p>
+            <p>Sekce je nadpis na stránce, pod který se řadí lidé — třeba Veterinární sestry.</p>
+        </field>
+    </record>
+</odoo>

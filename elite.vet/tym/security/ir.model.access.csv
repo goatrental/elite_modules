@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_team_section_user,elite.vet.team.section.user,model_elite_vet_team_section,base.group_user,1,1,1,1
+access_team_member_user,elite.vet.team.member.user,model_elite_vet_team_member,base.group_user,1,1,1,1
+access_team_fact_user,elite.vet.team.fact.user,model_elite_vet_team_fact,base.group_user,1,1,1,1
+access_team_section_public,elite.vet.team.section.public,model_elite_vet_team_section,base.group_public,1,0,0,0
+access_team_member_public,elite.vet.team.member.public,model_elite_vet_team_member,base.group_public,1,0,0,0
+access_team_fact_public,elite.vet.team.fact.public,model_elite_vet_team_fact,base.group_public,1,0,0,0
+access_team_section_portal,elite.vet.team.section.portal,model_elite_vet_team_section,base.group_portal,1,0,0,0
+access_team_member_portal,elite.vet.team.member.portal,model_elite_vet_team_member,base.group_portal,1,0,0,0
+access_team_fact_portal,elite.vet.team.fact.portal,model_elite_vet_team_fact,base.group_portal,1,0,0,0
+access_team_fact_label_user,elite.vet.team.fact.label.user,model_elite_vet_team_fact_label,base.group_user,1,1,1,1
+access_team_fact_label_public,elite.vet.team.fact.label.public,model_elite_vet_team_fact_label,base.group_public,1,0,0,0
+access_team_fact_label_portal,elite.vet.team.fact.label.portal,model_elite_vet_team_fact_label,base.group_portal,1,0,0,0

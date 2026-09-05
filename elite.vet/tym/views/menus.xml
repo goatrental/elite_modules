@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_tym_root" name="Náš tým" sequence="51"/>
+    <menuitem id="menu_tym_member" name="Členové týmu" parent="menu_tym_root"
+              action="action_team_member" sequence="10"/>
+    <menuitem id="menu_tym_section" name="Sekce" parent="menu_tym_root"
+              action="action_team_section" sequence="20"/>
+    <menuitem id="menu_tym_fact_label" name="Popisky podrobností" parent="menu_tym_root"
+              action="action_team_fact_label" sequence="30"/>
+</odoo>

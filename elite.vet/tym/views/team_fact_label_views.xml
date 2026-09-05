@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_team_fact_label_list" model="ir.ui.view">
+        <field name="name">elite.vet.team.fact.label.list</field>
+        <field name="model">elite.vet.team.fact.label</field>
+        <field name="arch" type="xml">
+            <list string="Popisky podrobností" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" string="Popisek"/>
+                <field name="is_default" string="Předvyplnit" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_team_fact_label_search" model="ir.ui.view">
+        <field name="name">elite.vet.team.fact.label.search</field>
+        <field name="model">elite.vet.team.fact.label</field>
+        <field name="arch" type="xml">
+            <search string="Popisky">
+                <field name="name"/>
+                <filter name="predvyplnene" string="Předvyplněné" domain="[('is_default', '=', True)]"/>
+                <filter name="archivovane" string="Archivované" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_team_fact_label" model="ir.actions.act_window">
+        <field name="name">Popisky podrobností</field>
+        <field name="res_model">elite.vet.team.fact.label</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte popisek</p>
+            <p>Popisky se nabízejí u každého člověka v Podrobnostech — Vzdělání,
+               Praxe, Specializace a podobně. Pořadí tady určuje pořadí v nabídce.
+               Co zaškrtnete jako <b>Předvyplnit</b>, objeví se u nového člověka
+               rovnou jako prázdný řádek k dopsání.</p>
+        </field>
+    </record>
+</odoo>

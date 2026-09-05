@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Kanban je vychozi pohled zamerne. Stranka tymu je vizualni vec, takze
+        je lepsi videt fotky a poradi nez tabulku textu.
+    -->
+    <record id="view_team_member_kanban" model="ir.ui.view">
+        <field name="name">elite.vet.team.member.kanban</field>
+        <field name="model">elite.vet.team.member</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="section_id" quick_create="false" class="o_kanban_dashboard">
+                <field name="initials"/>
+                <field name="has_image"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-start gap-3 p-2">
+                            <div>
+                                <img t-if="record.has_image.raw_value"
+                                     t-attf-src="/web/image/elite.vet.team.member/#{record.id.raw_value}/image_128"
+                                     class="rounded-circle"
+                                     style="width: 56px; height: 56px; object-fit: cover;"
+                                     alt="Fotka"/>
+                                <div t-if="!record.has_image.raw_value"
+                                     class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white"
+                                     style="width: 56px; height: 56px; background: #2b7870;">
+                                    <field name="initials"/>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-bold text-truncate"><field name="name"/></div>
+                                <div class="text-muted small"><field name="role"/></div>
+                                <span t-if="record.badge.raw_value" class="badge text-bg-dark mt-1">
+                                    <field name="badge"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_team_member_list" model="ir.ui.view">
+        <field name="name">elite.vet.team.member.list</field>
+        <field name="model">elite.vet.team.member</field>
+        <field name="arch" type="xml">
+            <list string="Členové týmu">
+                <field name="sequence" widget="handle"/>
+                <field name="name" string="Jméno"/>
+                <field name="role" string="Pozice"/>
+                <field name="section_id" string="Sekce"/>
+                <field name="email" string="E-mail" optional="show"/>
+                <field name="has_image" string="Fotka" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_team_member_form" model="ir.ui.view">
+        <field name="name">elite.vet.team.member.form</field>
+        <field name="model">elite.vet.team.member</field>
+        <field name="arch" type="xml">
+            <form string="Člen týmu">
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"
+                           options="{'preview_image': 'image_256'}"/>
+                    <div class="oe_title">
+                        <label for="name" string="Jméno a titul"/>
+                        <h1><field name="name" placeholder="např. MVDr. Kateřina Kadavá"/></h1>
+                        <field name="role" placeholder="Pozice, například: Veterinární lékařka · interní medicína"/>
+                        <div class="mt-2">
+                            <label for="badge" string="Štítek na kartě" class="fw-bold"/>
+                            <field name="badge" placeholder="Odborná garantka · Vedoucí lékařka · Novinka v týmu…"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Zařazení">
+                            <field name="section_id"/>
+                            <field name="active" string="Aktivní"/>
+                        </group>
+                        <group string="Na kartě">
+                            <field name="email" placeholder="jmeno@elite-vet.cz"/>
+                            <field name="highlight"/>
+                        </group>
+                    </group>
+                    <separator string="Popis na kartě"/>
+                    <field name="perex" nolabel="1"
+                           placeholder="Odstavec, který je na kartě vidět hned po otevření stránky. Například: Jako garantka kliniky dohlíží na odborný standard poskytované péče…"/>
+
+                    <separator string="Podrobnosti — rozbalovací část karty"/>
+                    <div class="alert alert-secondary" role="status">
+                        Na webu je tahle část schovaná pod tlačítkem
+                        <b>„Vzdělání, praxe a specializace"</b>. Klikněte na
+                        <b>Přidat řádek</b>, vyberte popisek ze seznamu a napište text.
+                        Přidávejte jen to, co u toho člověka dává smysl.
+                    </div>
+                    <field name="fact_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="label_id" string="Popisek" options="{'no_open': True}" placeholder="Vyberte ze seznamu"/>
+                            <field name="value" string="Text"/>
+                        </list>
+                    </field>
+                    <div class="alert alert-info" role="status">
+                        <b>Pořadí na stránce</b> se mění přetažením v seznamu členů —
+                        chyťte řádek za tečkovaný úchyt vlevo a posuňte nahoru nebo dolů.
+                        V kanbanu jde karta přetáhnout i do jiné sekce.
+                        <br/><br/>
+                        Fotka není povinná. Když ji nenahrajete, na webu se ukáže kolečko
+                        s iniciálami, které se spočítají ze jména. Nejlépe vypadá čtvercová
+                        fotka obličeje, ideálně aspoň 400 × 400 bodů.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_team_member_search" model="ir.ui.view">
+        <field name="name">elite.vet.team.member.search</field>
+        <field name="model">elite.vet.team.member</field>
+        <field name="arch" type="xml">
+            <search string="Členové týmu">
+                <field name="name"/>
+                <field name="role"/>
+                <filter name="bez_fotky" string="Bez fotky" domain="[('image_1920', '=', False)]"/>
+                <filter name="archivovani" string="Archivovaní" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Seskupit podle">
+                    <filter name="dle_sekce" string="Sekce" context="{'group_by': 'section_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_team_member" model="ir.actions.act_window">
+        <field name="name">Členové týmu</field>
+        <field name="res_model">elite.vet.team.member</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte prvního člověka</p>
+            <p>Jméno, pozice a sekce stačí. Fotku a podrobnosti jde doplnit kdykoliv později.</p>
+        </field>
+    </record>
+</odoo>
