@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--
+            Vlastni kategorie a skupina, aby slo uzivateli dat pristup jen
+            ke sprave tymu.
+        -->
+        <record id="module_category_elite_vet_team" model="ir.module.category">
+            <field name="name">Náš tým</field>
+            <field name="description">Přístup ke správě stránky Náš tým.</field>
+            <field name="sequence">51</field>
+        </record>
+
+        <record id="group_team_manager" model="res.groups">
+            <field name="name">Správce týmu</field>
+            <field name="category_id" ref="module_category_elite_vet_team"/>
+            <field name="comment">Může přidávat a upravovat lidi, fotky, sekce a popisky.</field>
+        </record>
+    </data>
+</odoo>

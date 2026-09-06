@@ -1,6 +1,6 @@
 {
     "name": "Elite Vet - Rozpis sluzeb",
-    "version": "18.0.4.0.2",
+    "version": "18.0.5.0.0",
     "category": "Website",
     "summary": "Rozpis sluzeb lekaru: jednoducha aplikace v Odoo a mesicni kalendar na webu.",
     "description": """
@@ -29,8 +29,8 @@ Navigace stranky se bere z menu webu, takze odkazy jdou menit v Odoo
     "license": "LGPL-3",
     "depends": ["website"],
     "data": [
+        "security/groups.xml",
         "security/ir.model.access.csv",
-        "data/website_menu.xml",
         "views/vet_shift_type_views.xml",
         "views/vet_doctor_views.xml",
         "views/vet_shift_views.xml",

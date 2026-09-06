@@ -1,4 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_elite_vet_shift_user,elite.vet.shift.user,model_elite_vet_shift,base.group_user,1,1,1,1
-access_elite_vet_doctor_user,elite.vet.doctor.user,model_elite_vet_doctor,base.group_user,1,1,1,1
-access_elite_vet_shift_type_user,elite.vet.shift.type.user,model_elite_vet_shift_type,base.group_user,1,1,1,1
+access_elite_vet_shift_manager,elite.vet.shift.manager,model_elite_vet_shift,elite_vet_calendar.group_calendar_manager,1,1,1,1
+access_elite_vet_doctor_manager,elite.vet.doctor.manager,model_elite_vet_doctor,elite_vet_calendar.group_calendar_manager,1,1,1,1
+access_elite_vet_shift_type_manager,elite.vet.shift.type.manager,model_elite_vet_shift_type,elite_vet_calendar.group_calendar_manager,1,1,1,1
+access_elite_vet_shift_public,elite.vet.shift.public,model_elite_vet_shift,base.group_public,1,0,0,0
+access_elite_vet_doctor_public,elite.vet.doctor.public,model_elite_vet_doctor,base.group_public,1,0,0,0
+access_elite_vet_shift_type_public,elite.vet.shift.type.public,model_elite_vet_shift_type,base.group_public,1,0,0,0
+access_elite_vet_shift_portal,elite.vet.shift.portal,model_elite_vet_shift,base.group_portal,1,0,0,0
+access_elite_vet_doctor_portal,elite.vet.doctor.portal,model_elite_vet_doctor,base.group_portal,1,0,0,0
+access_elite_vet_shift_type_portal,elite.vet.shift.type.portal,model_elite_vet_shift_type,base.group_portal,1,0,0,0

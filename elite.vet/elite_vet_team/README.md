@@ -90,3 +90,19 @@ se po aktualizaci modulu **nevrátí**.
 stránka, se ta stránka musí smazat** — jinak se URL srazí a instalace spadne.
 
 Nasazení přes Docker: [../../DOCKER.md](../../DOCKER.md).
+
+## Více webů v jedné databázi
+
+Stránka se při instalaci **přiřadí jednomu webu**, ne všem. Modul hledá web,
+jehož doména obsahuje `elite-vet`; když ho nenajde, vezme ten, který má v názvu
+nebo doméně „vet" a zároveň ne „arena". Který web to byl, napíše do logu.
+
+Změnit to jde kdykoliv v **Web → Konfigurace → Stránky** u pole *Web*. Stránka
+bez přiřazeného webu se zobrazí na všech doménách v databázi, což na sdílené
+instalaci nechcete.
+
+## Uživatelská práva
+
+Modul má vlastní skupinu **Správce týmu** (kategorie *Náš tým*). Kdo ji nemá,
+aplikaci v Odoo vůbec nevidí. Nastavuje se v **Nastavení → Uživatelé**
+u konkrétního člověka.

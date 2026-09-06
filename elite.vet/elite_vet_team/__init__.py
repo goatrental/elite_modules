@@ -1,3 +1,7 @@
+import logging
+
+_logger = logging.getLogger(__name__)
+
 from . import models
 from .preklady import PREKLADY
 
@@ -10,6 +14,8 @@ def _seed_team(env):
     se pri kazdem upgradu modulu obnovil, takze smazany clovek by se vratil.
     Takhle vzniknou jednou pri instalaci a od te chvile patri klinice.
     """
+    _priradit_k_webu(env, "elite_vet_team.nas_tym_page")
+
     Section = env["elite.vet.team.section"]
     if Section.search_count([]):
         return
@@ -262,3 +268,61 @@ def _seed_preklady(env):
                 }
                 if hodnoty:
                     zaznam.update_field_translations(nazev_pole, hodnoty)
+
+
+def _zvol_web(env):
+    """Vybere web, kteremu stranka patri.
+
+    V databazi bezi vic webu vedle sebe (Elite Vet, Elite Arena, trafika,
+    Jack, IMI). Stranka bez prirazeneho webu se v Odoo zobrazi na VSECH
+    domenach, coz je presne to, co nechceme.
+
+    Poradi hledani: domena obsahujici elite-vet, pak cokoli s "vet"
+    v nazvu nebo domene, jinak jediny existujici web. Kdyz nic nesedi,
+    vrati prvni a zapise to do logu - administrator to pak prepise
+    v Web -> Konfigurace -> Stranky.
+    """
+    weby = env["website"].search([])
+    if not weby:
+        return False
+    if len(weby) == 1:
+        return weby
+
+    for web in weby:
+        if "elite-vet" in (web.domain or "").lower():
+            return web
+    for web in weby:
+        popis = ((web.name or "") + " " + (web.domain or "")).lower()
+        if "vet" in popis and "arena" not in popis:
+            return web
+
+    _logger.warning(
+        "Nepodarilo se poznat, ktery web je Elite Vet. Stranka byla prirazena "
+        "k webu '%s'. Zmenit ji jde v Web -> Konfigurace -> Stranky.",
+        weby[0].name,
+    )
+    return weby[0]
+
+
+def _priradit_k_webu(env, xml_id_stranky, xml_id_menu=None):
+    """Priradi stranku (a volitelne polozku menu) ke konkretnimu webu.
+
+    Bez toho je stranka spolecna pro vsechny weby v databazi a objevi se
+    i na domenach, kam nepatri.
+    """
+    web = _zvol_web(env)
+    if not web:
+        return
+
+    stranka = env.ref(xml_id_stranky, raise_if_not_found=False)
+    if stranka:
+        stranka.website_id = web.id
+
+    if xml_id_menu:
+        polozka = env.ref(xml_id_menu, raise_if_not_found=False)
+        if polozka:
+            polozka.website_id = web.id
+            if web.menu_id:
+                polozka.parent_id = web.menu_id.id
+
+    _logger.info("Stranka %s prirazena k webu '%s'.", xml_id_stranky, web.name)

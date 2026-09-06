@@ -81,4 +81,20 @@ přesunout i smazat.
 * Multi-website: `website_id` není nastavené, stránka je na všech webech
   v databázi. Pro omezení jen na Elite Vet doplňte pole do záznamu `website.page`.
 
+## Více webů v jedné databázi
+
+Stránka i odkaz v menu se při instalaci **přiřadí jednomu webu**, ne všem.
+Modul hledá web, jehož doména obsahuje `elite-vet`; když ho nenajde, vezme ten,
+který má v názvu nebo doméně „vet" a zároveň ne „arena". Který web to byl,
+napíše do logu.
+
+Změnit to jde v **Web → Konfigurace → Stránky** u pole *Web*, odkaz v menu pak
+v **Web → Upravit → Menu**.
+
+## Uživatelská práva
+
+Modul má vlastní skupinu **Správce rozpisu** (kategorie *Rozpis služeb*).
+Kdo ji nemá, aplikaci v Odoo vůbec nevidí. Nastavuje se v
+**Nastavení → Uživatelé**.
+
 Nasazení přes Docker: [../../DOCKER.md](../../DOCKER.md).

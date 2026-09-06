@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_rozpis_root" name="Rozpis služeb" sequence="50"/>
+    <menuitem id="menu_rozpis_root" name="Rozpis služeb" sequence="50"
+              groups="elite_vet_calendar.group_calendar_manager"/>
     <menuitem id="menu_rozpis_shift" name="Rozpis" parent="menu_rozpis_root"
               action="action_vet_shift" sequence="10"/>
     <menuitem id="menu_rozpis_doctor" name="Lékařky" parent="menu_rozpis_root"
