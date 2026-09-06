@@ -185,7 +185,32 @@
 
             .tm-head { display: flex; align-items: center; gap: 16px; }
             .tm-avatar { width: 64px; height: 64px; border-radius: 9999px; background: linear-gradient(135deg, var(--ev-accent), var(--ev-accent-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; flex-shrink: 0; box-shadow: 0 10px 22px -12px rgba(91,168,160,.9); }
-            .tm-avatar--photo { padding: 0; background: none; object-fit: cover; }
+            .tm-avatar--photo { padding: 0; background: none; object-fit: cover; object-position: center; }
+
+            /* ====== ZVĚTŠENÍ FOTKY PO KLIKNUTÍ ======
+               Bez JavaScriptu: skrytý checkbox, klik na fotku ho zaškrtne a tím
+               se ukáže překryv. Překryv je zároveň label pro ten samý checkbox,
+               takže klik kamkoliv na něj zvětšení zavře. Nepoužíváme :target,
+               ten Odoo rozbíjí. */
+            .tm-zoom-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; margin: 0; }
+            .tm-zoom-open { display: block; flex-shrink: 0; cursor: zoom-in; border-radius: 9999px; line-height: 0; }
+            .tm-zoom-open:focus-visible { outline: 3px solid var(--ev-accent); outline-offset: 3px; }
+            .tm-zoom-overlay { display: none; }
+            .tm-zoom-toggle:checked ~ .tm-zoom-overlay {
+                display: flex; position: fixed; inset: 0; z-index: 10000;
+                align-items: center; justify-content: center; padding: 24px;
+                background: rgba(9, 15, 28, .88); cursor: zoom-out;
+                overflow: auto; overscroll-behavior: contain;
+                animation: evZoomIn .18s ease-out;
+            }
+            .tm-zoom-img { max-width: min(720px, 94vw); max-height: 82vh; width: auto; height: auto; object-fit: contain; }
+            .tm-zoom-name { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; color: rgba(255,255,255,.8); font-size: 14px; font-weight: 600; letter-spacing: .02em; padding: 0 20px; }
+            @keyframes evZoomIn { from { opacity: 0; } to { opacity: 1; } }
+            @media (prefers-reduced-motion: reduce) { .tm-zoom-toggle:checked ~ .tm-zoom-overlay { animation: none; } }
+            /* v editoru a v režimu překladu překryv nesmí plavat přes obsah */
+            body.editor_enable .tm-zoom-toggle:checked ~ .tm-zoom-overlay,
+            body.editor_has_snippets .tm-zoom-toggle:checked ~ .tm-zoom-overlay,
+            body.o_translate_mode .tm-zoom-toggle:checked ~ .tm-zoom-overlay { display: none !important; }
             .tm-card--lead .tm-avatar { background: linear-gradient(135deg, var(--ev-primary), var(--ev-primary-dark)); box-shadow: 0 10px 22px -12px rgba(17,27,48,.7); }
             .vet-page .tm-name { font-size: 19px; line-height: 1.25; }
             .vet-page .tm-role { margin-top: 6px; color: var(--ev-accent-dark); font-size: 13.5px; font-weight: 600; line-height: 1.45; }
@@ -445,9 +470,20 @@
                                     <article t-attf-class="tm-card#{' tm-card--lead' if tm_m.highlight else ''}">
                                         <div class="tm-card-main">
                                             <div class="tm-head">
-                                                <img t-if="tm_m.has_image" class="tm-avatar tm-avatar--photo"
-                                                     t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_512"
-                                                     t-att-alt="tm_m.name" loading="lazy"/>
+                                                <t t-if="tm_m.has_image">
+                                                    <input type="checkbox" class="tm-zoom-toggle" t-attf-id="evzoom-#{tm_m.id}" aria-hidden="true" tabindex="-1"/>
+                                                    <label class="tm-zoom-open" t-attf-for="evzoom-#{tm_m.id}" t-attf-title="Zvětšit fotku: #{tm_m.name}">
+                                                        <img class="tm-avatar tm-avatar--photo"
+                                                             t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_256"
+                                                             t-att-alt="tm_m.name" loading="lazy"/>
+                                                    </label>
+                                                    <label class="tm-zoom-overlay" t-attf-for="evzoom-#{tm_m.id}" aria-label="Zavřít">
+                                                        <img class="tm-zoom-img"
+                                                             t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_1024"
+                                                             t-att-alt="tm_m.name" loading="lazy"/>
+                                                        <span class="tm-zoom-name"><t t-esc="tm_m.name"/></span>
+                                                    </label>
+                                                </t>
                                                 <div t-if="not tm_m.has_image" class="tm-avatar"><t t-esc="tm_m.initials"/></div>
                                                 <div>
                                                     <h3 class="tm-name"><t t-esc="tm_m.name"/></h3>

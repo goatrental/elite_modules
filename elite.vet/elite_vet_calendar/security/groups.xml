@@ -18,4 +18,11 @@
             <field name="comment">Může zadávat směny, spravovat lékařky a typy směn.</field>
         </record>
     </data>
+
+    <!-- Mimo noupdate blok schvalne: spravce systemu ma skupinu dostat
+         i pri upgradu uz nainstalovaneho modulu, jinak by po zprisneni prav
+         prestal videt vlastni data. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_calendar_manager'))]"/>
+    </record>
 </odoo>

@@ -246,8 +246,19 @@ def _seed_preklady(env):
     """
     env.flush_all()
 
-    jazyky = set(env["res.lang"].search([("active", "=", True)]).mapped("code"))
-    jazyky &= {"de_DE", "en_US", "ru_RU"}
+    aktivni = set(env["res.lang"].search([("active", "=", True)]).mapped("code"))
+    jazyky = aktivni & {"de_DE", "en_US", "ru_RU"}
+
+    # Kdyz v databazi neni nainstalovana cestina, bydli cesky text ve slotu
+    # en_US - ten je pro Odoo zdrojovy. Zapsat do nej anglictinu by cestinu
+    # prepsalo a stranka by se cesky uz nezobrazila.
+    if "cs_CZ" not in aktivni:
+        jazyky.discard("en_US")
+        _logger.info(
+            "Cestina neni nainstalovana, anglicke preklady se preskoci - "
+            "en_US slot nese cesky zdrojovy text."
+        )
+
     if not jazyky:
         return
 

@@ -17,4 +17,11 @@
             <field name="comment">Může přidávat a upravovat lidi, fotky, sekce a popisky.</field>
         </record>
     </data>
+
+    <!-- Mimo noupdate blok schvalne: spravce systemu ma skupinu dostat
+         i pri upgradu uz nainstalovaneho modulu, jinak by po zprisneni prav
+         prestal videt vlastni data. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_team_manager'))]"/>
+    </record>
 </odoo>
