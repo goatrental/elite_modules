@@ -277,6 +277,11 @@ def _seed_preklady(env):
                     for kod, text in preklad.items()
                     if kod in jazyky and text
                 }
+                # Cesky text je pri zalozeni ve zdrojovem slotu, ne v cs_CZ.
+                # Kdyz do zdroje zapiseme anglictinu, cestina by zmizela -
+                # musi se proto ulozit do sveho slotu.
+                if "cs_CZ" in aktivni:
+                    hodnoty["cs_CZ"] = zdroj
                 if hodnoty:
                     zaznam.update_field_translations(nazev_pole, hodnoty)
 
