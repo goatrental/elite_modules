@@ -1,6 +1,6 @@
 {
     "name": "Elite Vet - Nas tym",
-    "version": "18.0.2.2.0",
+    "version": "18.0.2.3.0",
     "category": "Website",
     "summary": "Stranka /nas-tym se spravuje v Odoo: lide, fotky, sekce a podrobnosti.",
     "description": """

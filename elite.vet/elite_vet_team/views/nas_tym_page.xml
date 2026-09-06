@@ -474,12 +474,12 @@
                                                     <input type="checkbox" class="tm-zoom-toggle" t-attf-id="evzoom-#{tm_m.id}" aria-hidden="true" tabindex="-1"/>
                                                     <label class="tm-zoom-open" t-attf-for="evzoom-#{tm_m.id}" t-attf-title="Zvětšit fotku: #{tm_m.name}">
                                                         <img class="tm-avatar tm-avatar--photo"
-                                                             t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_256"
+                                                             t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_128?unique=#{tm_m.write_date}"
                                                              t-att-alt="tm_m.name" loading="lazy"/>
                                                     </label>
                                                     <label class="tm-zoom-overlay" t-attf-for="evzoom-#{tm_m.id}" aria-label="Zavřít">
                                                         <img class="tm-zoom-img"
-                                                             t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_1024"
+                                                             t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_1024?unique=#{tm_m.write_date}"
                                                              t-att-alt="tm_m.name" loading="lazy"/>
                                                         <span class="tm-zoom-name"><t t-esc="tm_m.name"/></span>
                                                     </label>
