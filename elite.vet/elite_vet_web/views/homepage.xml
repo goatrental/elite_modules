@@ -6,6 +6,14 @@
          v tomhle souboru nerozbije ostatni jazyky: menis zdroj, ne preklady. -->
     <template id="homepage" name="Elite Vet Homepage">
         <t t-call="website.layout">
+            <!-- Adresa teze stranky v kazdem jazyce. Prepinac na ne vede primo,
+                 protoze pres /website/lang/ to stoji na cookie frontend_lang a ten
+                 in-app prohlizec Instagramu a Facebooku neposila tak, jak Odoo ceka.
+                 Cestina je vychozi jazyk a na "/" vraci url_for prazdno, proto "/". -->
+            <t t-set="ev_jazyk_cs" t-value="('%s' % url_for(request.httprequest.path, lang_code='cs_CZ')) or '/'"/>
+            <t t-set="ev_jazyk_de" t-value="('%s' % url_for(request.httprequest.path, lang_code='de_DE')) or '/'"/>
+            <t t-set="ev_jazyk_en" t-value="('%s' % url_for(request.httprequest.path, lang_code='en_US')) or '/'"/>
+            <t t-set="ev_jazyk_ru" t-value="('%s' % url_for(request.httprequest.path, lang_code='ru_RU')) or '/'"/>
             <t t-set="ev_web" t-value="request.env['elite.vet.setting'].sudo().nastaveni() if 'elite.vet.setting' in request.env else None"/>
             <t t-set="additional_title">Veterinary clinic Karlovy Vary — Elite Vet</t>
             <t t-set="meta_description">Elite Vet veterinary clinic, Karlovy Vary — modern care for dogs, cats and small mammals: prevention, surgery, internal medicine, diagnostics, dentistry and ophthalmology. Extended opening hours including weekends.</t>
@@ -140,7 +148,7 @@
                 .ev-btn-pulse:hover { animation: none; background: var(--ev-accent); color: #fff !important; border-color: var(--ev-accent) !important; box-shadow: 0 6px 16px -4px rgba(91,168,160,.5); }
 
                 /* ============ CALL POPUP (pure CSS via &lt;details&gt;) ============ */
-                /* ============ PŘEPÍNAČ JAZYKŮ (nativní Odoo /website/lang/) ============ */
+                /* ============ PŘEPÍNAČ JAZYKŮ (odkazy rovnou na /cs, /de, /en, /ru) ============ */
                 .ev-lang { position: relative; display: inline-flex; }
                 .ev-lang > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 9999px; border: 1px solid var(--ev-border); background: #fff; color: var(--ev-primary); font-size: 13px; font-weight: 700; letter-spacing: .02em; transition: border-color .2s, background-color .2s, color .2s; }
                 .ev-lang > summary::-webkit-details-marker { display: none; }
@@ -1027,10 +1035,11 @@
             document.addEventListener("click",function(e){var o=e.target.closest&amp;&amp;e.target.closest(".ev-langgate-opt");if(!o){return;}try{sessionStorage.setItem("evSplashSeen","1");}catch(_){}document.documentElement.classList.add("ev-noSplash");},true);})();</script>
 
             <!-- Cesta bez jazykoveho prefixu. Prepinac jazyku pak vede primo na /de, /en, /ru,
-                 protoze jen URL urci jazyk spolehlive. Pres /website/lang/ to stoji na cookie
-                 frontend_lang a na tom, ze Odoo podle nej presmeruje "/", a to in-app prohlizec
-                 Instagramu nedela: klik na jazyk skoncil zpatky na ceske homepage.
-                 Cestina zadny prefix nema, ta musi pres /website/lang/cs, aby se cookie prepsal. -->
+                 protoze jen URL urci jazyk spolehlive. Pres /website/lang/ to stalo na cookie
+                 frontend_lang, a ten in-app prohlizec Instagramu a Facebooku neposila tak, jak
+                 Odoo ceka: klik na jazyk skoncil zpatky na ceske strance. Cestina ma prefix /cs,
+                 ktery Odoo prevede na adresu bez prefixu a cookie u toho prepise — overeno.
+                 -->
             <t t-set="ev_path" t-value="request.httprequest.path"/>
 
         <!-- Pojistka: kdyby model jeste neexistoval (stara databaze pred upgradem),
@@ -1070,10 +1079,10 @@
                                     </svg>
                                 </summary>
                                 <div class="ev-lang-panel">
-                                    <a t-attf-href="/website/lang/cs?r={{ url_for(request.httprequest.path, lang_code='cs_CZ') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
-                                    <a t-attf-href="/website/lang/de?r={{ url_for(request.httprequest.path, lang_code='de_DE') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
-                                    <a t-attf-href="/website/lang/en?r={{ url_for(request.httprequest.path, lang_code='en_US') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
-                                    <a t-attf-href="/website/lang/ru?r={{ url_for(request.httprequest.path, lang_code='ru_RU') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
+                                    <a data-no-post-process="1" t-att-href="ev_jazyk_cs" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
+                                    <a data-no-post-process="1" t-att-href="ev_jazyk_de" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
+                                    <a data-no-post-process="1" t-att-href="ev_jazyk_en" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
+                                    <a data-no-post-process="1" t-att-href="ev_jazyk_ru" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
                                 </div>
                             </details>
                             <a t-attf-href="tel:#{ev_web.phone or '+420722599699'}" class="ev-call ev-call--topbar">
@@ -1116,19 +1125,19 @@
                         <div class="ev-langgate-title">Welcome to Elite Vet</div>
                         <p class="ev-langgate-sub">Please select your language</p>
                         <div class="ev-langgate-grid">
-                            <a t-attf-href="/website/lang/cs?r={{ url_for(request.httprequest.path, lang_code='cs_CZ') }}" class="ev-langgate-opt">
+                            <a data-no-post-process="1" t-att-href="ev_jazyk_cs" class="ev-langgate-opt">
                                 <span class="ev-langgate-code">CZ</span>
                                 <span class="ev-langgate-name">Čeština</span>
                             </a>
-                            <a t-attf-href="/website/lang/de?r={{ url_for(request.httprequest.path, lang_code='de_DE') }}" class="ev-langgate-opt">
+                            <a data-no-post-process="1" t-att-href="ev_jazyk_de" class="ev-langgate-opt">
                                 <span class="ev-langgate-code">DE</span>
                                 <span class="ev-langgate-name">Deutsch</span>
                             </a>
-                            <a t-attf-href="/website/lang/en?r={{ url_for(request.httprequest.path, lang_code='en_US') }}" class="ev-langgate-opt">
+                            <a data-no-post-process="1" t-att-href="ev_jazyk_en" class="ev-langgate-opt">
                                 <span class="ev-langgate-code">EN</span>
                                 <span class="ev-langgate-name">English</span>
                             </a>
-                            <a t-attf-href="/website/lang/ru?r={{ url_for(request.httprequest.path, lang_code='ru_RU') }}" class="ev-langgate-opt">
+                            <a data-no-post-process="1" t-att-href="ev_jazyk_ru" class="ev-langgate-opt">
                                 <span class="ev-langgate-code">RU</span>
                                 <span class="ev-langgate-name">Русский</span>
                             </a>
@@ -1285,15 +1294,10 @@
         </t>
     </template>
 
-    <!-- Zadnou vlastni stranku na "/" nezakladame. Odoo ma svou a dve stranky
-         na stejne adrese znamenaji, ze si obsluha "/" vybere tu spatnou a misto
-         homepage presmeruje na prvni polozku menu. Prepneme tedy jeji obsah
-         na nasi sablonu — SEO pole zustanou na puvodnim zaznamu. -->
-    <record id="website.homepage_page" model="website.page">
-        <field name="name">Elite Vet Karlovy Vary</field>
-        <field name="view_id" ref="homepage"/>
-        <field name="is_published" eval="True"/>
-        <field name="website_indexed" eval="True"/>
-    </record>
+    <!-- Zadna stranka na "/" se tu nezaklada ani neprepisuje. Obecna stranka
+         Odoo patri VSEM webum v databazi, takze prepnout jeji obsah by hodilo
+         veterinarni homepage i Arene a trafice. Resi to post_init_hook
+         _nastav_homepage: prepne stranku webu Elite Vet, a kdyz zadnou nema
+         a webu je vic, nechá to na cloveku a zapise to do logu. -->
 
 </odoo>

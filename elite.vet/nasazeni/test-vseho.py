@@ -289,10 +289,42 @@ krok("tlacitko na rozpis je nad castymi dotazy",
      and rezervace.index("evrez-rozpis-lead") < rezervace.index('class="ev-faq-list"'))
 rozpis = stahni("/rozpis-lekaru")
 krok("na rozpisu je legenda specializaci", "rs-leg" in rozpis)
-bunky = [b for b in rozpis.split('<span class="rs-doc">')[1:] if 'rs-specs' in b]
-krok("smajlik stoji pred jmenem", bool(bunky) and all(
-     b.index('rs-specs') < b.index("MVDr.") for b in bunky if "MVDr." in b),
-     "bunek se smajlikem: %s" % len(bunky))
+# Smajlik se ukaze jen u lekarky, ktera ma specializaci a zrovna slouzi.
+# Obojí si zkouska zaridi sama, at nestoji na tom, co je zrovna v rozpisu,
+# a po sobe to zase uklidi.
+import datetime
+
+Smena = env["elite.vet.shift"]
+Lekarka = env["elite.vet.doctor"]
+typ_smeny = env["elite.vet.shift.type"].search([("is_note", "=", False)], limit=1)
+specializace = env["elite.vet.team.specialization"].search([("icon_id", "!=", False)], limit=1)
+lekarka = Lekarka.search([("specialization_ids", "!=", False)], limit=1)
+pridana_specializace = False
+if not lekarka and specializace:
+    lekarka = Lekarka.search([("member_id", "!=", False)], limit=1)
+    lekarka.member_id.specialization_ids = [(4, specializace.id)]
+    pridana_specializace = True
+
+if not lekarka or not typ_smeny or not specializace:
+    krok("smajlik stoji pred jmenem", False,
+         "v databazi chybi lekarka, typ smeny nebo specializace s ikonou")
+else:
+    zkusebni_smena = Smena.create({"date": datetime.date.today(),
+                                   "doctor_id": lekarka.id,
+                                   "type_id": typ_smeny.id})
+    env.cr.commit()
+    rozpis = stahni("/rozpis-lekaru")
+    bunky = [b for b in rozpis.split('<span class="rs-doc">')[1:] if "rs-specs" in b]
+    krok("smajlik stoji pred jmenem", bool(bunky) and all(
+         b.index("rs-specs") < b.index(lekarka.name) for b in bunky if lekarka.name in b),
+         "bunek se smajlikem: %s" % len(bunky))
+    zkusebni_smena.unlink()
+    if pridana_specializace:
+        lekarka.member_id.specialization_ids = [(3, specializace.id)]
+    env.cr.commit()
+    krok("zkusebni smena i specializace uklizeny",
+         not Smena.search_count([("id", "=", zkusebni_smena.id)])
+         and (not pridana_specializace or not lekarka.specialization_ids))
 krok("mesic je cesky", "Září" in rozpis or "Říjen" in rozpis)
 krok("mesic je nemecky", "September" in stahni("/rozpis-lekaru", "de-DE,de")
      or "Oktober" in stahni("/rozpis-lekaru", "de-DE,de"))
@@ -338,6 +370,72 @@ mimo = env["website.menu"].search([("url", "like", "winvet")])
 krok("zadna polozka menu nevede mimo web", not mimo,
      ", ".join(mimo.mapped("url"))[:60])
 
+
+print("\n===== 14. NIC NEPROSAKUJE NA CIZI WEBY =====")
+# Databaze hostuje vic webu (Arena, trafika, Jack, IMI). Stranka bez prirazeneho
+# webu je v Odoo "obecna" a vykresli se na vsech domenach — presne to se uz
+# jednou stalo a rozpis sluzeb visel i tam, kam nepatri.
+pocet_webu = env["website"].search_count([])
+print("webu v databazi: %s" % pocet_webu)
+
+for xml_id in ("elite_vet_web.rezervace_page", "elite_vet_web.cenik_page",
+               "elite_vet_calendar.rozpis_lekaru_page", "elite_vet_team.nas_tym_page"):
+    stranka = env.ref(xml_id, raise_if_not_found=False)
+    krok("stranka %s patri jednomu webu" % (stranka.url if stranka else xml_id),
+         bool(stranka and stranka.website_id))
+
+obecne_menu = env["website.menu"].search([
+    ("url", "in", ["/rozpis-lekaru", "/nas-tym", "/cenik", "/rezervacni-system"]),
+    ("website_id", "=", False)])
+krok("zadna polozka menu kliniky neni obecna",
+     not obecne_menu, ", ".join(obecne_menu.mapped("url")))
+
+if pocet_webu > 1:
+    # Obecna homepage patri vsem webum, takze na ni sablona kliniky nesmi.
+    obecna_domu = env["website.page"].search([("url", "=", "/"), ("website_id", "=", False)])
+    krok("obecna homepage neukazuje na sablonu kliniky",
+         not obecna_domu or obecna_domu.view_id.key != "elite_vet_web.homepage")
+else:
+    krok("jediny web v databazi, obecna homepage je v poradku", True)
+
+print("\n===== 15. PREPINAC JAZYKU =====")
+# Prepinac vede primo na jazykovou adresu. Pres /website/lang/ to stalo na cookie
+# frontend_lang a in-app prohlizec Instagramu a Facebooku ho neposila tak, jak
+# Odoo ceka — klik na jazyk skoncil zpatky na puvodni strance.
+import re
+
+for cesta in ("/", "/de", "/en", "/ru", "/de/cenik", "/ru/rozpis-lekaru", "/en/nas-tym"):
+    html = stahni(cesta)
+    zacatek = html.find('class="ev-lang-panel"')
+    panel = html[zacatek:zacatek + 600] if zacatek > -1 else ""
+    odkazy = re.findall(r'href="([^"]*)"', panel)
+    krok("%s: prepinac ma vsechny ctyri jazyky" % cesta, len(odkazy) == 4,
+         "nalezeno %s" % len(odkazy))
+    krok("%s: zadny odkaz neni prazdny" % cesta,
+         bool(odkazy) and all(o.strip() for o in odkazy), str(odkazy))
+    krok("%s: nejde pres /website/lang/" % cesta,
+         not any("website/lang" in o for o in odkazy), str(odkazy))
+
+# Klik na jazyk opravdu prepne, i kdyz prohlizec neposila Accept-Language.
+import urllib.request
+import http.cookiejar
+
+def prejdi(kroky):
+    """Projde adresy se sdilenymi cookies a vrati <html lang> te posledni."""
+    cookies = http.cookiejar.CookieJar()
+    otevirac = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookies))
+    html = ""
+    for cesta in kroky:
+        with otevirac.open(ZAKLAD + cesta, timeout=30) as odpoved:
+            html = odpoved.read().decode("utf-8", "replace")
+    nalez = re.search(r'<html[^>]*lang="([^"]+)"', html)
+    return nalez.group(1) if nalez else "?"
+
+for start, cil, ocekavano in (("/de", "/cs", "cs-CZ"), ("/en", "/cs", "cs-CZ"),
+                              ("/ru", "/cs", "cs-CZ"), ("/", "/de", "de-DE"),
+                              ("/de", "/ru", "ru-RU")):
+    mam = prejdi([start, cil])
+    krok("z %s na %s prepne na %s" % (start, cil, ocekavano), mam == ocekavano, mam)
 print("\n===== SHRNUTI =====")
 prosle = sum(1 for ok, _, _ in vysledky if ok)
 print("proslo %s z %s kontrol" % (prosle, len(vysledky)))

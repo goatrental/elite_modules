@@ -4,6 +4,19 @@ Celý web běží na modulech: `elite_vet_team` (/nas-tym), `elite_vet_calendar`
 (/rozpis-lekaru) a `elite_vet_web` (/ a /rezervacni-system). Instaluje se jen
 `elite_vet_web`, zbytek si Odoo dotáhne přes závislosti.
 
+## Rozpis služeb zůstane, jak je
+
+Směny, lékařky i typy směn jsou **záznamy v databázi**, ne součást modulu.
+Upgrade do nich nesahá: zakládací funkce se spustí jen tehdy, když je tabulka
+prázdná. Ostrý web má vlastní typy směn (Celodenní, Polední, Státní svátek)
+i lékařku, která v modulu není (MVDr. Daniela Píšková) — všechno zůstane.
+
+Co se změní, je **vzhled**: dvě lékařky na stejné směně se spojí do jednoho
+řádku („A + B — Ranní služba“) místo dvou stejných řádků pod sebou.
+
+**Modul neodinstalovávej.** Odinstalace smaže i tabulky, tedy celý rozpis.
+Když je potřeba něco vrátit, jde se zpátky commitem a upgradem, ne odinstalací.
+
 ## Než začneš
 
 **Zálohuj databázi.** Kroky 3 a 4 přepisují texty a překlady.
@@ -62,6 +75,15 @@ docker compose exec -i odoo odoo shell -c /etc/odoo/odoo.conf -d DATABAZE \
 
 Jde pustit opakovaně — páruje podle současné hodnoty, takže co je už přeložené,
 nechá být.
+
+**Tohle je na ostrém webu potřeba.** Stažení www.elite-vet.cz/rozpis-lekaru ve
+všech čtyřech jazycích ukázalo, že názvy směn a celodenní poznámky jsou všude
+česky — německý, anglický i ruský návštěvník čte „Celodenní služba“ a „Zavřeno“.
+Skript je doplní; pokryté jsou i typy, které v modulu nejsou
+(Celodenní, Polední, Státní svátek, Den otevřených dveří).
+
+Kdyby klinika mezitím zavedla další typ směny, přidej ho do
+`nasazeni/preklady-dat.json` stejným způsobem a skript pusť znovu.
 
 ## 5. Zkontrolovat obsah v adminu
 
@@ -123,12 +145,37 @@ docker compose exec -i odoo odoo shell -c /etc/odoo/odoo.conf -d DATABAZE \
     --no-http < nasazeni/test-vseho.py
 ```
 
-Na lokále hlásí **86 z 86 kontrol**. Skript po sobě uklízí, ale sahá do ostrých
+Na lokále hlásí **119 z 119 kontrol**. Skript po sobě uklízí, ale sahá do ostrých
 dat — pouštěj ho až po záloze.
 
 Ověř taky, že se u jazyka v adrese vrací i správný `<html lang>` — skript to
 kontroluje sám, protože bez hlavičky `Accept-Language` Odoo vrací angličtinu
 a člověk pak porovnává angličtinu samu se sebou.
+
+## Co ověřit hned po nasazení
+
+**Nic nesmí prosáknout na ostatní weby.** Databáze hostí i Elite Arenu,
+trafiku, Jacka a IMI. Stránka bez přiřazeného webu je v Odoo „obecná“ a
+vykreslí se na všech doménách — jednou se to už stalo. Modul si teď stránky
+přišije sám (instalační hook i migrace), ale zkontroluj to:
+
+**Nastavení → Technické → Web → Stránky**, sloupec **Web** — u `/cenik`,
+`/rezervacni-system`, `/rozpis-lekaru` i `/nas-tym` musí stát Elite Vet,
+ne prázdno. Totéž u položek v **Web → Upravit → Menu**.
+
+Obecnou domovskou stránku modul úmyslně nepřepisuje, když je webů víc —
+napíše to jen do logu a `/` webu Elite Vet se přepne ručně (krok 2).
+
+**Přepínač jazyků.** Odkazy vedou rovnou na `/cs`, `/de`, `/en`, `/ru`.
+Přes `/website/lang/` to stálo na cookie `frontend_lang`, a ten in-app
+prohlížeč Instagramu a Facebooku neposílá tak, jak Odoo čeká — klik na jazyk
+skončil zpátky na původní stránce. Otevři web z odkazu v Instagramu
+a přepni tam a zpátky.
+
+**Ikony specializací.** V rozpisu i na stránce týmu se ukazují jen u lidí,
+kteří mají specializaci vyplněnou na kartě v **Náš tým → Členové týmu**
+(a lékařka musí mít kartu přiřazenou). Zatím je nemá nikdo, takže po nasazení
+to vypadá stejně jako dnes, dokud je klinika nedoplní.
 
 ## Na co si dát pozor později
 

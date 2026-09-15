@@ -8,6 +8,14 @@
     -->
     <template id="nas_tym" name="Our team">
     <t t-call="website.layout">
+        <!-- Adresa teze stranky v kazdem jazyce. Prepinac na ne vede primo,
+             protoze pres /website/lang/ to stoji na cookie frontend_lang a ten
+             in-app prohlizec Instagramu a Facebooku neposila tak, jak Odoo ceka.
+             Cestina je vychozi jazyk a na "/" vraci url_for prazdno, proto "/". -->
+        <t t-set="ev_jazyk_cs" t-value="('%s' % url_for(request.httprequest.path, lang_code='cs_CZ')) or '/'"/>
+        <t t-set="ev_jazyk_de" t-value="('%s' % url_for(request.httprequest.path, lang_code='de_DE')) or '/'"/>
+        <t t-set="ev_jazyk_en" t-value="('%s' % url_for(request.httprequest.path, lang_code='en_US')) or '/'"/>
+        <t t-set="ev_jazyk_ru" t-value="('%s' % url_for(request.httprequest.path, lang_code='ru_RU')) or '/'"/>
             <t t-set="ev_web" t-value="request.env['elite.vet.setting'].sudo().nastaveni() if 'elite.vet.setting' in request.env else None"/>
         <t t-set="no_header" t-value="true"/>
         <t t-set="no_footer" t-value="true"/>
@@ -72,7 +80,7 @@
             .ev-burger-link svg { color: var(--ev-accent); flex-shrink: 0; }
 
             /* ============ KONTAKTNÍ POPUP ============ */
-            /* ============ PŘEPÍNAČ JAZYKŮ (nativní Odoo /website/lang/) ============ */
+            /* ============ PŘEPÍNAČ JAZYKŮ (odkazy rovnou na /cs, /de, /en, /ru) ============ */
             .ev-lang { position: relative; display: inline-flex; }
             .ev-lang > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 9999px; border: 1px solid var(--ev-border); background: #fff; color: var(--ev-primary); font-size: 13px; font-weight: 700; letter-spacing: .02em; transition: border-color .2s, background-color .2s, color .2s; }
             .ev-lang > summary::-webkit-details-marker { display: none; }
@@ -369,10 +377,10 @@
                                 </svg>
                             </summary>
                             <div class="ev-lang-panel">
-                                <a t-attf-href="/website/lang/cs?r={{ url_for(request.httprequest.path, lang_code='cs_CZ') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
-                                <a t-attf-href="/website/lang/de?r={{ url_for(request.httprequest.path, lang_code='de_DE') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
-                                <a t-attf-href="/website/lang/en?r={{ url_for(request.httprequest.path, lang_code='en_US') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
-                                <a t-attf-href="/website/lang/ru?r={{ url_for(request.httprequest.path, lang_code='ru_RU') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
+                                <a data-no-post-process="1" t-att-href="ev_jazyk_cs" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
+                                <a data-no-post-process="1" t-att-href="ev_jazyk_de" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
+                                <a data-no-post-process="1" t-att-href="ev_jazyk_en" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
+                                <a data-no-post-process="1" t-att-href="ev_jazyk_ru" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
                             </div>
                         </details>
                         <details class="ev-call ev-call--topbar">

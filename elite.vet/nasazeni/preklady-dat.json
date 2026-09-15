@@ -558,5 +558,165 @@
   "en": "Operations and management",
   "de": "Betrieb & Management",
   "ru": "Управление и менеджмент"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Celodenní služba",
+  "en": "All-day shift",
+  "de": "Ganztagsdienst",
+  "ru": "Смена на весь день"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Ranní služba",
+  "en": "Morning shift",
+  "de": "Vormittagsdienst",
+  "ru": "Утренняя смена"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Polední služba",
+  "en": "Midday shift",
+  "de": "Mittagsdienst",
+  "ru": "Дневная смена"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Odpolední služba",
+  "en": "Afternoon shift",
+  "de": "Nachmittagsdienst",
+  "ru": "Послеобеденная смена"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Noční služba",
+  "en": "Night shift",
+  "de": "Nachtdienst",
+  "ru": "Ночная смена"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Víkendová služba",
+  "en": "Weekend shift",
+  "de": "Wochenenddienst",
+  "ru": "Смена в выходные"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Státní svátek",
+  "en": "Public holiday",
+  "de": "Gesetzlicher Feiertag",
+  "ru": "Государственный праздник"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Zavřeno",
+  "en": "Closed",
+  "de": "Geschlossen",
+  "ru": "Закрыто"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Den otevřených dveří",
+  "en": "Open day",
+  "de": "Tag der offenen Tür",
+  "ru": "День открытых дверей"
+ },
+ {
+  "model": "elite.vet.shift.type",
+  "pole": "name",
+  "cs": "Den Otevření plného provozu",
+  "en": "Full operation starts",
+  "de": "Start des vollen Betriebs",
+  "ru": "Начало работы в полном режиме"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Celodenní služba",
+  "en": "All-day shift",
+  "de": "Ganztagsdienst",
+  "ru": "Смена на весь день"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Ranní služba",
+  "en": "Morning shift",
+  "de": "Vormittagsdienst",
+  "ru": "Утренняя смена"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Polední služba",
+  "en": "Midday shift",
+  "de": "Mittagsdienst",
+  "ru": "Дневная смена"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Odpolední služba",
+  "en": "Afternoon shift",
+  "de": "Nachmittagsdienst",
+  "ru": "Послеобеденная смена"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Noční služba",
+  "en": "Night shift",
+  "de": "Nachtdienst",
+  "ru": "Ночная смена"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Víkendová služba",
+  "en": "Weekend shift",
+  "de": "Wochenenddienst",
+  "ru": "Смена в выходные"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Státní svátek",
+  "en": "Public holiday",
+  "de": "Gesetzlicher Feiertag",
+  "ru": "Государственный праздник"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Zavřeno",
+  "en": "Closed",
+  "de": "Geschlossen",
+  "ru": "Закрыто"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Den otevřených dveří",
+  "en": "Open day",
+  "de": "Tag der offenen Tür",
+  "ru": "День открытых дверей"
+ },
+ {
+  "model": "elite.vet.shift",
+  "pole": "note",
+  "cs": "Den Otevření plného provozu",
+  "en": "Full operation starts",
+  "de": "Start des vollen Betriebs",
+  "ru": "Начало работы в полном режиме"
  }
 ]

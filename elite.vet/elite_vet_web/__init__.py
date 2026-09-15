@@ -1,3 +1,7 @@
+import logging
+
+_logger = logging.getLogger(__name__)
+
 from . import models
 
 
@@ -129,32 +133,78 @@ def _seed_sluzby(env):
 def _pri_instalaci(env):
     """Vse, co se ma stat po prvni instalaci modulu."""
     from .models.seed import seed_galerie, seed_obsah
+    _priradit_stranky_k_webu(env)
     _nastav_homepage(env)
     _seed_sluzby(env)
     seed_galerie(env)
     seed_obsah(env)
 
 
+def _priradit_stranky_k_webu(env):
+    """Prisije stranky modulu k webu Elite Vet.
+
+    Stranka bez prirazeneho webu je v Odoo "obecna" a vykresli se na VSECH
+    domenach v databazi. Ta hostuje i Elite Arenu, trafiku, Jacka a IMI —
+    a na tech by cenik ani rezervace veterinarni kliniky nemely co delat.
+    Uz jednou se to stalo, proto se to deje automaticky a ne rucne.
+    """
+    from odoo.addons.elite_vet_calendar import _priradit_k_webu
+    for xml_id in ("elite_vet_web.rezervace_page", "elite_vet_web.cenik_page"):
+        _priradit_k_webu(env, xml_id)
+
+
 def _nastav_homepage(env):
-    """Prepne domovskou stranku Odoo na sablonu tohohle modulu.
+    """Prepne domovskou stranku na sablonu tohohle modulu.
 
     Nejde to udelat zaznamem v XML: `website.homepage_page` je v modulu website
-    oznacena jako noupdate, takze ji cizi modul prepsat nesmi. A zalozit vlastni
-    stranku na "/" taky ne — dve stranky na stejne adrese znamenaji, ze obsluha
-    "/" sahne po te spatne a misto homepage presmeruje na prvni polozku menu.
+    oznacena jako noupdate, takze ji cizi modul prepsat nesmi.
 
-    Zamerne saha JEN na obecnou stranku Odoo. Databaze muze hostit vic webu a
-    prepnout homepage vsem by znamenalo prepsat cizi weby. Kdyz web pouziva
-    vlastni stranku "/", prepoji se na tuhle sablonu rucne.
+    Poradi je schvalne opatrne, protoze obecna stranka "/" patri vsem webum
+    v databazi:
+
+    1. Kdyz ma web Elite Vet vlastni stranku na "/", prepne se jen ta.
+    2. Kdyz je v databazi jediny web, je obecna stranka jeho a prepne se.
+    3. Kdyz je webu vic a Elite Vet vlastni "/" nema, NEPREPNE se nic. Prepsat
+       obecnou stranku by znamenalo hodit veterinarni homepage i Arene
+       a trafice. Zapise se to do logu a dodela se rucne podle nasazeni/README.
+
+    Vlastni stranka na "/" se zamerne nezaklada. Dve stranky na stejne adrese
+    znamenaji, ze si obsluha "/" vybere tu spatnou a misto homepage presmeruje
+    na prvni polozku menu.
     """
-    stranka = env.ref('website.homepage_page', raise_if_not_found=False)
+    from odoo.addons.elite_vet_calendar import _zvol_web
+
     sablona = env.ref('elite_vet_web.homepage', raise_if_not_found=False)
-    if not stranka or not sablona:
+    if not sablona:
         return
+
     # Zamerne se nemeni 'name': website.page pri prejmenovani prepise i klic
     # pohledu, takze by sablona modulu prestala mit svuj vlastni klic.
-    stranka.write({
+    zmena = {
         'view_id': sablona.id,
         'is_published': True,
         'website_indexed': True,
-    })
+    }
+
+    web = _zvol_web(env)
+    if web:
+        vlastni = env['website.page'].search(
+            [('url', '=', '/'), ('website_id', '=', web.id)], limit=1)
+        if vlastni:
+            vlastni.write(zmena)
+            _logger.info("Homepage webu '%s' prepnuta na sablonu modulu.", web.name)
+            return
+
+    if env['website'].search_count([]) <= 1:
+        obecna = env.ref('website.homepage_page', raise_if_not_found=False)
+        if obecna:
+            obecna.write(zmena)
+            _logger.info("Obecna homepage prepnuta na sablonu modulu.")
+        return
+
+    _logger.warning(
+        "Homepage se neprepnula. V databazi je vic webu a Elite Vet nema vlastni "
+        "stranku na '/'. Prepsat obecnou stranku by zmenilo homepage i ostatnim "
+        "webum, takze to necham na cloveku: Nastaveni -> Technicke -> Web -> "
+        "Stranky, najit '/' webu Elite Vet a v poli Zobrazeni vybrat "
+        "elite_vet_web.homepage.")
