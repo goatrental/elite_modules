@@ -38,6 +38,17 @@ class VetTeamSection(models.Model):
     )
     member_ids = fields.One2many("elite.vet.team.member", "section_id", string="Členové")
     member_count = fields.Integer(compute="_compute_member_count", string="Počet lidí")
+    na_webu = fields.Boolean(
+        string="Na webu",
+        compute="_compute_na_webu",
+        help="Sekce se na strance ukaze, teprve kdyz do ni patri aspon jeden clovek. "
+             "Prazdna sekce by udelala nadpis, pod kterym nic neni, takze se vynecha.",
+    )
+
+    @api.depends("member_ids", "active")
+    def _compute_na_webu(self):
+        for zaznam in self:
+            zaznam.na_webu = bool(zaznam.active and zaznam.member_ids)
     active = fields.Boolean(string="Aktivní", default=True)
 
     def _compute_member_count(self):

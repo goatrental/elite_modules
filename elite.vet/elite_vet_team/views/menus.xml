@@ -8,4 +8,8 @@
               action="action_team_section" sequence="20"/>
     <menuitem id="menu_tym_fact_label" name="Popisky podrobností" parent="menu_tym_root"
               action="action_team_fact_label" sequence="30"/>
+    <menuitem id="menu_tym_spec" name="Specializace" parent="menu_tym_root"
+              action="action_team_specialization" sequence="25"/>
+    <menuitem id="menu_tym_icon" name="Ikony" parent="menu_tym_root"
+              action="action_team_icon" sequence="27"/>
 </odoo>

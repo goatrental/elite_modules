@@ -1,0 +1,140 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* elite_vet_team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs_CZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Besides the doctors and staff at our own branch, a number of external specialists and doctors also work with the clinic. The people below make up the <strong>core team responsible for looking after your pets</strong> — and the team keeps growing."
+msgstr "Kromě lékařů a personálu přímo na naší pobočce s klinikou spolupracuje také řada externích specialistů a lékařů. Lidé níže tvoří <strong>hlavní odpovědný tým, který se postará o vaše mazlíčky</strong> — a tým se stále rozrůstá."
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Call"
+msgstr "Volat"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Close"
+msgstr "Zavřít"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Created"
+msgstr "Vytvořil"
+
+#. module: elite_vet_team
+#: model:elite.vet.team.specialization,name:elite_vet_team.spec_stomatologie
+msgid "Dentistry"
+msgstr "Stomatologie"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "ELITE VET is being built as a modern veterinary facility whose professional foundation combines clinical practice, specialised training, teamwork and a thorough approach to every patient. At the opening of the clinic the team includes veterinarians experienced in surgery, internal and emergency medicine, ophthalmology, ultrasonography, dentistry and critical patient care; veterinary nurses experienced in everyday clinical operations; client service with a professional veterinary background; and management with direct experience of veterinary practices and running operations."
+msgstr "ELITE VET vzniká jako moderní veterinární pracoviště, jehož odborný základ tvoří propojení klinické praxe, specializovaného vzdělávání, týmové spolupráce a důsledného přístupu ke každému pacientovi. Tým při otevření kliniky zahrnuje veterinární lékařky se zkušenostmi v chirurgii, interní a urgentní medicíně, oftalmologii, ultrasonografii, stomatologii a péči o kritické pacienty; veterinární sestry se zkušenostmi z každodenního klinického provozu; klientský servis s odborným veterinárním přesahem; a management s přímou zkušeností z veterinárních pracovišť i řízení provozu."
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Education, experience and specialisation"
+msgstr "Vzdělání, praxe a specializace"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Email: #{tm_m.email}"
+msgstr "Email: #{tm_m.email}"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Enlarge photo: #{tm_m.name}"
+msgstr "Zvětšit fotku: #{tm_m.name}"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Menu"
+msgstr "Menu"
+
+#. module: elite_vet_team
+#: model:elite.vet.team.specialization,name:elite_vet_team.spec_oftalmologie
+msgid "Ophthalmology"
+msgstr "Oftalmologie"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Our team"
+msgstr "Náš tým"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Our team | Elite Vet Karlovy Vary"
+msgstr "Náš tým | Elite Vet Karlovy Vary"
+
+#. module: elite_vet_team
+#: model:elite.vet.team.specialization,name:elite_vet_team.spec_prevence
+msgid "Prevention and vaccination"
+msgstr "Prevence a vakcinace"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Recruitment contact"
+msgstr "Kontakt pro nábor"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "Send your CV"
+msgstr "Poslat životopis"
+
+#. module: elite_vet_team
+#: model:elite.vet.team.specialization,name:elite_vet_team.spec_drobni_savci
+msgid "Small mammals"
+msgstr "Drobní savci"
+
+#. module: elite_vet_team
+#: model:elite.vet.team.specialization,name:elite_vet_team.spec_chirurgie
+msgid "Surgery"
+msgstr "Chirurgie"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "The team keeps growing"
+msgstr "Tým stále roste"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "The team opening our clinic"
+msgstr "Tým, který otevírá naši kliniku"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "The team opening the Elite Vet veterinary clinic in Karlovy Vary — veterinarians, veterinary nurses, client service and management. Education, experience, specialisation and languages of the whole team."
+msgstr "Tým, který otevírá veterinární kliniku Elite Vet v Karlových Varech — veterinární lékařky, veterinární sestry, klientský servis a management. Vzdělání, praxe, specializace a jazyky celého týmu."
+
+#. module: elite_vet_team
+#: model:elite.vet.team.specialization,name:elite_vet_team.spec_sonografie
+msgid "Ultrasonography"
+msgstr "Sonografie"
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "We keep adding more doctors and specialist staff to the clinic's team. We are looking for colleagues to join our newly forming team — from experienced vets to fresh graduates."
+msgstr "Tým kliniky průběžně doplňujeme o další lékaře a odborný personál. Hledáme kolegy do nově vznikajícího týmu — od zkušených veterinářů až po čerstvé absolventy."
+
+#. module: elite_vet_team
+#: model_terms:ir.ui.view,arch_db:elite_vet_team.nas_tym
+msgid "· runs on"
+msgstr "· běží na"

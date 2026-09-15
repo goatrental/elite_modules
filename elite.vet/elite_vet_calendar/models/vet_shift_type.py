@@ -24,7 +24,7 @@ class VetShiftType(models.Model):
     _description = "Typ směny"
     _order = "sequence, id"
 
-    name = fields.Char(string="Název", required=True)
+    name = fields.Char(string="Název", required=True, translate=True)
     sequence = fields.Integer(string="Pořadí", default=10)
     time_from = fields.Float(string="Od", default=8.0)
     time_to = fields.Float(string="Do", default=14.0)

@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ GALERIE ============ -->
+    <record id="view_gallery_list" model="ir.ui.view">
+        <field name="name">elite.vet.gallery.photo.list</field>
+        <field name="model">elite.vet.gallery.photo</field>
+        <field name="arch" type="xml">
+            <list string="Fotky galerie">
+                <field name="sequence" widget="handle"/>
+                <field name="image" widget="image" options="{'size': [60, 60]}" nolabel="1"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_gallery_kanban" model="ir.ui.view">
+        <field name="name">elite.vet.gallery.photo.kanban</field>
+        <field name="model">elite.vet.gallery.photo</field>
+        <field name="arch" type="xml">
+            <kanban default_order="sequence">
+                <field name="sequence"/>
+                <templates>
+                    <t t-name="card">
+                        <!-- Fotku vykresluje widget image. Pomocnik kanban_image, ktery se
+                             na tohle driv pouzival, uz v Odoo 18 neexistuje a kanban s nim
+                             spadne na „kanban_image is not a function“. -->
+                        <field name="image" widget="image" options="{'size': [220, 220]}" class="w-100"/>
+                        <div class="p-2">
+                            <field name="name" placeholder="Popis fotky"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_gallery_form" model="ir.ui.view">
+        <field name="name">elite.vet.gallery.photo.form</field>
+        <field name="model">elite.vet.gallery.photo</field>
+        <field name="arch" type="xml">
+            <form string="Fotka">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar" options="{'size': [220, 220]}"/>
+                    <group>
+                        <field name="name" placeholder="např. Ordinace"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                    <div class="text-muted">
+                        Pás na webu listuje po třech fotkách. Poslední stránka se sama
+                        zarovná na konec, takže v ní nezůstane prázdné místo.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gallery" model="ir.actions.act_window">
+        <field name="name">Galerie kliniky</field>
+        <field name="res_model">elite.vet.gallery.photo</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nahrajte první fotku</p>
+            <p>Fotky se ukazují na domovské stránce v sekci O klinice.</p>
+        </field>
+    </record>
+
+    <!-- ============ ORDINAČNÍ HODINY ============ -->
+    <record id="view_hours_list" model="ir.ui.view">
+        <field name="name">elite.vet.opening.hours.list</field>
+        <field name="model">elite.vet.opening.hours</field>
+        <field name="arch" type="xml">
+            <list string="Ordinační hodiny" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="time_text"/>
+                <field name="name_short" placeholder="Po–Pá"/>
+                <field name="time_short" placeholder="8–20"/>
+                <field name="is_closed" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_hours" model="ir.actions.act_window">
+        <field name="name">Ordinační hodiny</field>
+        <field name="res_model">elite.vet.opening.hours</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte první řádek</p>
+            <p>Řádky se propíšou všude, kde je na webu otevírací doba: na leták, do kontaktů,
+               na rozpis služeb i na stránku rezervace. Zkrácená podoba je pro leták,
+               kde je málo místa — když ji necháte prázdnou, použije se dlouhá.</p>
+        </field>
+    </record>
+
+    <!-- ============ KONTAKTNÍ KARTY ============ -->
+    <record id="view_contact_list" model="ir.ui.view">
+        <field name="name">elite.vet.contact.list</field>
+        <field name="model">elite.vet.contact</field>
+        <field name="arch" type="xml">
+            <list string="Kontaktní karty" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="icon_code"/>
+                <field name="name"/>
+                <field name="value"/>
+                <field name="value2" optional="show"/>
+                <field name="note" optional="show"/>
+                <field name="url" optional="show"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_contact" model="ir.actions.act_window">
+        <field name="name">Kontaktní karty</field>
+        <field name="res_model">elite.vet.contact</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ ČASTÉ DOTAZY ============ -->
+    <record id="view_faq_list" model="ir.ui.view">
+        <field name="name">elite.vet.faq.list</field>
+        <field name="model">elite.vet.faq</field>
+        <field name="arch" type="xml">
+            <list string="Časté dotazy">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_faq_form" model="ir.ui.view">
+        <field name="name">elite.vet.faq.form</field>
+        <field name="model">elite.vet.faq</field>
+        <field name="arch" type="xml">
+            <form string="Častý dotaz">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Otázka"/>
+                        <h1><field name="name" placeholder="např. Jak se u vás objednám?"/></h1>
+                    </div>
+                    <field name="answer" placeholder="Odpověď, kterou uvidí návštěvník po rozkliknutí."/>
+                    <group>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_faq" model="ir.actions.act_window">
+        <field name="name">Časté dotazy</field>
+        <field name="res_model">elite.vet.faq</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte první dotaz</p>
+            <p>Dotazy se ukazují na stránce s rezervačním systémem.</p>
+        </field>
+    </record>
+
+    <!-- ============ CENÍK ============ -->
+    <record id="view_price_item_list" model="ir.ui.view">
+        <field name="name">elite.vet.price.item.list</field>
+        <field name="model">elite.vet.price.item</field>
+        <field name="arch" type="xml">
+            <list string="Ceník" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="icon_image" widget="image" options="{'size': [26, 26]}" nolabel="1"/>
+                <field name="icon_code"/>
+                <field name="icon_id" options="{'no_create': True}" optional="show"/>
+                <field name="category_id" optional="hide"/>
+                <field name="name"/>
+                <field name="price_from" widget="boolean_toggle"/>
+                <field name="price"/>
+                <field name="note" optional="show"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_price_item" model="ir.actions.act_window">
+        <field name="name">Ceník</field>
+        <field name="res_model">elite.vet.price.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte první úkon</p>
+            <p>Ceník se ukazuje na stránce /cenik. Bez jediného úkonu stránka nic nevypíše.</p>
+        </field>
+    </record>
+
+    <record id="view_price_category_list" model="ir.ui.view">
+        <field name="name">elite.vet.price.category.list</field>
+        <field name="model">elite.vet.price.category</field>
+        <field name="arch" type="xml">
+            <list string="Skupiny ceníku" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="pocet_ukonu"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_price_category" model="ir.actions.act_window">
+        <field name="name">Skupiny ceníku</field>
+        <field name="res_model">elite.vet.price.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ NASTAVENÍ ============ -->
+    <record id="view_setting_form" model="ir.ui.view">
+        <field name="name">elite.vet.setting.form</field>
+        <field name="model">elite.vet.setting</field>
+        <field name="arch" type="xml">
+            <form string="Nastavení webu">
+                <sheet>
+                    <div class="alert alert-info" role="status">
+                        Tyhle údaje se opakují na více stránkách. Když je změníš tady,
+                        změní se všude — v hlavičce, v kontaktech i v patičce.
+                    </div>
+                    <group>
+                        <group string="Recepce">
+                            <field name="phone" placeholder="+420722599699"/>
+                            <field name="phone_display" placeholder="+420 722 599 699"/>
+                            <field name="email" placeholder="info@elite-vet.cz"/>
+                        </group>
+                        <group string="Pro uchazeče o práci">
+                            <field name="hr_phone" placeholder="+420728549095"/>
+                            <field name="hr_phone_display" placeholder="+420 728 549 095"/>
+                            <field name="hr_email" placeholder="info@elite-vet.cz"/>
+                        </group>
+                        <group string="Adresa">
+                            <field name="address_line1" placeholder="Hybešova 167/18, Rybáře"/>
+                            <field name="address_line2" placeholder="360 05 Karlovy Vary"/>
+                            <field name="map_url" placeholder="https://maps.google.com/?q=…"/>
+                        </group>
+                        <group string="Rezervace">
+                            <field name="booking_url" placeholder="https://reservation.winvet.cz/booking/…"/>
+                        </group>
+                        <group string="Sociální sítě">
+                            <field name="instagram_url"/>
+                            <field name="facebook_url"/>
+                        </group>
+                        <group string="Pohotovost 24/7">
+                            <field name="emergency_active"/>
+                            <field name="emergency_phone" placeholder="+420722599699"
+                                   required="emergency_active"/>
+                            <field name="emergency_phone_display" placeholder="+420 722 599 699"/>
+                            <field name="emergency_live" invisible="1"/>
+                            <div colspan="2" class="text-muted" invisible="emergency_active">
+                                Vypnuto: na webu svítí „již brzy“, tlačítko Volat je šedé
+                                a kolečko 24/7 vpravo dole se nedá zmáčknout.
+                            </div>
+                            <div colspan="2" class="alert alert-success mb-0" role="status"
+                                 invisible="not emergency_active">
+                                Zapnuto: z tlačítka Volat se stane zelené s odkazem na číslo
+                                a kolečko 24/7 začne volat. Texty se přepnou samy, ve všech jazycích.
+                            </div>
+                        </group>
+                        <!-- Texty vypnute pohotovosti se daji prepsat. Prazdne pole nechava
+                             puvodni vetu ze sablony, ktera je prelozena do vsech ctyr jazyku. -->
+                        <group string="Texty, když pohotovost neběží" invisible="emergency_active">
+                            <field name="emergency_off_button" placeholder="Volat již brzy"/>
+                            <field name="emergency_off_text"
+                                   placeholder="Když se mazlíčkovi něco stane, pohotovostní linku najdete vždycky tady. Brzy ji spustíme nepřetržitě."/>
+                            <field name="emergency_off_note"
+                                   placeholder="V blízké době plánujeme další rozšíření provozní doby…"/>
+                            <div colspan="2" class="text-muted">
+                                Prázdné pole = zůstane původní věta ze šablony,
+                                a ta je přeložená do všech čtyř jazyků.
+                                Jakmile sem něco napíšeš, uvidí to i němečtí, angličtí
+                                a ruští návštěvníci — text proto doplň i v nich:
+                                přepni jazyk vpravo nahoře a přepiš ho.
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Nastaveni je jediny zaznam. Nabidka proto vede na serverovou akci, ktera
+         ho najde a otevre; obycejna akce by otevrela prazdny formular a klinika
+         by si omylem zalozila druhe nastaveni, ze ktereho web nic nebere. -->
+    <record id="action_setting_otevrit" model="ir.actions.server">
+        <field name="name">Nastavení webu</field>
+        <field name="model_id" ref="model_elite_vet_setting"/>
+        <field name="state">code</field>
+        <field name="code">action = model.otevrit_nastaveni()</field>
+    </record>
+
+
+    <!-- ============ BLOKY STRÁNKY ============ -->
+    <record id="view_section_list" model="ir.ui.view">
+        <field name="name">elite.vet.page.section.list</field>
+        <field name="model">elite.vet.page.section</field>
+        <field name="arch" type="xml">
+            <list string="Bloky stránky" editable="bottom" create="false" delete="false">
+                <field name="sequence" widget="handle"/>
+                <field name="name" readonly="1"/>
+                <field name="note" readonly="1"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_section" model="ir.actions.act_window">
+        <field name="name">Bloky stránky</field>
+        <field name="res_model">elite.vet.page.section</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'active_test': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Bloky se založí při instalaci</p>
+            <p>Pořadí se mění přetažením, vypínačem se blok z webu schová.</p>
+        </field>
+    </record>
+
+    <!-- ============ KOHO PŘIJÍMÁME ============ -->
+    <record id="view_species_list" model="ir.ui.view">
+        <field name="name">elite.vet.species.list</field>
+        <field name="model">elite.vet.species</field>
+        <field name="arch" type="xml">
+            <list string="Koho přijímáme" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="icon_image" widget="image" options="{'size': [26, 26]}" nolabel="1"/>
+                <field name="name"/>
+                <field name="icon_code"/>
+                <field name="icon_id" options="{'no_create': True}"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_species" model="ir.actions.act_window">
+        <field name="name">Koho přijímáme</field>
+        <field name="res_model">elite.vet.species</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Přidejte první druh</p>
+            <p>Zelené odznaky nad službami na domovské stránce.</p>
+        </field>
+    </record>
+
+
+    <!-- ============ NASTAVENÍ REZERVACE ============ -->
+    <record id="view_setting_rezervace_form" model="ir.ui.view">
+        <field name="name">elite.vet.setting.rezervace.form</field>
+        <field name="model">elite.vet.setting</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Nastavení rezervace">
+                <sheet>
+                    <div class="alert alert-info" role="status">
+                        Nastavení stránky <b>/rezervacni-system</b>. Otázky a odpovědi
+                        se upravují vedle v Častých dotazech.
+                    </div>
+                    <group>
+                        <group string="Rezervační systém">
+                            <field name="booking_url" placeholder="https://reservation.winvet.cz/booking/…"/>
+                        </group>
+                        <group string="Telefon na recepci">
+                            <field name="phone" placeholder="+420722599699"/>
+                            <field name="phone_display" placeholder="+420 722 599 699"/>
+                        </group>
+                    </group>
+                    <group string="Hláška, dokud se rezervace načítá">
+                        <field name="booking_loading_title" placeholder="Načítáme rezervační systém…"/>
+                        <field name="booking_loading_note" placeholder="Chvilku to trvá, děkujeme za trpělivost."/>
+                        <div colspan="2" class="text-muted">
+                            Text leží pod rámečkem a zmizí sám, jakmile se rezervace vykreslí.
+                            Ukazuje se i na stránce rozpisu služeb.
+                        </div>
+                    </group>
+                    <group string="Odkaz na rozpis služeb pod rezervací">
+                        <field name="schedule_link_lead" placeholder="Nevíte, ke kterému lékaři se objednat?"/>
+                        <field name="schedule_link_button" placeholder="Zobrazit rozpis služeb"/>
+                    </group>
+                    <div class="text-muted">
+                        Texty jdou přeložit: přepni jazyk vpravo nahoře a přepiš je.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_setting_rezervace" model="ir.actions.server">
+        <field name="name">Nastavení rezervace</field>
+        <field name="model_id" ref="model_elite_vet_setting"/>
+        <field name="state">code</field>
+        <field name="code">action = model.otevrit_rezervaci()</field>
+    </record>
+
+    <!-- Rezervace ma vlastni aplikaci: klinika v ni meni odkaz na WinVet, hlasku
+         pri nacitani a caste dotazy, coz spolu souvisi vic nez se zbytkem webu. -->
+    <menuitem id="menu_rezervace_root" name="Rezervace" sequence="53"
+              groups="elite_vet_calendar.group_calendar_manager"/>
+    <menuitem id="menu_rezervace_nastaveni" name="Nastavení rezervace" parent="menu_rezervace_root"
+              action="action_setting_rezervace" sequence="10"/>
+    <menuitem id="menu_rezervace_faq" name="Časté dotazy" parent="menu_rezervace_root"
+              action="action_faq" sequence="20"/>
+
+    <!-- ============ NABÍDKA ============ -->
+    <!-- Kazda stranka ma vlastni aplikaci a v ni jen to, co se te stranky tyka.
+         Drive bylo vsechno pod jednou polozkou a klinika hledala nastaveni
+         rezervace pod domovskou strankou. -->
+
+    <menuitem id="menu_web_root" name="Hlavní stránka" sequence="48"
+              groups="elite_vet_calendar.group_calendar_manager"/>
+    <menuitem id="menu_web_section" name="Bloky stránky" parent="menu_web_root"
+              action="action_section" sequence="10"/>
+    <menuitem id="menu_web_service" name="Služby" parent="menu_web_root"
+              action="action_service" sequence="20"/>
+    <menuitem id="menu_web_species" name="Koho přijímáme" parent="menu_web_root"
+              action="action_species" sequence="30"/>
+    <menuitem id="menu_web_gallery" name="Galerie kliniky" parent="menu_web_root"
+              action="action_gallery" sequence="40"/>
+    <menuitem id="menu_web_hours" name="Ordinační hodiny" parent="menu_web_root"
+              action="action_hours" sequence="50"/>
+    <menuitem id="menu_web_contact" name="Kontaktní karty" parent="menu_web_root"
+              action="action_contact" sequence="60"/>
+
+    <!-- Cenik ma vlastni stranku, takze i vlastni aplikaci. -->
+    <menuitem id="menu_price_root" name="Ceník" sequence="52"
+              groups="elite_vet_calendar.group_calendar_manager"/>
+    <menuitem id="menu_price_item" name="Úkony a ceny" parent="menu_price_root"
+              action="action_price_item" sequence="10"/>
+    <menuitem id="menu_price_category" name="Skupiny" parent="menu_price_root"
+              action="action_price_category" sequence="20"/>
+
+    <!-- Udaje spolecne vsem strankam (telefony, adresa, pohotovost) maji vlastni
+         aplikaci — nepatri jedne strance, propisuji se do vsech. -->
+    <menuitem id="menu_nastaveni_root" name="Nastavení kontaktu" sequence="55"
+              groups="elite_vet_calendar.group_calendar_manager"/>
+    <menuitem id="menu_nastaveni_web" name="Telefony, adresa, sítě, pohotovost" parent="menu_nastaveni_root"
+              action="action_setting_otevrit" sequence="10"/>
+
+</odoo>

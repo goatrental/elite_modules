@@ -1,0 +1,385 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* elite_vet_web
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid ". Book online or by phone at the reception."
+msgstr ". Termine online oder telefonisch an der Rezeption."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "24/7 emergency line"
+msgstr "24/7-Notfalllinie"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "24/7 emergency line — coming soon"
+msgstr "Notfallnummer 24/7 — demnächst"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "<span class=\"ev-flyer2-open\">Open</span>"
+msgstr "<span class=\"ev-flyer2-open\">Geöffnet</span>"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "About the clinic"
+msgstr "Über die Klinik"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_tym
+msgid "Behind Elite Vet is a team of experienced veterinarians and specialists. Get to know the people who are opening our clinic in Karlovy Vary."
+msgstr "Hinter Elite Vet steht ein Team erfahrener Tierärzte und Spezialisten. Lernen Sie die Menschen kennen, die unsere Klinik in Karlovy Vary eröffnen."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_objednat
+msgid "Book an appointment"
+msgstr "Termin vereinbaren"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Book an appointment | Elite Vet Karlovy Vary"
+msgstr "Termin buchen | Elite Vet Karlovy Vary"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "Book by phone or email."
+msgstr "Vereinbaren Sie einen Termin telefonisch oder per E-Mail."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Book online at the Elite Vet veterinary clinic in Karlovy Vary. Choose a free appointment with our doctors, or call the reception. Answers to the most common questions before your visit."
+msgstr "Buchen Sie online in der Tierklinik Elite Vet in Karlovy Vary. Wählen Sie einen freien Termin bei unseren Ärzten oder rufen Sie die Rezeption an. Antworten auf die häufigsten Fragen vor Ihrem Besuch."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Book your appointment"
+msgstr "Vereinbaren Sie einen Termin"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "Call SOON"
+msgstr "Anrufen demnächst"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Call the reception<br/>"
+msgstr "Rezeption anrufen<br/>"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Complex care"
+msgstr "Komplexe Versorgung"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_sluzby
+msgid "Comprehensive care for your pets"
+msgstr "Umfassende Pflege für Ihre Haustiere"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Contact<br/>"
+msgstr "Kontakt<br/>"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Created"
+msgstr "Erstellt von"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "Dogs and cat"
+msgstr "Hunde und Katze"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_sluzby
+msgid "Dogs, cats and small mammals — comprehensive veterinary care in one place, with technology at a very high level. Our goal is to provide the widest possible range of care under one roof."
+msgstr "Hunde, Katzen und Kleinsäuger — umfassende tierärztliche Versorgung an einem Ort, mit Technik auf sehr hohem Niveau. Unser Ziel ist es, ein möglichst breites Leistungsspektrum unter einem Dach anzubieten."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Elite Vet booking system"
+msgstr "Reservierungssystem Elite Vet"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "Elite Vet veterinary clinic, Karlovy Vary — modern care for dogs, cats and small mammals: prevention, surgery, internal medicine, diagnostics, dentistry and ophthalmology. Extended opening hours including weekends."
+msgstr "Tierklinik Elite Vet in Karlovy Vary — moderne Versorgung für Hunde, Katzen, Kleinsäuger: Chirurgie, innere Medizin, Diagnostik, Zahnheilkunde, Ophthalmologie."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "Elite Veterinary Clinic"
+msgstr "Elite Tierklinik"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "Every day!"
+msgstr "Jeden Tag!"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_tym
+msgid "Expert team for the health of your pets"
+msgstr "Expertenteam für die Gesundheit Ihrer Lieblinge"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Frequently Asked Questions"
+msgstr "Häufig gestellte Fragen"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Gentle handling"
+msgstr "Schonender Umgang"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "Got it"
+msgstr "Verstanden"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "If something happens to your pet, call us any time. Our emergency line is here round the clock for acute cases."
+msgstr "Wenn Ihrem Liebling etwas passiert, rufen Sie jederzeit an. Unsere Notfallnummer ist rund um die Uhr für akute Fälle da."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "If something happens to your pet, you'll always find our emergency line right here. We'll soon launch round-the-clock 24/7 availability for acute cases."
+msgstr "Falls mit Ihrem Liebling etwas passiert, finden Sie unsere Notfalllinie immer genau hier. Bald starten wir die durchgehende 24/7-Erreichbarkeit für akute Fälle."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Individual approach"
+msgstr "Individueller Ansatz"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "Language selection"
+msgstr "Sprachauswahl"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_tym
+msgid "Meet our team<br/>"
+msgstr "Lernen Sie unser Team kennen<br/>"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Menu"
+msgstr "Menü"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Modern equipment"
+msgstr "Moderne Ausstattung"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Next photos"
+msgstr "Weitere Fotos"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_tym
+msgid "OUR TEAM"
+msgstr "UNSER TEAM"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "Open in maps"
+msgstr "In Karten öffnen"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "Opening hours"
+msgstr "Öffnungszeiten"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "Opening soon"
+msgstr "Wir eröffnen bald"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_sluzby
+msgid "Our services"
+msgstr "Unsere Leistungen"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "Overview of the most common procedures. Prices are indicative — we will always inform you of the final amount in advance, before the treatment."
+msgstr "Überblick über die häufigsten Eingriffe. Die Preise sind Richtwerte — den endgültigen Betrag nennen wir Ihnen immer vorab, noch vor der Behandlung."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "PRICE LIST"
+msgstr "PREISLISTE"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "Please select your language"
+msgstr "Bitte wählen Sie Ihre Sprache"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Previous photos"
+msgstr "Vorherige Fotos"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "Price list of the Elite Vet veterinary clinic in Karlovy Vary — vaccination of dogs, cats and rabbits, clinical examination, nail trimming and expression of anal glands. We always tell you the final price before the treatment."
+msgstr "Preisliste der Tierklinik Elite Vet Karlovy Vary — Impfung von Hunden, Katzen und Kaninchen, klinische Untersuchung, Krallenschneiden und Ausdrücken der Analdrüsen. Den Endpreis nennen wir immer vor der Behandlung."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "Price list of treatments"
+msgstr "Preisliste der Behandlungen"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "Price list | Elite Vet Karlovy Vary"
+msgstr "Preisliste | Elite Vet Karlovy Vary"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "RESERVATION SYSTEM"
+msgstr "RESERVIERUNGSSYSTEM"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Reception of the Elite Vet veterinary clinic in Karlovy Vary"
+msgstr "Rezeption der Tierklinik Elite Vet in Karlovy Vary"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "Select a free appointment with our doctors online, whenever it suits you. If you are unsure, call the reception and we will book you in ourselves."
+msgstr "Wählen Sie online einen freien Termin bei unseren Ärzten, wann immer es Ihnen passt. Wenn Sie sich unsicher sind, rufen Sie an der Rezeption an und wir buchen Sie selbst."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "Swipe sideways to browse the photos"
+msgstr "Fotos zum Blättern zur Seite wischen"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "The clinic is equipped with modern diagnostic and treatment technology and from the outset offers extended opening hours including weekends. We will gradually extend our operation further and in the near future also plan 24/7 availability for acute cases."
+msgstr "Die Klinik ist mit moderner Diagnose- und Behandlungstechnik ausgestattet und bietet von Anfang an erweiterte Öffnungszeiten inklusive Wochenenden. Den Betrieb werden wir schrittweise weiter ausbauen und planen in naher Zukunft auch eine 24/7-Erreichbarkeit für akute Fälle."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "The stated prices include basic treatment and commonly used materials. The final price may vary depending on the vaccine used, medications, additional materials, or necessary procedures."
+msgstr "In den genannten Preisen sind die Grundbehandlung und üblicherweise verwendetes Material enthalten. Der Endpreis kann sich je nach verwendetem Impfstoff, Medikamenten, weiterem Material oder notwendigen Eingriffen unterscheiden."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "To ask about the price"
+msgstr "Nach dem Preis fragen"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "To make an appointment"
+msgstr "Termin vereinbaren"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "Veterinary clinic Karlovy Vary — Elite Vet"
+msgstr "Tierklinik Karlovy Vary — Elite Vet"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "Visit us"
+msgstr "Besuchen Sie uns"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "We are here for you every day"
+msgstr "Wir sind jeden Tag für Sie da"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "We are in full operation —"
+msgstr "Wir sind im vollen Betrieb —"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "We have built a modern clinic for <span class=\"ev-accent-text\">your pets</span>"
+msgstr "Wir haben eine moderne Klinik für <span class=\"ev-accent-text\">Ihre Lieblinge</span> gebaut"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_o_klinice
+msgid "We have built a modern veterinary clinic in Karlovy Vary for you — a long-term project with the goal of offering comprehensive veterinary care in the region, all in one place."
+msgstr "Wir haben für Sie eine moderne Tierklinik in Karlovy Vary gebaut — ein langfristiges Projekt mit dem Ziel, in der Region umfassende tierärztliche Versorgung an einem Ort anzubieten."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "We look forward to seeing you!"
+msgstr "Wir freuen uns auf Sie!"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "We plan to extend our opening hours further in the near future. For acute cases outside opening hours we are available on <span class=\"ev-hours-emergency\">the 24/7 emergency line</span>."
+msgstr "In nächster Zeit planen wir, die Öffnungszeiten weiter auszubauen. Für akute Fälle außerhalb der Sprechzeiten sind wir für Sie unter <span class=\"ev-hours-emergency\">der Notfallnummer 24/7</span> erreichbar."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_kontakt
+msgid "We plan to extend our opening hours further in the near future. We will also soon launch <span class=\"ev-hours-emergency\">a 24/7 emergency line</span> for acute cases — we will publish the number as soon as it is ready."
+msgstr "In naher Zukunft planen wir eine weitere Erweiterung der Öffnungszeiten. Außerdem starten wir bald <span class=\"ev-hours-emergency\">eine Notfalllinie mit 24/7-Erreichbarkeit</span> für akute Fälle — die Nummer veröffentlichen wir, sobald sie bereit ist."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "We will be happy to provide you with additional prices before the treatment or we can provide them to you by phone or email."
+msgstr "Weitere Preise nennen wir Ihnen gerne vor der Behandlung oder teilen sie Ihnen telefonisch bzw. per E-Mail mit."
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+msgid "Welcome to Elite Vet"
+msgstr "Willkommen bei Elite Vet"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "What do you ask most often"
+msgstr "Worüber fragen Sie am häufigsten?"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "Write an email"
+msgstr "E-Mail schreiben"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.sekce_letak
+msgid "Your pets in the best hands!"
+msgstr "Ihre Lieblinge in den besten Händen!"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+msgid "from"
+msgstr "ab"
+
+#. module: elite_vet_web
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.cenik
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.homepage
+#: model_terms:ir.ui.view,arch_db:elite_vet_web.rezervace
+msgid "· runs on"
+msgstr "· läuft auf"

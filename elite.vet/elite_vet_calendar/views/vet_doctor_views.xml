@@ -6,6 +6,8 @@
         <field name="arch" type="xml">
             <list string="Lékařky" editable="bottom">
                 <field name="name" string="Jméno"/>
+                <field name="member_id" string="Karta v týmu"/>
+                <field name="specialization_ids" widget="many2many_tags" string="Specializace"/>
             </list>
         </field>
     </record>
@@ -21,7 +23,13 @@
                         <h1><field name="name" placeholder="např. MVDr. Kateřina Kadavá"/></h1>
                     </div>
                     <group>
-                        <field name="active" string="Aktivní"/>
+                        <group>
+                            <field name="member_id"/>
+                            <field name="specialization_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="active" string="Aktivní"/>
+                        </group>
                     </group>
                     <div class="alert alert-info" role="status">
                         Jméno se takhle přesně objeví na webu v buňce rozpisu.

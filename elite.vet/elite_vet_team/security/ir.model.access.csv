@@ -11,3 +11,9 @@ access_team_fact_portal,elite.vet.team.fact.portal,model_elite_vet_team_fact,bas
 access_team_fact_label_manager,elite.vet.team.fact.label.manager,model_elite_vet_team_fact_label,elite_vet_team.group_team_manager,1,1,1,1
 access_team_fact_label_public,elite.vet.team.fact.label.public,model_elite_vet_team_fact_label,base.group_public,1,0,0,0
 access_team_fact_label_portal,elite.vet.team.fact.label.portal,model_elite_vet_team_fact_label,base.group_portal,1,0,0,0
+access_team_spec_manager,elite.vet.team.specialization.manager,model_elite_vet_team_specialization,elite_vet_team.group_team_manager,1,1,1,1
+access_team_spec_public,elite.vet.team.specialization.public,model_elite_vet_team_specialization,base.group_public,1,0,0,0
+access_team_spec_portal,elite.vet.team.specialization.portal,model_elite_vet_team_specialization,base.group_portal,1,0,0,0
+access_team_icon_manager,elite.vet.team.icon.manager,model_elite_vet_team_icon,elite_vet_team.group_team_manager,1,1,1,1
+access_team_icon_public,elite.vet.team.icon.public,model_elite_vet_team_icon,base.group_public,1,0,0,0
+access_team_icon_portal,elite.vet.team.icon.portal,model_elite_vet_team_icon,base.group_portal,1,0,0,0

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Specializace, ktere si klinika vyzadala. Zaklada se jen pri instalaci
+         (noupdate), aby upgrade modulu neprepsal to, co si klinika mezitim
+         prejmenovala, pridala nebo smazala.
+
+         Dalsi si klinika pridava sama v Odoo: Nas tym -> Specializace. Ikon je
+         ve vyberu 25, takze na vetsinu oboru uz obrazek existuje.
+
+         Nazvy jsou ANGLICKY: to je zdrojovy jazyk, cestina a dalsi jazyky jsou
+         preklady v i18n/*.po. Kdyby tu byla cestina, anglicky preklad by prepsal
+         zdroj a cestina by zdedila anglictinu. -->
+    <data noupdate="1">
+        <record id="spec_stomatologie" model="elite.vet.team.specialization">
+            <field name="name">Dentistry</field>
+            <field name="icon_id" ref="icon_dentistry"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="spec_oftalmologie" model="elite.vet.team.specialization">
+            <field name="name">Ophthalmology</field>
+            <field name="icon_id" ref="icon_eye"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="spec_chirurgie" model="elite.vet.team.specialization">
+            <field name="name">Surgery</field>
+            <field name="icon_id" ref="icon_gloves"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="spec_sonografie" model="elite.vet.team.specialization">
+            <field name="name">Ultrasonography</field>
+            <field name="icon_id" ref="icon_ultrasound"/>
+            <field name="sequence">40</field>
+        </record>
+        <record id="spec_drobni_savci" model="elite.vet.team.specialization">
+            <field name="name">Small mammals</field>
+            <field name="icon_id" ref="icon_small_mammals"/>
+            <field name="sequence">50</field>
+        </record>
+    </data>
+</odoo>

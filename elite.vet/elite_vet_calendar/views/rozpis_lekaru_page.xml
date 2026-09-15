@@ -12,10 +12,12 @@
     -->
     <template id="rozpis_lekaru" name="Rozpis lékařů">
     <t t-call="website.layout">
+            <t t-set="ev_web" t-value="request.env['elite.vet.setting'].sudo().nastaveni() if 'elite.vet.setting' in request.env else None"/>
+            <t t-set="ev_hodiny" t-value="request.env['elite.vet.opening.hours'].sudo().search([]) if 'elite.vet.opening.hours' in request.env else []"/>
         <t t-set="no_header" t-value="true"/>
         <t t-set="no_footer" t-value="true"/>
-        <t t-set="additional_title">Rozpis služeb | Elite Vet Karlovy Vary</t>
-        <t t-set="meta_description">Rozpis ordinačních služeb veterinární kliniky Elite Vet Karlovy Vary — měsíční kalendář s ranní a odpolední službou a s víkendovými službami našich lékařek.</t>
+        <t t-set="additional_title">Duty schedule | Elite Vet Karlovy Vary</t>
+        <t t-set="meta_description">Duty schedule of the Elite Vet veterinary clinic in Karlovy Vary — a monthly calendar with morning and afternoon shifts and the weekend shifts of our doctors.</t>
         <meta name="theme-color" content="#1a2744"/>
 
         <style>
@@ -109,7 +111,10 @@
             a.ev-call { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background-color .2s, color .2s, border-color .2s; }
             a.ev-call--topbar { background: var(--ev-accent); color: #fff !important; padding: 9px 18px; border-radius: 9999px; font-size: 14px; }
             a.ev-call--topbar:hover { background: var(--ev-accent-dark); color: #fff !important; }
+            /* stejny vzhled i kdyz je to popisek radia, ne odkaz */
+            label.ev-call--outro,
             a.ev-call--outro { background: var(--ev-accent); color: #fff !important; padding: 14px 26px; border-radius: 9999px; font-size: 15px; }
+            label.ev-call--outro:hover,
             a.ev-call--outro:hover { background: var(--ev-accent-dark); color: #fff !important; }
 
             /* ============ ZÁKLAD ============ */
@@ -145,6 +150,54 @@
             /* barva puntiku prichazi z typu smeny jako inline styl */
             .rs-leg-dot { width: 12px; height: 12px; border-radius: 9999px; flex-shrink: 0; background: var(--ev-border); }
             .rs-leg span.rs-leg-time { color: var(--ev-text-secondary); font-weight: 500; }
+            /* ============ TLACITKO NA REZERVACI ============ */
+            /* Tlacitko je obycejna kotva dolu na rezervaci. Ze se WinVet jeste
+               nacita, rekne kolecko primo v ramecku — clovek to uvidi na tom
+               miste, kam ho tlacitko posunulo, a nemusi to hlasit tlacitko. */
+            .rs-cta-sec { background: var(--ev-muted); padding: 44px 0 52px; text-align: center; }
+            .rs-cta { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 260px; padding: 15px 30px; border-radius: 9999px; background: var(--ev-accent); color: #fff !important; font-size: 15.5px; font-weight: 700; text-decoration: none; box-shadow: 0 12px 26px -12px rgba(31,90,84,.8); transition: background-color .2s, transform .1s, box-shadow .25s; }
+            .rs-cta:hover { background: var(--ev-accent-dark); color: #fff !important; }
+            .rs-cta:active { transform: scale(.985); }
+            .rs-cta svg { flex-shrink: 0; }
+
+            @keyframes rsCtaToci { to { transform: rotate(360deg); } }
+            @media (max-width: 768px) {
+                .rs-cta-sec { padding: 32px 0 40px; }
+                .rs-cta { width: 100%; max-width: 340px; font-size: 15px; }
+            }
+
+            /* ====== druha stranka: rezervacni system ====== */
+            .rs-rez { background: var(--ev-muted); padding: 76px 0 90px; scroll-margin-top: 76px; }
+            .rs-rez-head { text-align: center; max-width: 620px; margin: 0 auto 34px; }
+            .vet-page .rs-rez-head h2 { font-size: clamp(24px, 3.2vw, 32px); line-height: 1.18; margin-top: 18px; }
+            .rs-rez-head p { margin-top: 12px; color: var(--ev-text-secondary); font-size: 16.5px; line-height: 1.6; }
+            .rs-rez-frame { max-width: 520px; margin: 0 auto; background: #fff; border: 1px solid var(--ev-border); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 24px 60px -28px rgba(17,27,48,.45); }
+            /* Kolecko lezi POD iframem, ne pres nej. Dokud se WinVet nenacte,
+               je iframe pruhledny a kolecko je skrz nej videt; jakmile se
+               vykresli, prekryje ho vlastnim pozadim a kolecko zmizi samo.
+               Zadny skript, zadne hlidani udalosti.
+               Nahore, ne uprostred: ramecek je pres 800 px vysoky, takze
+               vycentrovane kolecko by skoncilo hluboko pod ohybem. */
+            .rs-rez-nacitani { position: absolute; inset: 0; z-index: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 90px; gap: 22px; color: var(--ev-primary); font-size: 19px; font-weight: 700; letter-spacing: .01em; text-align: center; }
+            .rs-rez-spinner { width: 58px; height: 58px; border-radius: 50%; border: 5px solid var(--ev-border); border-top-color: var(--ev-accent); animation: rsCtaToci .85s linear infinite; }
+            .rs-rez-nacitani-podtext { font-size: 14px; font-weight: 500; color: var(--ev-text-secondary); margin-top: -10px; }
+            @media (prefers-reduced-motion: reduce) { .rs-rez-spinner { animation: none; } }
+            .rs-rez-frame iframe { display: block; width: 100%; height: 820px; border: 0; position: relative; z-index: 1; background: transparent; }
+            .rs-rez-back { margin-top: 34px; display: flex; justify-content: center; }
+            @media (max-width: 768px) {
+                .rs-rez { padding: 56px 0 70px; }
+                .rs-rez-nacitani { padding-top: 64px; gap: 18px; font-size: 17px; }
+                .rs-rez-spinner { width: 50px; height: 50px; border-width: 4px; }
+                .rs-rez-nacitani-podtext { font-size: 13px; }
+                .rs-rez-frame { border-radius: 16px; }
+                .rs-rez-frame iframe { height: 760px; }
+                .rs-rez-back { margin-top: 26px; }
+            }
+
+            /* druha radka vysvetlivek — co znamenaji ikony u jmen */
+            .rs-legend-specs { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--ev-border); }
+            .rs-legend-specs .rs-leg { font-size: 13.5px; font-weight: 600; color: var(--ev-text-secondary); gap: 8px; }
+            .rs-leg .ev-spec-ico { flex-shrink: 0; display: block; object-fit: contain; }
 
             /* ============ MĚSÍČNÍ KALENDÁŘ ============ */
             .rs-sec { padding: 50px 0 30px; }
@@ -185,8 +238,17 @@
             .rs-cell-event { font-size: 12px; font-weight: 700; color: var(--ev-accent-dark); line-height: 1.4; background: var(--ev-accent-light); border-radius: 9px; padding: 7px 9px; }
 
             /* jméno lékařky + bublina s hodinami (pure CSS, bez JS) */
-            .rs-doc { position: relative; display: inline-flex; align-items: flex-start; flex-wrap: wrap; gap: 4px 8px; font-size: 12.5px; font-weight: 600; line-height: 1.35; color: var(--ev-primary); cursor: default; }
-            .rs-dot { width: 7px; height: 7px; margin-top: 5px; border-radius: 9999px; flex-shrink: 0; background: var(--ev-border); }
+            /* Bezny textovy tok, ne flex: ikony stoji pred jmenem na stejnem radku
+               a dlouhe jmeno se lame az za nimi, misto aby skocilo cele pod ne. */
+            .rs-doc { position: relative; display: block; font-size: 12.5px; font-weight: 600; line-height: 1.45; color: var(--ev-primary); cursor: default; }
+            .rs-dot { display: inline-block; width: 7px; height: 7px; border-radius: 9999px; background: var(--ev-border); vertical-align: 1px; margin-right: 4px; }
+            /* Ikony specializaci u jmena — bez popisku, aby se vesly do bunky kalendare.
+               Nazev specializace je v title, takze najetim mysi se da precist. */
+            /* Ikony stoji pred jmenem a drzi se ho: nezalamuji se od nej pryc,
+               aby smajlik nikdy nezustal sam na radku. */
+            .rs-specs { display: inline; white-space: nowrap; }
+            .rs-spec { display: inline-block; vertical-align: -4px; margin-right: 2px; }
+            .rs-spec .ev-spec-ico { display: block; object-fit: contain; }
 
             .rs-tip { position: absolute; left: 0; bottom: calc(100% + 9px); transform: translateY(5px); background: var(--ev-primary); color: #fff; padding: 8px 14px; border-radius: 11px; font-size: 12.5px; font-weight: 700; white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; z-index: 40; box-shadow: 0 16px 34px -14px rgba(9,15,28,.75); transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
             .rs-tip::after { content: ""; position: absolute; top: 100%; left: 18px; border: 6px solid transparent; border-top-color: var(--ev-primary); }
@@ -199,7 +261,7 @@
 
             /* dotykové displeje neumí hover — hodiny ukážeme rovnou pod jménem */
             @media (hover: none) {
-                .rs-tip { position: static; opacity: 1; visibility: visible; transform: none; background: transparent; color: var(--ev-text-secondary); padding: 0; font-size: 12px; font-weight: 600; white-space: normal; box-shadow: none; }
+                .rs-tip { display: block; margin-top: 1px; position: static; opacity: 1; visibility: visible; transform: none; background: transparent; color: var(--ev-text-secondary); padding: 0; font-size: 12px; font-weight: 600; white-space: normal; box-shadow: none; }
                 .rs-tip::after { display: none; }
             }
 
@@ -248,7 +310,7 @@
                 .rs-cell { min-height: 96px; padding: 8px 10px 10px; }
                 .vet-page .rs-scroll-hint { display: flex; }
                 /* v posouvací oblasti by se bublina ořízla — hodiny proto ukážeme rovnou pod jménem */
-                .rs-tip { position: static; opacity: 1; visibility: visible; transform: none; background: transparent; color: var(--ev-text-secondary); padding: 0; font-size: 11.5px; font-weight: 600; white-space: normal; box-shadow: none; }
+                .rs-tip { display: block; margin-top: 1px; position: static; opacity: 1; visibility: visible; transform: none; background: transparent; color: var(--ev-text-secondary); padding: 0; font-size: 11.5px; font-weight: 600; white-space: normal; box-shadow: none; }
                 .rs-tip::after { display: none; }
             }
             @media (max-width: 768px) {
@@ -350,17 +412,17 @@
                                 </svg>
                             </summary>
                             <div class="ev-lang-panel">
-                                <a t-attf-href="/website/lang/cs?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
-                                <a t-attf-href="/website/lang/de?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
-                                <a t-attf-href="/website/lang/en?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
-                                <a t-attf-href="/website/lang/ru?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
+                                <a t-attf-href="/website/lang/cs?r={{ url_for(request.httprequest.path, lang_code='cs_CZ') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
+                                <a t-attf-href="/website/lang/de?r={{ url_for(request.httprequest.path, lang_code='de_DE') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
+                                <a t-attf-href="/website/lang/en?r={{ url_for(request.httprequest.path, lang_code='en_US') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
+                                <a t-attf-href="/website/lang/ru?r={{ url_for(request.httprequest.path, lang_code='ru_RU') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
                             </div>
                         </details>
-                        <a href="tel:+420722599699" class="ev-call ev-call--topbar">
+                        <a t-attf-href="tel:#{ev_web.phone or '+420722599699'}" class="ev-call ev-call--topbar">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                             </svg>
-                            Kontakt
+                            Contact
                         </a>
                         <details class="ev-burger">
                             <summary aria-label="Menu">
@@ -396,28 +458,25 @@
                             <line x1="8" y1="2" x2="8" y2="6"/>
                             <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
-                        Rozpis služeb
+                        Duty schedule
                     </div>
 
-                    <h1>Kdo u nás který den slouží</h1>
+                    <h1>Who is on duty on which day</h1>
 
-                    <p class="rs-lead">Ve všední dny se u nás střídá ranní a odpolední služba, o víkendu slouží jedna lékařka po celou provozní dobu. Najeďte na jméno a ukáže se vám, v jakých hodinách ten den ordinuje.</p>
+                    <p class="rs-lead">On weekdays we alternate morning and afternoon shifts; at the weekend one doctor covers the whole opening time. Hover over a name to see the hours she is seeing patients that day.</p>
 
                     <div class="rs-open">
-                        <div class="rs-open-chip">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                            Pondělí – Pátek · 8:00–20:00
-                        </div>
-                        <div class="rs-open-chip">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                            Sobota – Neděle · 10:00–18:00
-                        </div>
+                        <!-- Oteviraci doba z adminu (Web kliniky -> Ordinacni hodiny),
+                             takze se zmenou na jednom miste prepise i tady. -->
+                        <t t-foreach="ev_hodiny" t-as="ev_h">
+                            <div class="rs-open-chip">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                <span t-field="ev_h.name"></span> · <span t-field="ev_h.time_text"></span>
+                            </div>
+                        </t>
                     </div>
                 </div>
             </section>
@@ -433,7 +492,26 @@
                         <t t-foreach="ev_types" t-as="ev_t">
                             <div class="rs-leg">
                                 <span class="rs-leg-dot" t-attf-style="background: #{ev_t.color_hex};"></span>
-                                <t t-esc="ev_t.name"/> <span class="rs-leg-time" t-esc="ev_t.time_display"></span>
+                                <!-- t-field, ne t-esc: t-esc nevytvori branding a text pak
+                                     v prekladovem rezimu nejde kliknout a prelozit -->
+                                <span t-field="ev_t.name"></span> <span class="rs-leg-time" t-esc="ev_t.time_display"></span>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Vysvetlivky ikon u jmen. Stejny princip jako u typu smen nad tim:
+                         vypisuje se presne to, co je v adminu (Nas tym -> Specializace).
+                         Co tam neni, neni ani tady. Kdyz nejsou zadne, pruh se nevykresli. -->
+                    <t t-set="ev_has_s" t-value="'elite.vet.team.specialization' in request.env"/>
+                    <t t-set="ev_leg_specs" t-value="request.env['elite.vet.team.specialization'].sudo().search([]) if ev_has_s else []"/>
+                    <div t-if="ev_leg_specs" class="rs-legend rs-legend-specs">
+                        <t t-foreach="ev_leg_specs" t-as="ev_ls">
+                            <div class="rs-leg">
+                                <t t-call="elite_vet_team.specialization_icon">
+                                    <t t-set="ev_icon_rec" t-value="ev_ls.icon_id"/>
+                                    <t t-set="ev_size" t-value="20"/>
+                                </t>
+                                <span t-field="ev_ls.name"></span>
                             </div>
                         </t>
                     </div>
@@ -456,7 +534,16 @@
                         Ukládá se datum (ne čas), takže tu odpadá přepočet časových zón.
                         Čísla dnů, prázdné buňky i názvy měsíců se počítají samy.
                     -->
-                    <t t-set="ev_months" t-value="['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec']"/>
+                    <!-- Nazvy mesicu nejsou text stranky, ale seznam ve vyrazu QWeb — Odoo je
+                         tedy k prekladu vubec nenabidne a zustaly by ve vsech jazycich stejne.
+                         Proto jsou napevno po jazycich, stejne jako hlaseni o nacitani nize. -->
+                    <t t-set="ev_months_all" t-value="{
+                        'cs_CZ': ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
+                        'de_DE': ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                        'en_US': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                        'ru_RU': ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                    }"/>
+                    <t t-set="ev_months" t-value="ev_months_all.get(request.env.lang, ev_months_all['cs_CZ'])"/>
                     <t t-set="ev_cellno" t-value="[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]"/>
                     <t t-set="ev_base" t-value="datetime.date.today().replace(day=1)"/>
                     <!-- pojistka: kdyby modul nebyl nainstalovaný, stránka se vykreslí prázdná místo chyby 500 -->
@@ -493,18 +580,18 @@
                                     <line x1="5" y1="12" x2="19" y2="12"/>
                                     <polyline points="12 5 19 12 12 19"/>
                                 </svg>
-                                Kalendář posuňte prstem do strany
+                                Swipe sideways to browse the calendar
                             </p>
 
                             <div class="rs-cal">
                                 <div class="rs-cal-head">
-                                    <div>Pondělí</div>
-                                    <div>Úterý</div>
-                                    <div>Středa</div>
-                                    <div>Čtvrtek</div>
-                                    <div>Pátek</div>
-                                    <div class="rs-hd-we">Sobota</div>
-                                    <div class="rs-hd-we">Neděle</div>
+                                    <div>Monday</div>
+                                    <div>Tuesday</div>
+                                    <div>Wednesday</div>
+                                    <div>Thursday</div>
+                                    <div>Friday</div>
+                                    <div class="rs-hd-we">Saturday</div>
+                                    <div class="rs-hd-we">Sunday</div>
                                 </div>
 
                                 <div class="rs-cal-grid">
@@ -516,16 +603,19 @@
                                             <div t-attf-class="rs-cell#{' rs-cell--we' if ev_we else ''}#{'' if ev_in else ' rs-cell--empty'}">
                                                 <t t-if="ev_in">
                                                     <div class="rs-cell-top"><span t-attf-class="rs-num#{' rs-num--today' if ev_d == datetime.date.today() else ''}" t-esc="ev_d.day"/></div>
-                                                    <t t-foreach="ev_recs" t-as="ev_r">
-                                                        <t t-if="ev_r.date == ev_d">
-                                                            <t t-if="ev_r.type_id.is_note">
-                                                                <div class="rs-cell-note" t-attf-style="color: #{ev_r.type_id.color_hex};"><t t-esc="ev_r.note or ev_r.type_id.name"/></div>
-                                                            </t>
-                                                            <t t-else="">
-                                                                <div class="rs-slot">
-                                                                    <span class="rs-doc"><span class="rs-dot" t-attf-style="background: #{ev_r.type_id.color_hex};"></span><t t-esc="ev_r.doctor_id.name"/><span class="rs-tip"><t t-esc="ev_r.type_id.name"/> · <t t-esc="ev_r.type_id.time_display"/></span></span>
-                                                                </div>
-                                                            </t>
+                                                    <!-- Zaznamy dne seskupene podle smeny: jedna smena = jeden radek,
+                                                         jmena lekarek spojena plusem. Drive mel kazdy zaznam vlastni
+                                                         radek, takze u dvou lekarek stala smena v bunce dvakrat. -->
+                                                    <t t-set="ev_den" t-value="ev_recs.filtered(lambda z: z.date == ev_d)"/>
+                                                    <t t-foreach="ev_den.mapped('type_id')" t-as="ev_typ">
+                                                        <t t-set="ev_skupina" t-value="ev_den.filtered(lambda z: z.type_id == ev_typ)"/>
+                                                        <t t-if="ev_typ.is_note">
+                                                            <div class="rs-cell-note" t-attf-style="color: #{ev_typ.color_hex};"><span t-if="ev_skupina[0].note" t-field="ev_skupina[0].note"></span><span t-else="" t-field="ev_typ.name"></span></div>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <div class="rs-slot">
+                                                                <span class="rs-doc"><span class="rs-dot" t-attf-style="background: #{ev_typ.color_hex};"></span><t t-foreach="ev_skupina" t-as="ev_r"><t t-if="ev_r_index"> + </t><t t-if="ev_r.doctor_id.specialization_ids"><span class="rs-specs"><t t-foreach="ev_r.doctor_id.specialization_ids" t-as="ev_s"><span class="rs-spec" t-att-title="ev_s.name"><t t-call="elite_vet_team.specialization_icon"><t t-set="ev_icon_rec" t-value="ev_s.icon_id"/><t t-set="ev_size" t-value="18"/></t></span></t></span></t><t t-esc="ev_r.doctor_id.name"/></t><span class="rs-tip"><span t-field="ev_typ.name"></span> · <t t-esc="ev_typ.time_display"/></span></span>
+                                                            </div>
                                                         </t>
                                                     </t>
                                                 </t>
@@ -539,80 +629,57 @@
                 </div>
             </section>
 
-            <!-- =========================== LÉKAŘKY =========================== -->
-            <section class="rs-docs-sec o_colored_level">
+            <!-- =========================== OBJEDNÁNÍ =========================== -->
+            <section class="rs-cta-sec o_colored_level">
                 <div class="ev-container">
-                    <div class="rs-docs-head">
-                        <h2>Naše lékařky</h2>
-                        <p>Kdo se za jmény v rozpisu skrývá a čemu se odborně věnuje.</p>
-                    </div>
-                    <div class="rs-docs">
-                        <a href="/nas-tym" class="rs-doc-card">
-                            <div class="rs-doc-ava">DP</div>
-                            <div>
-                                <h3 class="rs-doc-name">MVDr. Dominika Pražáková</h3>
-                                <p class="rs-doc-spec">Garantka kliniky · chirurgie měkkých tkání a interní medicína</p>
-                            </div>
-                        </a>
-                        <a href="/nas-tym" class="rs-doc-card">
-                            <div class="rs-doc-ava">SM</div>
-                            <div>
-                                <h3 class="rs-doc-name">MVDr. Sandra Mrázová</h3>
-                                <p class="rs-doc-spec">Interní medicína, všeobecná a akutní chirurgie, péče o kritické pacienty</p>
-                            </div>
-                        </a>
-                        <a href="/nas-tym" class="rs-doc-card">
-                            <div class="rs-doc-ava">KK</div>
-                            <div>
-                                <h3 class="rs-doc-name">MVDr. Kateřina Kadavá</h3>
-                                <p class="rs-doc-spec">Interní medicína psů, koček a drobných savců, akutní stavy a oftalmologie</p>
-                            </div>
-                        </a>
-                        <a href="/nas-tym" class="rs-doc-card">
-                            <div class="rs-doc-ava">GC</div>
-                            <div>
-                                <h3 class="rs-doc-name">MVDr. Georgiana Chihaia</h3>
-                                <p class="rs-doc-spec">Pohotovostní a intenzivní péče, ultrasonografie a stomatologie</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- =========================== ZÁVĚR =========================== -->
-            <section class="rs-outro o_colored_level">
-                <div class="ev-container">
-                    <div class="rs-outro-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <a href="#rezervace" class="rs-cta">
+                        <svg class="rs-cta-ikona" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="4" width="18" height="18" rx="2"/>
                             <line x1="16" y1="2" x2="16" y2="6"/>
                             <line x1="8" y1="2" x2="8" y2="6"/>
                             <line x1="3" y1="10" x2="21" y2="10"/>
-                            <path d="M9 16l2 2 4-4"/>
                         </svg>
+                        <span class="rs-cta-text">Book online</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- =========================== REZERVAČNÍ SYSTÉM =========================== -->
+            <section class="rs-rez o_colored_level" id="rezervace">
+                <div class="ev-container">
+                    <div class="rs-rez-head">
+                        <div class="rs-outro-icon">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </div>
+                        <h2>Book an appointment</h2>
+                        <p>Choose the reason for your visit and a free appointment. You will receive a confirmation by email.</p>
                     </div>
-                    <h2>Objednejte se na konkrétní termín</h2>
-                    <p>Nejste si jistí, kdy k nám s mazlíčkem vyrazit? Zavolejte na recepci — najdeme termín, který vám sedne, a rovnou vás objednáme k lékařce, která bude ten den sloužit.</p>
-                    <div class="rs-outro-cta">
-                        <a href="tel:+420722599699" class="ev-call ev-call--outro">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                            +420 722 599 699
-                        </a>
-                        <a href="mailto:info@elite-vet.cz" class="rs-btn-ghost">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                            </svg>
-                            info@elite-vet.cz
-                        </a>
+                    <div class="rs-rez-frame">
+                        <!-- Zamerne BEZ loading="lazy". WinVet se nacita dlouho, takze ho
+                             chceme rozjet hned pri otevreni stranky — nez zakaznik doscrolluje
+                             nebo zmackne tlacitko, uz je rozjety.
+                             Texty jsou napevno pro kazdy jazyk, ne pres prekladovy rezim:
+                             tohle hlaseni lezi POD iframem, takze je v Odoo Translate
+                             neviditelne a nikdo by se na nej neproklikal. Kdyz prijde
+                             dalsi jazyk, staci sem dopsat radek. -->
+                        <div class="rs-rez-nacitani" aria-hidden="true">
+                            <span class="rs-rez-spinner"></span>
+                            <span t-out="ev_web.booking_loading_title or 'Načítáme rezervační systém…'"></span>
+                            <span class="rs-rez-nacitani-podtext" t-out="ev_web.booking_loading_note or ''"></span>
+                        </div>
+                        <iframe t-att-src="ev_web.booking_url or 'https://reservation.winvet.cz/booking/f5832eae07850edb2b5a1167843ef423'"
+                                title="Elite Vet booking system" scrolling="no" loading="eager"></iframe>
                     </div>
                 </div>
             </section>
 
             <!-- =========================== AUTORSKÝ KREDIT =========================== -->
-            <div class="ev-footer-credit">Vytvořil <a href="https://www.michalvarys.eu/chytil-jste-se-do-site" target="_blank" rel="noopener">Michal Varys</a> · běží na <a href="https://www.varyshop.cz/jak-vypada-nas-system" target="_blank" rel="noopener">Varyshop</a></div>
+            <div class="ev-footer-credit">Created <a href="https://www.michalvarys.eu/chytil-jste-se-do-site" target="_blank" rel="noopener">Michal Varys</a> · runs on <a href="https://www.varyshop.cz/jak-vypada-nas-system" target="_blank" rel="noopener">Varyshop</a></div>
 
         </div>
 
@@ -662,6 +729,8 @@
                     if (ticking === false) { ticking = true; window.requestAnimationFrame(navScroll); }
                 }, { passive: true });
             })();
+
+
         </script>
     </t>
     </template>

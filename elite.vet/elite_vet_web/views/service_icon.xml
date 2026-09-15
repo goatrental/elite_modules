@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Ikona sluzby. Bud vlastni obrazek z knihovny ikon, nebo jedna z carovych
+         ikon, ktere web pouzival od zacatku. Sablona je jedna pro mrizku na PC
+         i pro rozbalovaci seznam na mobilu, lisi se jen velikosti. -->
+    <template id="service_icon" name="Ikona služby">
+        <t t-set="ev_size" t-value="ev_size or 28"/>
+        <img t-if="ev_service.icon_id and ev_service.icon_id.image"
+             t-attf-src="/web/image/elite.vet.team.icon/#{ev_service.icon_id.id}/image/#{ev_size}x#{ev_size}"
+             t-att-width="ev_size" t-att-height="ev_size" alt="" loading="lazy" decoding="async"/>
+        <svg t-else="" t-att-width="ev_size" t-att-height="ev_size" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <t t-if="ev_service.icon_code == 'chirurgie'">
+                <circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/>
+            </t>
+            <t t-elif="ev_service.icon_code == 'interni'">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </t>
+            <t t-elif="ev_service.icon_code == 'diagnostika'">
+                <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </t>
+            <t t-elif="ev_service.icon_code == 'stomatologie'">
+                <path d="M12 2C9.5 2 7 3 6 5C5 7 4.5 9.5 5 12C5.5 14.5 6.5 17 8 19C9 20.5 10.5 22 12 22C13.5 22 15 20.5 16 19C17.5 17 18.5 14.5 19 12C19.5 9.5 19 7 18 5C17 3 14.5 2 12 2Z"/>
+            </t>
+            <t t-elif="ev_service.icon_code == 'oftalmologie'">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+            </t>
+            <t t-elif="ev_service.icon_code == 'dermatologie'">
+                <path d="M14 9V5a3 3 0 0 0-6 0v4"/><rect x="5" y="9" width="14" height="12" rx="2"/><circle cx="12" cy="15" r="1"/>
+            </t>
+            <t t-elif="ev_service.icon_code == 'ultrazvuk'">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </t>
+            <t t-else="">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </t>
+        </svg>
+    </template>
+
+</odoo>

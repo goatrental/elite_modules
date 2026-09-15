@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_team_icon_list" model="ir.ui.view">
+        <field name="name">elite.vet.team.icon.list</field>
+        <field name="model">elite.vet.team.icon</field>
+        <field name="arch" type="xml">
+            <list string="Ikony">
+                <field name="sequence" widget="handle"/>
+                <field name="image" widget="image" options="{'size': [32, 32]}" string=""/>
+                <field name="name"/>
+                <field name="pouziti"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_team_icon_form" model="ir.ui.view">
+        <field name="name">elite.vet.team.icon.form</field>
+        <field name="model">elite.vet.team.icon</field>
+        <field name="arch" type="xml">
+            <form string="Ikona">
+                <sheet>
+                    <widget name="web_ribbon" title="Archivováno" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Zub"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status">
+                        Název je jen pro vás, abyste ikonu našli v nabídce. Na webu
+                        se u obrázku ukazuje název specializace.
+                        <br/>
+                        Vlastní ikonu nahrajete kliknutím na obrázek — nejlépe
+                        čtvercové PNG s průhledným pozadím.
+                    </div>
+                    <group string="Kde všude se obrázek používá">
+                        <field name="pouziti" nolabel="1" readonly="1"
+                               placeholder="Zatím nikde — je volný k použití."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_team_icon_search" model="ir.ui.view">
+        <field name="name">elite.vet.team.icon.search</field>
+        <field name="model">elite.vet.team.icon</field>
+        <field name="arch" type="xml">
+            <search string="Ikony">
+                <field name="name"/>
+                <filter name="pouzite" string="Používané" domain="[('je_pouzita', '=', True)]"/>
+                <filter name="volne" string="Zatím nepoužité" domain="[('je_pouzita', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_team_icon" model="ir.actions.act_window">
+        <field name="name">Ikony</field>
+        <field name="res_model">elite.vet.team.icon</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_team_icon_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nahrajte první ikonu</p>
+            <p>
+                Ikony se přiřazují specializacím. Můžete si je přejmenovat,
+                změnit pořadí nebo nahrát vlastní obrázek.
+            </p>
+        </field>
+    </record>
+</odoo>

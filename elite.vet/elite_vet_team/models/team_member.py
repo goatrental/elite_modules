@@ -45,6 +45,28 @@ class VetTeamMember(models.Model):
              "garantka, Vedoucí lékařka, Novinka v týmu. Když ho necháte "
              "prázdný, na kartě nebude.",
     )
+    badge_icon_id = fields.Many2one(
+        comodel_name="elite.vet.team.icon",
+        string="Ikona štítku",
+        ondelete="set null",
+        help="Obrázek ve štítku, před textem. Když ho nevyberete, zůstane "
+             "tam fajfka jako doteď.",
+    )
+    badge_icon_image = fields.Image(
+        string="Náhled ikony štítku",
+        related="badge_icon_id.image",
+        readonly=True,
+    )
+
+    specialization_ids = fields.Many2many(
+        comodel_name="elite.vet.team.specialization",
+        relation="elite_vet_team_member_specialization_rel",
+        column1="member_id",
+        column2="specialization_id",
+        string="Specializace",
+        help="Na kartě se ukážou jako štítky s ikonou. V rozpisu služeb "
+             "se u jména objeví jen samotné ikony, bez popisků.",
+    )
     perex = fields.Text(
         string="Popis",
         translate=True,

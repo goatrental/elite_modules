@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vykresli ikonu. Pouziva to karta lekare na /nas-tym (stitek i specializace)
+         a rozpis sluzeb, aby vsude vypadaly stejne.
+
+         Obrazek se bere ze zaznamu ikony, ne ze souboru v modulu — klinika si
+         tedy muze nahrat vlastni a nikdo kvuli tomu nesaha do kodu. Odoo ho
+         pres /web/image/ samo zmensi na pozadovanou velikost a nacachuje.
+
+         Ocekava `ev_icon_rec` (zaznam elite.vet.team.icon) a volitelne `ev_size`.
+         Kdyz ikona neni vyplnena, nevykresli se nic. -->
+    <template id="specialization_icon" name="Ikona">
+        <t t-set="ev_size" t-value="ev_size or 18"/>
+        <img t-if="ev_icon_rec and ev_icon_rec.image"
+             t-attf-src="/web/image/elite.vet.team.icon/#{ev_icon_rec.id}/image/#{ev_size}x#{ev_size}"
+             t-att-width="ev_size" t-att-height="ev_size" alt=""
+             class="ev-spec-ico" loading="lazy" decoding="async"/>
+    </template>
+</odoo>

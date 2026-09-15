@@ -1,0 +1,354 @@
+{
+ "hodiny": [
+  {
+   "poradi": 10,
+   "dny": {
+    "en_US": "Monday – Friday",
+    "cs_CZ": "Pondělí – Pátek",
+    "de_DE": "Montag – Freitag",
+    "ru_RU": "Понедельник – Пятница"
+   },
+   "cas": {
+    "en_US": "8:00 – 20:00",
+    "cs_CZ": "8:00 – 20:00",
+    "de_DE": "8:00 – 20:00",
+    "ru_RU": "8:00 – 20:00"
+   }
+  },
+  {
+   "poradi": 20,
+   "dny": {
+    "en_US": "Saturday – Sunday",
+    "cs_CZ": "Sobota – Neděle",
+    "de_DE": "Samstag – Sonntage",
+    "ru_RU": "Суббота – Воскресенье"
+   },
+   "cas": {
+    "en_US": "10:00 – 18:00",
+    "cs_CZ": "10:00 – 18:00",
+    "de_DE": "10:00 – 18:00",
+    "ru_RU": "10:00 – 18:00"
+   }
+  }
+ ],
+ "kontakty": [
+  {
+   "poradi": 10,
+   "ikona": "adresa",
+   "odkaz": "https://maps.google.com/?q=Hybesova+167/18+Karlovy+Vary",
+   "nadpis": {
+    "en_US": "ADDRESS",
+    "cs_CZ": "Adresa",
+    "de_DE": "ADRESSE",
+    "ru_RU": "АДРЕС"
+   },
+   "hodnota": {
+    "en_US": "Hybešova 167/18, Rybáře",
+    "cs_CZ": "Hybešova 167/18, Rybáře",
+    "de_DE": "Hybešova 167/18, Rybáře",
+    "ru_RU": "Hybešova 167/18, Rybáře"
+   },
+   "hodnota2": {
+    "en_US": "360 05 Karlovy Vary",
+    "cs_CZ": "360 05 Karlovy Vary",
+    "de_DE": "360 05 Karlovy Vary",
+    "ru_RU": "360 05 Karlovy Vary"
+   },
+   "poznamka": {
+    "en_US": "",
+    "cs_CZ": "",
+    "de_DE": "",
+    "ru_RU": ""
+   }
+  },
+  {
+   "poradi": 20,
+   "ikona": "telefon",
+   "odkaz": "tel:+420722599699",
+   "nadpis": {
+    "en_US": "Phone – Reception",
+    "cs_CZ": "Telefon – Recepce",
+    "de_DE": "Telefon – Rezeption",
+    "ru_RU": "Телефон – Ресепшн"
+   },
+   "hodnota": {
+    "en_US": "+420 722 599 699",
+    "cs_CZ": "+420 722 599 699",
+    "de_DE": "+420 722 599 699",
+    "ru_RU": "+420 722 599 699"
+   },
+   "hodnota2": {
+    "en_US": "",
+    "cs_CZ": "",
+    "de_DE": "",
+    "ru_RU": ""
+   },
+   "poznamka": {
+    "en_US": "Ordering, information, and frequently asked questions",
+    "cs_CZ": "Objednávání, informace a běžné dotazy",
+    "de_DE": "Terminvereinbarung, Auskünfte und häufige Fragen",
+    "ru_RU": "Запись, информация и частые вопросы"
+   }
+  },
+  {
+   "poradi": 30,
+   "ikona": "email",
+   "odkaz": "mailto:info@elite-vet.cz",
+   "nadpis": {
+    "en_US": "Email",
+    "cs_CZ": "E-mail",
+    "de_DE": "E-Mail",
+    "ru_RU": "Эл. почта"
+   },
+   "hodnota": {
+    "en_US": "info@elite-vet.cz",
+    "cs_CZ": "info@elite-vet.cz",
+    "de_DE": "info@elite-vet.cz",
+    "ru_RU": "info@elite-vet.cz"
+   },
+   "hodnota2": {
+    "en_US": "",
+    "cs_CZ": "",
+    "de_DE": "",
+    "ru_RU": ""
+   },
+   "poznamka": {
+    "en_US": "",
+    "cs_CZ": "",
+    "de_DE": "",
+    "ru_RU": ""
+   }
+  }
+ ],
+ "dotazy": [
+  {
+   "poradi": 10,
+   "otazka": {
+    "en_US": "How do I make an appointment with you?",
+    "cs_CZ": "Jak se u vás objednám?",
+    "de_DE": "Wie kann ich bei Ihnen einen Termin vereinbaren?",
+    "ru_RU": "Как мне записаться к вам на прием?"
+   },
+   "odpoved": {
+    "en_US": "The fastest way is through the reservation form above — you select the reason for your visit and an available date, and a confirmation will be sent to you via email. If you are unsure about what to choose, call the reception. <a href=\"tel:+420722599699\">+420 722 599 699</a> and we will order for you ourselves.",
+    "cs_CZ": "Nejrychleji přes rezervační formulář výše — vyberete si důvod návštěvy a volný termín, potvrzení vám přijde e-mailem. Pokud si nebudete jistí, co zvolit, zavolejte na recepci <a href=\"tel:+420722599699\">+420 722 599 699</a> a objednáme vás sami.",
+    "de_DE": "Am schnellsten über das obenstehende Buchungsformular – wählen Sie den Grund Ihres Besuchs und einen freien Termin aus, die Bestätigung erhalten Sie per E-Mail. Wenn Sie sich nicht sicher sind, was Sie wählen sollen, rufen Sie die Rezeption an. <a href=\"tel:+420722599699\">+420 722 599 699</a> und wir bestellen Sie selbst.",
+    "ru_RU": "Самый быстрый способ — через форму бронирования выше: вы выбираете причину вашего визита и доступную дату, и подтверждение будет отправлено вам по электронной почте. Если вы не уверены, что выбрать, позвоните на ресепшен. <a href=\"tel:+420722599699\">+420 722 599 699</a> и мы сами сделаем заказ для вас."
+   }
+  },
+  {
+   "poradi": 20,
+   "otazka": {
+    "en_US": "Do I need to make an appointment, or can I come without one?",
+    "cs_CZ": "Musím se objednat, nebo můžu přijít bez objednání?",
+    "de_DE": "muss ich einen Termin vereinbaren, oder kann ich ohne Termin kommen?",
+    "ru_RU": "Мне нужно записаться на прием, или я могу прийти без записи?"
+   },
+   "odpoved": {
+    "en_US": "We recommend making an appointment — clients with appointments have priority and do not wait. Of course, we will not refuse you without an appointment, but the waiting time depends on how busy we are at the moment.",
+    "cs_CZ": "Objednání doporučujeme — objednaní klienti mají přednost a nečekají. Bez objednání vás samozřejmě neodmítneme, ale čekací doba se odvíjí od toho, jak je zrovna plno.",
+    "de_DE": "Wir empfehlen eine Terminvereinbarung – angemeldete Kunden haben Vorrang und müssen nicht warten. Ohne Termin lehnen wir Sie natürlich nicht ab, aber die Wartezeit hängt davon ab, wie voll es gerade ist.",
+    "ru_RU": "Мы рекомендуем записаться на прием — клиенты с записями имеют приоритет и не ждут. Конечно, мы не откажем вам без записи, но время ожидания зависит от того, насколько мы заняты в данный момент."
+   }
+  },
+  {
+   "poradi": 30,
+   "otazka": {
+    "en_US": "What animals do you treat?",
+    "cs_CZ": "Jaká zvířata ošetřujete?",
+    "de_DE": "Welche Tiere behandeln Sie?",
+    "ru_RU": "Каких животных вы лечите?"
+   },
+   "odpoved": {
+    "en_US": "Dogs, cats, and small mammals. If you are not sure whether your pet belongs to this group, call us and we will advise you.",
+    "cs_CZ": "Psy, kočky a drobné savce. Pokud si nejste jistí, jestli vaše zvíře do téhle skupiny patří, zavolejte nám a poradíme.",
+    "de_DE": "Hunde, Katzen und kleine Säugetiere. Wenn Sie sich nicht sicher sind, ob Ihr Tier zu dieser Gruppe gehört, rufen Sie uns an und wir beraten Sie.",
+    "ru_RU": "Собаки, кошки и мелкие млекопитающие. Если вы не уверены, принадлежит ли ваше животное к этой группе, позвоните нам, и мы вас проконсультируем."
+   }
+  },
+  {
+   "poradi": 40,
+   "otazka": {
+    "en_US": "What are your office hours?",
+    "cs_CZ": "Jaké máte ordinační hodiny?",
+    "de_DE": "Welche Sprechzeiten haben Sie?",
+    "ru_RU": "Каковы ваши часы работы?"
+   },
+   "odpoved": {
+    "en_US": "<strong>Monday to Friday 8:00 AM–8:00 PM and Saturday and Sunday 10:00 AM–6:00 PM. We will further extend the operating hours.</strong>",
+    "cs_CZ": "<strong>Pondělí až pátek 8:00–20:00</strong> a <strong>sobota a neděle 10:00–18:00</strong>. Provozní dobu budeme dále rozšiřovat.",
+    "de_DE": "<strong>Montag bis Freitag 8:00–20:00 und Samstag und Sonntag 10:00–18:00. Wir werden die Öffnungszeiten weiter ausdehnen.</strong>",
+    "ru_RU": "<strong>С понедельника по пятницу с 8:00 до 20:00, а в субботу и воскресенье с 10:00 до 18:00. Мы будем дальше продлевать часы работы.</strong>"
+   }
+  },
+  {
+   "poradi": 50,
+   "otazka": {
+    "en_US": "Since when are you open?",
+    "cs_CZ": "Od kdy máte otevřeno?",
+    "de_DE": "Seit wann haben Sie geöffnet?",
+    "ru_RU": "С какого времени вы открыты?"
+   },
+   "odpoved": {
+    "en_US": "We will start full operations according to the stated opening hours on <strong>Monday, September 14, 2026, at 8:00 AM.</strong> Before that, on <strong>September 9, 2026, from 12:00 PM to 8:00 PM</strong>, we are holding an open house — come and take a look and meet the team.",
+    "cs_CZ": "Plný provoz podle uvedené otevírací doby zahajujeme v <strong>pondělí 14. 9. 2026 od 8:00</strong>. Předtím, <strong>9. 9. 2026 od 12:00 do 20:00</strong>, pořádáme den otevřených dveří — přijďte se podívat a seznámit se s týmem.",
+    "de_DE": "Den vollständigen Betrieb gemäß der angegebenen Öffnungszeiten beginnen wir am <strong>Montag, den 14. September 2026, um 8:00 Uhr</strong>. Zuvor veranstalten wir am <strong>9. September 2026 von 12:00 bis 20:00</strong> Uhr einen Tag der offenen Tür – kommen Sie vorbei und lernen Sie das Team kennen.",
+    "ru_RU": "Мы начнем полную работу в соответствии с указанными часами работы в понедельник, <strong>14 сентября 2026 года, в 8:00 утра.</strong> До этого, <strong>9 сентября 2026 года, с 12:00 до 20:00,</strong> мы проводим день открытых дверей — приходите, посмотрите и познакомьтесь с командой."
+   }
+  },
+  {
+   "poradi": 60,
+   "otazka": {
+    "en_US": "Where can I find you?",
+    "cs_CZ": "Kde vás najdu?",
+    "de_DE": "Wo finde ich Sie?",
+    "ru_RU": "Где я могу тебя найти?"
+   },
+   "odpoved": {
+    "en_US": "At the address <strong>Hybešova 167/18, Rybáře, 360 05 Karlovy Vary</strong>. The address at the top of the page leads directly to the map.",
+    "cs_CZ": "Na adrese <strong>Hybešova 167/18, Rybáře, 360 05 Karlovy Vary</strong>. Adresa v horní části stránky vede rovnou do map.",
+    "de_DE": "Unter der Adresse <strong>Hybešova 167/18, Rybáře, 360 05 Karlovy Vary.</strong> Die Adresse im oberen Teil der Seite führt direkt zur Karte.",
+    "ru_RU": "По адресу <strong>Hybešova 167/18, Rybáře, 360 05 Карловы Вары.</strong> Адрес вверху страницы ведет непосредственно к карте."
+   }
+  },
+  {
+   "poradi": 70,
+   "otazka": {
+    "en_US": "What should I bring with me on the first visit?",
+    "cs_CZ": "Co si mám vzít s sebou na první návštěvu?",
+    "de_DE": "Was soll ich zu meinem ersten Besuch mitnehmen?",
+    "ru_RU": "Что мне нужно принести с собой на первый визит?"
+   },
+   "odpoved": {
+    "en_US": "Vaccination certificate or pet passport, reports from the previous veterinarian, if you have them, and a list of medications the animal is taking. For small mammals, information about what you are feeding the animal will also be helpful.",
+    "cs_CZ": "Očkovací průkaz nebo pas zvířete, zprávy od předchozího veterináře, pokud je máte, a seznam léků, které zvíře užívá. U drobných savců pomůže i informace o tom, čím zvíře krmíte.",
+    "de_DE": "Impfpass oder Tierausweis, Berichte vom vorherigen Tierarzt, falls vorhanden, und eine Liste der Medikamente, die das Tier einnimmt. Bei kleinen Säugetieren sind auch Informationen darüber hilfreich, womit Sie das Tier füttern.",
+    "ru_RU": "Сертификат о вакцинации или паспорт животного, отчеты от предыдущего ветеринара, если они у вас есть, и список медикаментов, которые принимает животное. Для мелких млекопитающих информация о том, чем вы кормите животное, также будет полезной."
+   }
+  },
+  {
+   "poradi": 80,
+   "otazka": {
+    "en_US": "How do I cancel or reschedule an already agreed appointment?",
+    "cs_CZ": "Jak zruším nebo přesunu už domluvený termín?",
+    "de_DE": "Wie kann ich einen bereits vereinbarten Termin absagen oder verschieben?",
+    "ru_RU": "Как мне отменить или перенести уже согласованную встречу?"
+   },
+   "odpoved": {
+    "en_US": "Please call the reception as soon as possible <a href=\"tel:+420722599699\">+420 722 599 699</a>We will gladly offer the freed-up appointment to someone else who is waiting.",
+    "cs_CZ": "Zavolejte prosím co nejdřív na recepci <a href=\"tel:+420722599699\">+420 722 599 699</a>. Uvolněný termín rádi nabídneme někomu dalšímu, kdo čeká.",
+    "de_DE": "Bitte rufen Sie so schnell wie möglich an der Rezeption an <a href=\"tel:+420722599699\">+420 722 599 699</a>Den freigewordenen Termin bieten wir gerne jemand anderem an, der wartet.",
+    "ru_RU": "Пожалуйста, позвоните на ресепшен как можно скорее <a href=\"tel:+420722599699\">+420 722 599 699</a>Мы с радостью предложим освобожденное время записи кому-то другому, кто ждет."
+   }
+  },
+  {
+   "poradi": 90,
+   "otazka": {
+    "en_US": "Do you also deal with acute conditions?",
+    "cs_CZ": "Řešíte i akutní stavy?",
+    "de_DE": "Behandeln Sie auch akute Fälle?",
+    "ru_RU": "Вы также занимаетесь острыми состояниями?"
+   },
+   "odpoved": {
+    "en_US": "Yes, we treat acute cases during office hours — please call in advance so we can be prepared for you. We operate a <strong>24/7</strong> emergency service, and we will publish the number as soon as it is ready.",
+    "cs_CZ": "Ano, akutní případy ošetřujeme v rámci ordinačních hodin — zavolejte předem, ať na vás můžeme být připravení. Na nepřetržité pohotovosti 24/7 pracujeme, číslo zveřejníme, jakmile bude připravené.",
+    "de_DE": "Ja, akute Fälle behandeln wir während der Sprechzeiten – rufen Sie vorher an, damit wir auf Sie vorbereitet sein können. Wir arbeiten rund um die Uhr, <strong>24/7</strong>, die Nummer werden wir veröffentlichen, sobald sie bereit ist.",
+    "ru_RU": "Да, мы лечим острые случаи в рабочие часы — пожалуйста, звоните заранее, чтобы мы могли подготовиться к вашему визиту. Мы работаем круглосуточно и без выходных, и мы опубликуем номер, как только он будет готов."
+   }
+  },
+  {
+   "poradi": 100,
+   "otazka": {
+    "en_US": "What services can I find with you?",
+    "cs_CZ": "Jaké služby u vás najdu?",
+    "de_DE": "Welche Dienstleistungen finde ich bei Ihnen?",
+    "ru_RU": "Какие услуги я могу найти у вас?"
+   },
+   "odpoved": {
+    "en_US": "Preventive care and vaccination, surgery, internal medicine, X-ray and ultrasound diagnostics, dentistry, ophthalmology, dermatology, and sonological diagnostics. A complete overview is at <a href=\"/en/#sluzby\">main page</a>.",
+    "cs_CZ": "Preventivní péči a vakcinaci, chirurgii, interní medicínu, RTG a ultrazvukovou diagnostiku, stomatologii, oftalmologii, dermatologii a sonologickou diagnostiku. Kompletní přehled je na <a href=\"/#sluzby\">hlavní stránce</a>.",
+    "de_DE": "Präventivpflege und Impfungen, Chirurgie, Innere Medizin, Röntgen- und Ultraschalldiagnostik, Zahnmedizin, Augenheilkunde, Dermatologie und sonologische Diagnostik. Eine vollständige Übersicht finden Sie auf <a href=\"/de/#sluzby\">Hauptseite</a>.",
+    "ru_RU": "Профилактическое обслуживание и вакцинация, хирургия, внутренняя медицина, рентгеновская и ультразвуковая диагностика, стоматология, офтальмология, дерматология и сонологическая диагностика. Полный обзор доступен на <a href=\"/ru/#sluzby\">главная страница</a>."
+   }
+  }
+ ],
+ "cenik": [
+  {
+   "poradi": 10,
+   "ikona": "kocka",
+   "cena": "990 Kč",
+   "nazev": {
+    "en_US": "Vaccination cat",
+    "cs_CZ": "Vakcinace kočka",
+    "de_DE": "Impfung Katze",
+    "ru_RU": "Вакцинация кошка"
+   }
+  },
+  {
+   "poradi": 20,
+   "ikona": "pes",
+   "cena": "700 Kč",
+   "nazev": {
+    "en_US": "Vaccination dog",
+    "cs_CZ": "Vakcinace pes",
+    "de_DE": "Impfung Hund",
+    "ru_RU": "Вакцинация собака"
+   }
+  },
+  {
+   "poradi": 30,
+   "ikona": "kralik",
+   "cena": "650 Kč",
+   "nazev": {
+    "en_US": "Rabbit vaccination",
+    "cs_CZ": "Vakcinace králík",
+    "de_DE": "Impfung Kaninchen",
+    "ru_RU": "Вакцинация кролик"
+   }
+  },
+  {
+   "poradi": 40,
+   "ikona": "nuzky",
+   "cena": "129 Kč",
+   "nazev": {
+    "en_US": "Nail trimming",
+    "cs_CZ": "Stříhání drápků",
+    "de_DE": "Krallenschneiden",
+    "ru_RU": "Стрижка когтей"
+   }
+  },
+  {
+   "poradi": 50,
+   "ikona": "kapka",
+   "cena": "129 Kč",
+   "nazev": {
+    "en_US": "Expression of anal glands",
+    "cs_CZ": "Vymačkání análních žlázek",
+    "de_DE": "Ausdrücken der Analdrüsen",
+    "ru_RU": "Чистка параанальных желёз"
+   }
+  },
+  {
+   "poradi": 60,
+   "ikona": "stetoskop",
+   "cena": "590 Kč",
+   "nazev": {
+    "en_US": "Clinical examination",
+    "cs_CZ": "Klinické vyšetření",
+    "de_DE": "Klinische Untersuchung",
+    "ru_RU": "Клинический осмотр"
+   }
+  }
+ ],
+ "nastaveni": {
+  "phone": "+420722599699",
+  "phone_display": "+420 722 599 699",
+  "email": "info@elite-vet.cz",
+  "address_line1": "Hybešova 167/18, Rybáře",
+  "address_line2": "360 05 Karlovy Vary",
+  "map_url": "https://maps.google.com/?q=Hybesova+167/18+Karlovy+Vary",
+  "booking_url": "https://reservation.winvet.cz/booking/f5832eae07850edb2b5a1167843ef423",
+  "instagram_url": "",
+  "facebook_url": ""
+ }
+}

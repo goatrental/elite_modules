@@ -8,4 +8,12 @@
               action="action_vet_doctor" sequence="20"/>
     <menuitem id="menu_rozpis_type" name="Typy směn" parent="menu_rozpis_root"
               action="action_vet_shift_type" sequence="30"/>
+
+    <!-- Specializace a ikony patri modulu Nas tym, ale ukazuji se i v rozpisu
+         (legenda nahore a smajlici u jmen). Kdo upravuje rozpis, hleda je tady,
+         ne v jine aplikaci — proto stejna akce visi v obou nabidkach. -->
+    <menuitem id="menu_rozpis_spec" name="Specializace" parent="menu_rozpis_root"
+              action="elite_vet_team.action_team_specialization" sequence="40"/>
+    <menuitem id="menu_rozpis_icon" name="Ikony" parent="menu_rozpis_root"
+              action="elite_vet_team.action_team_icon" sequence="50"/>
 </odoo>

@@ -37,6 +37,7 @@ class VetShift(models.Model):
     is_note = fields.Boolean(related="type_id.is_note")
     note = fields.Char(
         string="Poznámka",
+        translate=True,
         help="Text, který se vypíše na webu přes celou buňku — například "
              "Státní svátek. Vyplňuje se jen u typů s celodenní poznámkou; "
              "když zůstane prázdný, použije se název typu.",

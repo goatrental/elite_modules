@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Cenik osetreni. Zdrojovy jazyk sablony je ANGLICTINA, ostatni jazyky
+         jsou preklady v i18n/*.po. Samotne ukony a ceny jsou zaznamy v adminu. -->
+    <template id="cenik" name="Elite Vet - Ceník">
+        <t t-call="website.layout">
+            <t t-set="ev_web" t-value="request.env['elite.vet.setting'].sudo().nastaveni() if 'elite.vet.setting' in request.env else None"/>
+            <t t-set="ev_ceny" t-value="request.env['elite.vet.price.item'].sudo().search([]) if 'elite.vet.price.item' in request.env else []"/>
+            <t t-set="no_header" t-value="true"/>
+            <t t-set="no_footer" t-value="true"/>
+            <t t-set="additional_title">Price list | Elite Vet Karlovy Vary</t>
+            <t t-set="meta_description">Price list of the Elite Vet veterinary clinic in Karlovy Vary — vaccination of dogs, cats and rabbits, clinical examination, nail trimming and expression of anal glands. We always tell you the final price before the treatment.</t>
+            <meta name="theme-color" content="#1a2744"/>
+
+            <style>
+                :root {
+                    --ev-bg: #ffffff;
+                    --ev-fg: #1a2744;
+                    --ev-primary: #1a2744;
+                    --ev-primary-dark: #111b30;
+                    --ev-primary-light: #e8edf4;
+                    --ev-accent: #2b7870;
+                    --ev-accent-dark: #1f5a54;
+                    --ev-accent-light: #e0f2f0;
+                    --ev-muted: #f7f9fb;
+                    --ev-border: #e2e8f0;
+                    --ev-text-secondary: #64748b;
+                }
+
+                /* ============ JAZYKOVÁ BRÁNA (intro při načtení — výběr jazyka) ============ */
+                /* zobrazí se jen jednou za návštěvu; guard níže nastaví .ev-noSplash */
+                html.ev-noSplash .ev-langgate { display: none !important; }
+                .ev-langgate { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(17,27,48,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: evGateIn .35s ease both; }
+                @keyframes evGateIn { from { opacity: 0; } to { opacity: 1; } }
+                .ev-langgate-card { width: 100%; max-width: 460px; background: #fff; border-radius: 26px; padding: 38px 32px 32px; text-align: center; box-shadow: 0 30px 80px -20px rgba(9,15,28,.5); animation: evGateCard .5s cubic-bezier(.2,.8,.25,1) both; }
+                @keyframes evGateCard { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: none; } }
+                .ev-langgate-logo { width: auto; height: auto; max-width: 190px; max-height: 96px; object-fit: contain; margin: 0 auto 18px; display: block; }
+                .vet-page .ev-langgate-title { font-size: 23px; line-height: 1.22; font-weight: 800; color: var(--ev-primary); }
+                .ev-langgate-sub { margin-top: 10px; color: var(--ev-text-secondary); font-size: 14.5px; line-height: 1.5; }
+                .ev-langgate-grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+                .ev-langgate-opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 18px 10px; border-radius: 16px; border: 1.5px solid var(--ev-border); background: #fff; color: var(--ev-primary) !important; transition: border-color .2s, background-color .2s, box-shadow .2s, transform .1s; }
+                .ev-langgate-opt:hover { border-color: var(--ev-accent); background: var(--ev-accent-light); box-shadow: 0 10px 24px -14px rgba(91,168,160,.7); }
+                .ev-langgate-opt:active { transform: scale(.98); }
+                .ev-langgate-code { font-size: 20px; font-weight: 800; letter-spacing: .04em; color: var(--ev-primary); }
+                .ev-langgate-name { font-size: 13px; font-weight: 600; color: var(--ev-text-secondary); }
+                @media (max-width: 480px) {
+                    .ev-langgate-card { padding: 30px 20px 24px; border-radius: 22px; }
+                    .ev-langgate-logo { max-width: 150px; max-height: 78px; }
+                    .vet-page .ev-langgate-title { font-size: 20px; }
+                    .ev-langgate-opt { padding: 15px 8px; }
+                }
+
+                /* ============ HIDE ODOO DEFAULT HEADER (aggressive) ============ */
+                body > header,
+                #wrapwrap > header,
+                #wrapwrap > div > header,
+                header#top,
+                header.o_header_standard,
+                header.o_header_affix,
+                header.o_main_header,
+                .o_header_standard,
+                .o_header_affix,
+                .o_main_navbar,
+                .o_top_fixed_element,
+                body > footer,
+                #wrapwrap > footer,
+                footer#footer,
+                footer.o_footer,
+                .o_footer,
+                .o_footer_copyright { display: none !important; visibility: hidden !important; height: 0 !important; max-height: 0 !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+                body, html { padding-top: 0 !important; margin-top: 0 !important; }
+
+                /* ============ TOPBAR (vlastní sticky nav) ============ */
+                /* plná bílá (ne průhledná) — logo je JPEG s bílým pozadím, na poloprůhledné liště by svítilo jako čtverec */
+                .ev-topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: #ffffff; border-bottom: 1px solid var(--ev-border); transition: transform .3s ease; -webkit-backface-visibility: hidden; backface-visibility: hidden; will-change: transform; }
+                .ev-topbar.ev-nav-hidden { transform: translateY(-100%); }
+                .ev-topbar-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+                .ev-topbar-logo { display: inline-flex; align-items: center; gap: 0; font-size: 20px; font-weight: 800; color: var(--ev-primary); letter-spacing: -0.01em; }
+                .ev-topbar-logo:hover { color: var(--ev-primary); }
+                .ev-topbar-img { height: 44px; width: auto; max-width: 80px; object-fit: contain; display: block; border-radius: 8px; margin-right: 10px; }
+                .ev-topbar-nav { display: flex; align-items: center; gap: 28px; }
+                .ev-topbar-nav a { font-size: 14px; font-weight: 500; color: var(--ev-text-secondary); transition: color .2s; }
+                .ev-topbar-nav a:hover { color: var(--ev-accent); }
+                .ev-topbar-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--ev-accent); color: #fff; padding: 9px 18px; border-radius: 9999px; font-size: 14px; font-weight: 600; transition: background-color .2s; }
+                .ev-topbar-cta:hover { background: var(--ev-accent-dark); color: #fff; }
+                .vet-page .ev-topbar-nav a.ev-nav-rez { color: var(--ev-accent-dark); font-weight: 600; border-bottom: 2px solid var(--ev-accent); padding-bottom: 3px; }
+                .vet-page .ev-topbar-nav a.ev-nav-rez:hover { color: var(--ev-accent-dark); border-bottom-color: var(--ev-accent-dark); }
+
+                /* ============ BURGER MENU (mobile, pure CSS) ============ */
+                .ev-burger { position: relative; display: none; }
+                .ev-burger > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: var(--ev-accent); color: #fff; transition: background-color .2s; }
+                .ev-burger > summary::-webkit-details-marker { display: none; }
+                .ev-burger > summary:hover { background: var(--ev-accent-dark); }
+                .ev-burger-panel { position: absolute; top: calc(100% + 10px); right: 0; min-width: 280px; max-width: calc(100vw - 24px); background: #fff; border: 1px solid var(--ev-border); border-radius: 18px; padding: 14px; box-shadow: 0 18px 40px -12px rgba(17,27,48,.28); z-index: 999; animation: evCallInTop .18s ease-out; display: flex; flex-direction: column; gap: 4px; }
+                .ev-burger-link { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 14px; color: var(--ev-primary); font-size: 16px; font-weight: 600; transition: background-color .15s; }
+                .ev-burger-link:hover { background: var(--ev-muted); color: var(--ev-primary); }
+                .ev-burger-link svg { color: var(--ev-accent); flex-shrink: 0; }
+                .ev-burger-divider { height: 1px; background: var(--ev-border); margin: 6px 4px; }
+                .ev-burger-tel { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; transition: background-color .15s; color: var(--ev-primary); }
+                .ev-burger-tel:hover { background: var(--ev-accent-light); color: var(--ev-primary); }
+                .ev-burger-tel .ev-call-icon { width: 36px; height: 36px; }
+                .ev-burger-tel .ev-call-num { font-size: 14px; font-weight: 700; }
+                .ev-burger-tel .ev-call-lbl { font-size: 11px; }
+
+                html { scroll-behavior: smooth; }
+                .vet-page { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ev-fg); background: var(--ev-bg); line-height: 1.5; }
+                .vet-page * { box-sizing: border-box; }
+                .vet-page a { color: inherit; text-decoration: none; }
+                .vet-page p { margin: 0; }
+                .vet-page h1, .vet-page h2, .vet-page h3 { margin: 0; letter-spacing: -0.02em; color: var(--ev-primary); font-weight: 700; }
+                .vet-page section.o_colored_level { padding-left: 0; padding-right: 0; }
+
+                .ev-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+                .ev-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--ev-accent-light); color: var(--ev-accent); padding: 6px 16px; border-radius: 9999px; font-size: 14px; font-weight: 500; margin-bottom: 16px; }
+                .ev-section-head { text-align: center; max-width: 640px; margin: 0 auto 64px; }
+                .ev-section-head h2 { font-size: clamp(28px, 4vw, 38px); line-height: 1.15; }
+                .ev-section-head p { margin-top: 16px; color: var(--ev-text-secondary); font-size: 18px; }
+                .ev-accent-text { color: var(--ev-accent); }
+
+                .ev-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 9999px; font-size: 15px; font-weight: 600; transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s; cursor: pointer; border: 0; }
+                .ev-btn-primary { background: #fff; color: var(--ev-accent); border: 1.5px solid var(--ev-accent); font-weight: 700; box-shadow: none; }
+                .ev-btn-primary:hover { background: var(--ev-accent); color: #fff; border-color: var(--ev-accent); }
+                .ev-btn-outline { background: transparent; color: var(--ev-primary); border: 2px solid var(--ev-border); }
+                .ev-btn-outline:hover { border-color: var(--ev-accent); color: var(--ev-accent); }
+
+                @keyframes evBtnPulse {
+                    0% { box-shadow: 0 0 0 0 rgba(91,168,160,.55); }
+                    70% { box-shadow: 0 0 0 14px rgba(91,168,160,0); }
+                    100% { box-shadow: 0 0 0 0 rgba(91,168,160,0); }
+                }
+                @keyframes evBtnGlow {
+                    0%, 100% { border-color: var(--ev-accent); color: var(--ev-accent); }
+                    50% { border-color: var(--ev-accent-dark); color: var(--ev-accent-dark); }
+                }
+                .ev-btn-pulse {
+                    border-color: var(--ev-accent) !important;
+                    color: var(--ev-accent) !important;
+                    animation: evBtnPulse 1.8s ease-out infinite, evBtnGlow 1.8s ease-in-out infinite;
+                }
+                .ev-btn-pulse:hover { animation: none; background: var(--ev-accent); color: #fff !important; border-color: var(--ev-accent) !important; box-shadow: 0 6px 16px -4px rgba(91,168,160,.5); }
+
+                /* ============ CALL POPUP (pure CSS via &lt;details&gt;) ============ */
+                /* ============ PŘEPÍNAČ JAZYKŮ (nativní Odoo /website/lang/) ============ */
+                .ev-lang { position: relative; display: inline-flex; }
+                .ev-lang > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 9999px; border: 1px solid var(--ev-border); background: #fff; color: var(--ev-primary); font-size: 13px; font-weight: 700; letter-spacing: .02em; transition: border-color .2s, background-color .2s, color .2s; }
+                .ev-lang > summary::-webkit-details-marker { display: none; }
+                .ev-lang > summary::marker { content: ""; }
+                .ev-lang > summary:hover { border-color: var(--ev-accent); background: var(--ev-accent-light); color: var(--ev-accent-dark); }
+                .ev-lang > summary svg { flex-shrink: 0; }
+                .ev-lang-caret { opacity: .6; transition: transform .25s ease; }
+                .ev-lang[open] > summary .ev-lang-caret { transform: rotate(180deg); }
+                details.ev-lang[open] { z-index: 9999; }
+                .ev-lang-panel { position: absolute; top: calc(100% + 10px); right: 0; min-width: 170px; display: flex; flex-direction: column; gap: 2px; background: #fff; border: 1px solid var(--ev-border); border-radius: 14px; padding: 6px; box-shadow: 0 18px 40px -12px rgba(17,27,48,.28); z-index: 9999; animation: evCallInTop .18s ease-out; }
+                .ev-lang-opt { display: block; padding: 10px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--ev-text-secondary); white-space: nowrap; transition: background-color .15s, color .15s; }
+                .ev-lang-opt:hover { background: var(--ev-muted); color: var(--ev-primary); }
+                .ev-lang-opt.is-active { background: var(--ev-accent-light); color: var(--ev-accent-dark); }
+                /* odznak aktuálního jazyka — pure CSS podle html[lang], bez QWeb (aby šel text v editoru upravovat) */
+                .ev-lang-code { display: none; }
+                .ev-lang-code-cs { display: inline; }
+                html[lang^="de"] .ev-lang-code-cs,
+                html[lang^="en"] .ev-lang-code-cs,
+                html[lang^="ru"] .ev-lang-code-cs { display: none; }
+                html[lang^="de"] .ev-lang-code-de,
+                html[lang^="en"] .ev-lang-code-en,
+                html[lang^="ru"] .ev-lang-code-ru { display: inline; }
+                .ev-call { position: relative; display: inline-flex; }
+                .ev-call.ev-call--full { display: flex; width: 100%; }
+                .ev-call > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s; }
+                .ev-call > summary::-webkit-details-marker { display: none; }
+                .ev-call-panel { position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); min-width: 260px; background: #fff; border: 1px solid var(--ev-border); border-radius: 16px; padding: 8px; box-shadow: 0 18px 40px -12px rgba(17,27,48,.28); z-index: 9999; animation: evCallIn .18s ease-out; }
+                details.ev-call[open] { position: relative; z-index: 9999; }
+                @keyframes evCallIn { from { opacity: 0; transform: translate(-50%, -6px); } to { opacity: 1; transform: translate(-50%, 0); } }
+                .ev-call-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; transition: background-color .15s; color: var(--ev-primary); }
+                .ev-call-item:hover { background: var(--ev-accent-light); color: var(--ev-primary); }
+                .ev-call-item + .ev-call-item { margin-top: 4px; }
+                .ev-call-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--ev-accent-light); color: var(--ev-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+                .ev-call-num { font-size: 15px; font-weight: 700; color: var(--ev-primary); letter-spacing: 0.01em; }
+                .ev-call-lbl { font-size: 12px; color: var(--ev-text-secondary); margin-top: 1px; }
+
+                .ev-call--primary > summary { background: var(--ev-accent); color: #fff; padding: 14px 26px; border-radius: 9999px; font-size: 15px; box-shadow: 0 10px 24px -8px rgba(91,168,160,.45); }
+                .ev-call--primary > summary:hover { background: var(--ev-accent-dark); }
+                .ev-call--outline > summary { background: transparent; color: var(--ev-primary); border: 2px solid var(--ev-border); padding: 12px 24px; border-radius: 9999px; font-size: 15px; }
+                .ev-call--outline > summary:hover { border-color: var(--ev-accent); color: var(--ev-accent); }
+                .ev-call--topbar > summary { background: var(--ev-accent); color: #fff; padding: 9px 18px; border-radius: 9999px; font-size: 14px; }
+                .ev-call--topbar > summary:hover { background: var(--ev-accent-dark); }
+                .ev-call--topbar > .ev-call-panel { left: auto !important; right: 0 !important; transform: none !important; animation: evCallInTop .18s ease-out; }
+                @keyframes evCallInTop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+                .ev-mission-card > details.ev-call--mission,
+                .ev-call.ev-call--mission { display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important; margin: 20px auto 0 auto !important; text-align: center !important; }
+                .ev-call--mission > summary { background: var(--ev-accent) !important; color: #fff !important; padding: 14px 24px !important; border-radius: 9999px !important; font-weight: 600 !important; font-size: 15px !important; }
+                .ev-call--mission > summary:hover { background: var(--ev-accent-dark) !important; }
+                .ev-call--full > summary { width: 100%; padding: 14px 24px; border-radius: 12px; background: var(--ev-accent); color: #fff; font-size: 14px; }
+                .ev-call--full > summary:hover { background: var(--ev-accent-dark); }
+
+                /* přímé volání — telefonní tlačítka jsou odkazy tel: místo rozbalovacího details */
+                a.ev-call { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; text-decoration: none; transition: background-color .2s, color .2s, border-color .2s, box-shadow .2s; }
+                a.ev-call--topbar { background: var(--ev-accent); color: #fff !important; padding: 9px 18px; border-radius: 9999px; font-size: 14px; }
+                a.ev-call--topbar:hover { background: var(--ev-accent-dark); color: #fff !important; }
+                a.ev-call--outline { background: transparent; color: var(--ev-primary) !important; border: 2px solid var(--ev-border); padding: 12px 24px; border-radius: 9999px; font-size: 15px; }
+                a.ev-call--outline:hover { border-color: var(--ev-accent); color: var(--ev-accent) !important; }
+                a.ev-call--mission { background: var(--ev-accent) !important; color: #fff !important; padding: 14px 24px !important; border-radius: 9999px !important; font-weight: 600 !important; font-size: 15px !important; }
+                a.ev-call--mission:hover { background: var(--ev-accent-dark) !important; }
+                a.ev-call--full { width: 100%; padding: 14px 24px; border-radius: 12px; background: var(--ev-accent); color: #fff !important; font-size: 14px; }
+                a.ev-call--full:hover { background: var(--ev-accent-dark); color: #fff !important; }
+
+                /* ============ RESPONSIVE — horni lista ============ */
+                @media (max-width: 1100px) {
+                    .ev-topbar-nav { gap: 13px; }
+                    .ev-topbar-nav > a[href$="#kontakt"] { display: none; }
+                    .ev-topbar-nav a { font-size: 13.5px; white-space: nowrap; }
+                    .ev-call--topbar > summary { padding: 9px 14px; }
+                }
+                @media (max-width: 768px) {
+                    .ev-container { padding: 0 20px; }
+                    .ev-topbar { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+                    .ev-burger-panel, .ev-call-panel { -webkit-backdrop-filter: none; backdrop-filter: none; }
+                    html { scroll-behavior: auto; }
+                    .ev-topbar-inner { height: 60px; }
+                    .ev-topbar-nav { gap: 10px; }
+                    .ev-topbar-nav a:not(.ev-topbar-cta):not(.ev-burger-link):not(.ev-burger-tel):not(.ev-lang-opt) { display: none; }
+                    .ev-topbar-nav > .ev-call--topbar { display: none; }
+                    .ev-lang > summary { padding: 7px 11px; font-size: 12.5px; gap: 6px; }
+                    .ev-lang-panel { min-width: 158px; }
+                    .ev-burger { display: inline-flex; }
+                    .ev-topbar-logo { font-size: 17px; }
+                    .ev-topbar-img { height: 36px; }
+                    .ev-call-panel { min-width: 230px; max-width: calc(100vw - 32px); }
+                }
+
+                /* ============ CENIK — HERO ============ */
+                .ev-cenhero { padding: 128px 0 44px; background: linear-gradient(180deg, #ffffff 0%, var(--ev-muted) 100%); text-align: center; }
+                .ev-cenhero .ev-container { max-width: 780px; }
+                .ev-cenhero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--ev-accent-light); color: var(--ev-accent-dark); padding: 7px 18px; border-radius: 9999px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+                .ev-cenhero-badge svg { flex-shrink: 0; }
+                .vet-page .ev-cenhero h1 { margin-top: 18px; font-size: clamp(30px, 4.2vw, 44px); line-height: 1.1; color: var(--ev-primary); }
+                .vet-page .ev-cenhero-lead { margin-top: 14px; color: var(--ev-text-secondary); font-size: 17px; line-height: 1.6; }
+
+                /* ============ CENIK — TABULKA ============ */
+                .ev-cen { background: var(--ev-muted); padding: 0 0 88px; }
+                .ev-cen .ev-container { max-width: 820px; }
+                .ev-cen-card { background: #fff; border: 1px solid var(--ev-border); border-radius: 20px; overflow: hidden; box-shadow: 0 18px 48px rgba(26,39,68,.10); }
+                .ev-cen-row { display: flex; align-items: center; gap: 16px; padding: 17px 24px; transition: background-color .2s; }
+                .ev-cen-row + .ev-cen-row { border-top: 1px solid var(--ev-border); }
+                .ev-cen-row:hover { background: var(--ev-muted); }
+                .ev-cen-ic { width: 44px; height: 44px; border-radius: 13px; background: var(--ev-accent-light); color: var(--ev-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+                .ev-cen-ic svg { width: 22px; height: 22px; display: block; }
+                .ev-cen-pozn { display: block; font-size: 13px; font-weight: 500; color: var(--ev-text-secondary); margin-top: 2px; }
+                .ev-cen-name { flex: 1; min-width: 0; font-size: 16.5px; font-weight: 600; color: var(--ev-primary); line-height: 1.35; }
+                .ev-cen-price { flex-shrink: 0; white-space: nowrap; }
+                .ev-cen-from { font-size: 13px; font-weight: 600; color: var(--ev-text-secondary); }
+                .ev-cen-num { font-size: 20px; font-weight: 800; color: var(--ev-accent-dark); letter-spacing: -0.01em; }
+
+                /* poznamka pod tabulkou */
+                .ev-cen-note { margin-top: 20px; display: flex; gap: 14px; background: #fff; border: 1px solid var(--ev-border); border-left: 4px solid var(--ev-accent); border-radius: 16px; padding: 20px 22px; text-align: left; }
+                .ev-cen-note-ic { color: var(--ev-accent); flex-shrink: 0; margin-top: 2px; }
+                .ev-cen-note p { color: var(--ev-text-secondary); font-size: 15px; line-height: 1.65; }
+                .ev-cen-note p + p { margin-top: 10px; }
+
+                /* tlacitka pod cenikem */
+                .ev-cen-cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+                .ev-cen-btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 26px; border-radius: 9999px; font-size: 15px; font-weight: 700; transition: background-color .2s, border-color .2s, color .2s; }
+                .ev-cen-btn svg { flex-shrink: 0; }
+                .ev-cen-btn--prim { background: var(--ev-accent); color: #fff !important; }
+                .ev-cen-btn--prim:hover { background: var(--ev-accent-dark); color: #fff !important; }
+                .ev-cen-btn--ghost { background: #fff; color: var(--ev-primary) !important; border: 1.5px solid var(--ev-border); }
+                .ev-cen-btn--ghost:hover { border-color: var(--ev-accent); color: var(--ev-accent-dark) !important; }
+
+                @media (max-width: 768px) {
+                    .ev-cenhero { padding: 104px 0 32px; }
+                    .vet-page .ev-cenhero-lead { font-size: 15.5px; }
+                    .ev-cen { padding: 0 0 64px; }
+                    .ev-cen-card { border-radius: 16px; }
+                    .ev-cen-row { padding: 14px 16px; gap: 12px; }
+                    .ev-cen-ic { width: 38px; height: 38px; border-radius: 11px; }
+                    .ev-cen-ic svg { width: 19px; height: 19px; }
+                    .ev-cen-name { font-size: 15px; }
+                    .ev-cen-num { font-size: 18px; }
+                    .ev-cen-from { font-size: 12px; }
+                    .ev-cen-note { padding: 17px 18px; gap: 12px; border-radius: 14px; }
+                    .ev-cen-note p { font-size: 14.5px; }
+                    .ev-cen-cta { flex-direction: column; align-items: stretch; max-width: 340px; margin-left: auto; margin-right: auto; }
+                    .ev-cen-btn { justify-content: center; }
+                }
+
+                /* ============ SR-ONLY (skryté pro oči, čitelné pro Google/čtečky — nese hlavní SEO klíčové slovo v H1) ============ */
+                .ev-sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+                /* ============ AUTORSKÝ KREDIT (patička) — menší, ale výrazný ============ */
+                .ev-footer-credit { padding: 18px 24px 20px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; color: #fff; background: linear-gradient(135deg, var(--ev-primary), var(--ev-primary-dark)); border-top: 3px solid var(--ev-accent); }
+                .ev-footer-credit a { color: var(--ev-accent); font-weight: 800; border-bottom: 1.5px solid var(--ev-accent); padding-bottom: 1px; transition: color 0.25s, border-color 0.25s; }
+                .ev-footer-credit a:hover { color: #fff; border-color: #fff; }
+
+                /* ============ ODOO EDITOR / PŘEKLAD ============ */
+                /* splash je fixed přes celou obrazovku se z-indexem 9999 — v editoru překrývá obsah a nejde klikat do textu */
+                body.editor_enable .ev-splash,
+                body.editor_has_snippets .ev-splash,
+                body.o_translate_mode .ev-splash { display: none !important; }
+                /* zavřené details (rozbalovací sekce) skrývají text před editorem i před režimem překladu — v editoru je otevřeme.
+                   Popupy (.ev-call, .ev-burger, .ev-lang) necháme zavřené, jinak by plavaly přes obsah. */
+                body.editor_enable details:not(.ev-call):not(.ev-burger):not(.ev-lang) > *:not(summary),
+                body.editor_has_snippets details:not(.ev-call):not(.ev-burger):not(.ev-lang) > *:not(summary),
+                body.o_translate_mode details:not(.ev-call):not(.ev-burger):not(.ev-lang) > *:not(summary) { display: block !important; }
+                body.editor_enable details:not(.ev-call):not(.ev-burger):not(.ev-lang)::details-content,
+                body.editor_has_snippets details:not(.ev-call):not(.ev-burger):not(.ev-lang)::details-content,
+                body.o_translate_mode details:not(.ev-call):not(.ev-burger):not(.ev-lang)::details-content { content-visibility: visible !important; }
+            </style>
+
+            <!-- Cesta bez jazykoveho prefixu. Prepinac jazyku vede primo na /de, /en, /ru,
+                 protoze jen URL urci jazyk spolehlive. Pres /website/lang/ to stoji na cookie
+                 frontend_lang a na tom, ze Odoo podle nej presmeruje neprefixovanou cestu,
+                 a to in-app prohlizec Instagramu nedela. Cestina prefix nema, ta musi
+                 pres /website/lang/cs, aby se cookie prepsal. -->
+
+            <div id="wrap" class="oe_structure vet-page">
+
+                <!-- =========================== TOPBAR =========================== -->
+                <div class="ev-topbar">
+                    <div class="ev-container ev-topbar-inner">
+                        <a href="#odpocet" class="ev-topbar-logo">
+                            <img src="/elite_vet_web/static/src/img/logo.jpeg" alt="Elite Vet" class="ev-topbar-img" loading="lazy"/>
+                            <span class="ev-logo-brand" style="display: inline-block; white-space: nowrap;"><span style="color: #1a2744 !important;">Elite</span><span style="color: #2b7870 !important;">Vet</span></span>
+                        </a>
+                        <nav class="ev-topbar-nav">
+                            <!-- Polozky navigace se berou z menu webu (Odoo: Web -> Upravit -> Menu),
+                                 takze se daji menit bez zasahu do kodu stranky. -->
+                            <t t-foreach="website.menu_id.child_id" t-as="ev_m">
+                                <a t-att-href="ev_m.url" t-attf-class="#{'ev-nav-active' if ev_m.url == request.httprequest.path else ''}" t-att-target="'_blank' if '://' in ev_m.url else False" t-att-rel="'noopener' if '://' in ev_m.url else False"><span t-field="ev_m.name"></span></a>
+                            </t>
+                            <details class="ev-lang">
+                                <summary>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M2 12h20"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                    <span class="ev-lang-code ev-lang-code-cs">CZ</span><span class="ev-lang-code ev-lang-code-de">DE</span><span class="ev-lang-code ev-lang-code-en">EN</span><span class="ev-lang-code ev-lang-code-ru">RU</span>
+                                    <svg class="ev-lang-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"/>
+                                    </svg>
+                                </summary>
+                                <div class="ev-lang-panel">
+                                    <a t-attf-href="/website/lang/cs?r={{ url_for(request.httprequest.path, lang_code='cs_CZ') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
+                                    <a t-attf-href="/website/lang/de?r={{ url_for(request.httprequest.path, lang_code='de_DE') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
+                                    <a t-attf-href="/website/lang/en?r={{ url_for(request.httprequest.path, lang_code='en_US') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
+                                    <a t-attf-href="/website/lang/ru?r={{ url_for(request.httprequest.path, lang_code='ru_RU') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
+                                </div>
+                            </details>
+                            <a t-attf-href="tel:#{ev_web.phone or '+420722599699'}" class="ev-call ev-call--topbar">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                                Contact
+                            </a>
+                            <details class="ev-burger">
+                                <summary aria-label="Menu">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="3" y1="6" x2="21" y2="6"/>
+                                        <line x1="3" y1="12" x2="21" y2="12"/>
+                                        <line x1="3" y1="18" x2="21" y2="18"/>
+                                    </svg>
+                                </summary>
+                                <div class="ev-burger-panel">
+                                    <!-- stejne menu webu jako v horni liste -->
+                                    <t t-foreach="website.menu_id.child_id" t-as="ev_m">
+                                        <a t-att-href="ev_m.url" class="ev-burger-link" t-att-target="'_blank' if '://' in ev_m.url else False" t-att-rel="'noopener' if '://' in ev_m.url else False">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="9 18 15 12 9 6"/>
+                                            </svg>
+                                            <span t-field="ev_m.name"></span>
+                                        </a>
+                                    </t>
+                                </div>
+                            </details>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- =========================== HERO =========================== -->
+                <section class="ev-cenhero o_colored_level">
+                    <div class="ev-container">
+                        <span class="ev-cenhero-badge">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                                <line x1="7" y1="7" x2="7.01" y2="7"/>
+                            </svg>
+                            PRICE LIST
+                        </span>
+                        <h1>Price list of treatments</h1>
+                        <p class="ev-cenhero-lead">Overview of the most common procedures. Prices are indicative — we will always inform you of the final amount in advance, before the treatment.</p>
+                    </div>
+                </section>
+
+                <!-- =========================== TABULKA CEN =========================== -->
+                <section class="ev-cen o_colored_level">
+                    <div class="ev-container">
+                        <!-- Ukony z adminu (Web kliniky -> Cenik). Kdyz klinika zadny nezada,
+                             karta se vubec nevykresli a stranka nezustane s prazdnym ramem. -->
+                        <div t-if="ev_ceny" class="ev-cen-card">
+                            <t t-foreach="ev_ceny" t-as="ev_c">
+                                <div class="ev-cen-row">
+                                    <span class="ev-cen-ic">
+                                        <img t-if="ev_c.icon_id and ev_c.icon_id.image"
+                                             t-attf-src="/web/image/elite.vet.team.icon/#{ev_c.icon_id.id}/image/26x26"
+                                             width="26" height="26" alt="" loading="lazy" decoding="async"/>
+                                        <svg t-else="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <t t-if="ev_c.icon_code == 'kocka'"><path d="M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3.1-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5z"/><path d="M8 14v.5"/><path d="M16 14v.5"/><path d="M11.25 16.25h1.5L12 17z"/></t>
+                                            <t t-elif="ev_c.icon_code == 'pes'"><path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.96-1.45-2.344-2.5"/></t>
+                                            <t t-elif="ev_c.icon_code == 'kralik'"><path d="M13 16a3 3 0 0 1 2.24 5"/><path d="M18 12h.01"/><path d="M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 2.8-2.8L15.8 7h.2c3.3 0 6 2.7 6 6v1a2 2 0 0 1-2 2h-1a3 3 0 0 0-3 3"/><path d="M20 8.54V4a2 2 0 1 0-4 0v3"/><path d="M7.612 12.524a3 3 0 1 0-1.6 4.3"/></t>
+                                            <t t-elif="ev_c.icon_code == 'nuzky'"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></t>
+                                            <t t-elif="ev_c.icon_code == 'kapka'"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></t>
+                                            <t t-else=""><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></t>
+                                        </svg>
+                                    </span>
+                                    <span class="ev-cen-name">
+                                        <span t-field="ev_c.name"></span>
+                                        <small t-if="ev_c.note" class="ev-cen-pozn" t-field="ev_c.note"></small>
+                                    </span>
+                                    <span class="ev-cen-price">
+                                        <span t-if="ev_c.price_from" class="ev-cen-from">from</span>
+                                        <span class="ev-cen-num" t-field="ev_c.price"></span>
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
+
+                        <!-- ====== POZNAMKA K CENAM ====== -->
+                        <div class="ev-cen-note">
+                            <svg class="ev-cen-note-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <div>
+                                <p>The stated prices include basic treatment and commonly used materials. The final price may vary depending on the vaccine used, medications, additional materials, or necessary procedures.</p>
+                                <p>We will be happy to provide you with additional prices before the treatment or we can provide them to you by phone or email.</p>
+                            </div>
+                        </div>
+
+                        <!-- ====== KONTAKT ====== -->
+                        <div class="ev-cen-cta">
+                            <a t-attf-href="tel:#{ev_web.phone or '+420722599699'}" class="ev-cen-btn ev-cen-btn--prim">
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                                To ask about the price
+                            </a>
+                            <a t-attf-href="mailto:#{ev_web.email or 'info@elite-vet.cz'}" class="ev-cen-btn ev-cen-btn--ghost">
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                                </svg>
+                                Write an email
+                            </a>
+                            <a href="/rezervacni-system" class="ev-cen-btn ev-cen-btn--ghost">
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                To make an appointment
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =========================== AUTORSKY KREDIT =========================== -->
+                <div class="ev-footer-credit">Created <a href="https://www.michalvarys.eu/chytil-jste-se-do-site" target="_blank" rel="noopener">Michal Varys</a> · runs on <a href="https://www.varyshop.cz/jak-vypada-nas-system" target="_blank" rel="noopener">Varyshop</a></div>
+
+            </div>
+        </t>
+    </template>
+
+    <record id="cenik_page" model="website.page">
+        <!-- Nazev se zamerne nenastavuje: website.page pri prejmenovani prepise
+             i klic pohledu, takze by sablona modulu po kazdem upgradu prisla
+             o svuj klic (elite_vet_web.rezervace -> website.rezervace). -->
+        <field name="url">/cenik</field>
+        <field name="view_id" ref="cenik"/>
+        <field name="is_published" eval="True"/>
+        <field name="website_indexed" eval="True"/>
+    </record>
+
+</odoo>

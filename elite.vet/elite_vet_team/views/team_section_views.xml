@@ -4,11 +4,14 @@
         <field name="name">elite.vet.team.section.list</field>
         <field name="model">elite.vet.team.section</field>
         <field name="arch" type="xml">
-            <list string="Sekce týmu" editable="bottom">
+            <!-- Sloupec Na webu rika, proc se sekce na strance neukazuje: prazdna
+                 sekce by udelala nadpis, pod kterym nic neni, takze se vynecha. -->
+            <list string="Sekce týmu" editable="bottom" decoration-muted="not na_webu">
                 <field name="sequence" widget="handle"/>
                 <field name="name" string="Název sekce"/>
                 <field name="anchor" string="Kotva"/>
                 <field name="member_count" string="Lidí"/>
+                <field name="na_webu" string="Na webu" widget="boolean_toggle" readonly="1"/>
                 <field name="active" string="Aktivní"/>
             </list>
         </field>

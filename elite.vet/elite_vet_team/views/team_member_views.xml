@@ -70,6 +70,14 @@
                         <div class="mt-2">
                             <label for="badge" string="Štítek na kartě" class="fw-bold"/>
                             <field name="badge" placeholder="Odborná garantka · Vedoucí lékařka · Novinka v týmu…"/>
+                            <field name="badge_icon_id" placeholder="Ikona ve štítku — nepovinné"
+                                   options="{'no_create': True}"/>
+                        </div>
+                        <div class="mt-2">
+                            <label for="specialization_ids" string="Specializace" class="fw-bold"/>
+                            <field name="specialization_ids" widget="many2many_tags"
+                                   options="{'no_quick_create': True}"
+                                   placeholder="Stomatologie, Chirurgie, Sonografie…"/>
                         </div>
                     </div>
                     <group>

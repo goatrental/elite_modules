@@ -6,12 +6,13 @@
         nekdo prijde nebo odejde. Design zustal stejny jako u puvodni rucni
         stranky.
     -->
-    <template id="nas_tym" name="Náš tým">
+    <template id="nas_tym" name="Our team">
     <t t-call="website.layout">
+            <t t-set="ev_web" t-value="request.env['elite.vet.setting'].sudo().nastaveni() if 'elite.vet.setting' in request.env else None"/>
         <t t-set="no_header" t-value="true"/>
         <t t-set="no_footer" t-value="true"/>
-        <t t-set="additional_title">Náš tým | Elite Vet Karlovy Vary</t>
-        <t t-set="meta_description">Tým, který otevírá veterinární kliniku Elite Vet v Karlových Varech — veterinární lékařky, veterinární sestry, klientský servis a management. Vzdělání, praxe, specializace a jazyky celého týmu.</t>
+        <t t-set="additional_title">Our team | Elite Vet Karlovy Vary</t>
+        <t t-set="meta_description">The team opening the Elite Vet veterinary clinic in Karlovy Vary — veterinarians, veterinary nurses, client service and management. Education, experience, specialisation and languages of the whole team.</t>
         <meta name="theme-color" content="#1a2744"/>
 
         <style>
@@ -214,7 +215,13 @@
             .tm-card--lead .tm-avatar { background: linear-gradient(135deg, var(--ev-primary), var(--ev-primary-dark)); box-shadow: 0 10px 22px -12px rgba(17,27,48,.7); }
             .vet-page .tm-name { font-size: 19px; line-height: 1.25; }
             .vet-page .tm-role { margin-top: 6px; color: var(--ev-accent-dark); font-size: 13.5px; font-weight: 600; line-height: 1.45; }
-            .tm-tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 5px 12px; border-radius: 9999px; background: var(--ev-primary); color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+            .tm-tag .ev-spec-ico { flex-shrink: 0; display: block; object-fit: contain; }
+            .tm-tag { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; padding: 5px 12px; border-radius: 9999px; background: var(--ev-primary); color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+            /* Specializace — stitky s ikonou. Svetlejsi nez .tm-tag, aby zustal
+               hlavni stitek (Vedouci lekarka) tim vyraznejsim prvkem. */
+            .tm-specs { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+            .tm-spec { display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px 5px 9px; border-radius: 9999px; background: var(--ev-accent-light); border: 1px solid rgba(43,120,112,.28); color: var(--ev-accent-dark); font-size: 12px; font-weight: 600; line-height: 1.2; }
+            .tm-spec .ev-spec-ico { flex-shrink: 0; display: block; object-fit: contain; }
             .vet-page .tm-perex { margin-top: 14px; color: var(--ev-text-secondary); font-size: 14.5px; line-height: 1.7; }
 
             .tm-facts { display: flex; flex-direction: column; }
@@ -238,7 +245,7 @@
             /* ============ RESPONZIVITA ============ */
             @media (max-width: 1100px) {
                 .ev-topbar-nav { gap: 13px; }
-                /* textovy odkaz Kontakt duplikuje zeleny Kontakt button vedle — na uzkem PC ho schovame, jinak nav dosedne na logo */
+                /* textovy odkaz Contact duplikuje zeleny Contact button vedle — na uzkem PC ho schovame, jinak nav dosedne na logo */
                 .ev-topbar-nav > a[href$="#kontakt"] { display: none; }
                 .ev-topbar-nav a { font-size: 13.5px; white-space: nowrap; }
                 .ev-call--topbar > summary { padding: 9px 14px; }
@@ -362,10 +369,10 @@
                                 </svg>
                             </summary>
                             <div class="ev-lang-panel">
-                                <a t-attf-href="/website/lang/cs?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
-                                <a t-attf-href="/website/lang/de?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
-                                <a t-attf-href="/website/lang/en?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
-                                <a t-attf-href="/website/lang/ru?r={{ request.httprequest.path }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
+                                <a t-attf-href="/website/lang/cs?r={{ url_for(request.httprequest.path, lang_code='cs_CZ') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'cs_CZ' else '' }}">Čeština</a>
+                                <a t-attf-href="/website/lang/de?r={{ url_for(request.httprequest.path, lang_code='de_DE') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'de_DE' else '' }}">Deutsch</a>
+                                <a t-attf-href="/website/lang/en?r={{ url_for(request.httprequest.path, lang_code='en_US') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'en_US' else '' }}">English</a>
+                                <a t-attf-href="/website/lang/ru?r={{ url_for(request.httprequest.path, lang_code='ru_RU') }}" t-attf-class="ev-lang-opt{{ ' is-active' if request.env.lang == 'ru_RU' else '' }}">Русский</a>
                             </div>
                         </details>
                         <details class="ev-call ev-call--topbar">
@@ -373,18 +380,18 @@
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                                 </svg>
-                                Kontakt
+                                Contact
                             </summary>
                             <div class="ev-call-panel">
-                                <a href="tel:+420722599699" class="ev-call-item">
+                                <a t-attf-href="tel:#{ev_web.phone or '+420722599699'}" class="ev-call-item">
                                     <div class="ev-call-icon">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="ev-call-num">+420 722 599 699</div>
-                                        <div class="ev-call-lbl">Volat</div>
+                                        <div class="ev-call-num"><t t-out="ev_web.phone_display or ev_web.phone or '+420 722 599 699'"/></div>
+                                        <div class="ev-call-lbl">Call</div>
                                     </div>
                                 </a>
                             </div>
@@ -423,10 +430,10 @@
                             <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
-                        Náš tým
+                        Our team
                     </div>
 
-                    <h1>Tým, který otevírá naši kliniku</h1>
+                    <h1>The team opening our clinic</h1>
 
                     <div class="tm-hero-sub">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -436,14 +443,14 @@
                         ELITE VET Karlovy Vary
                     </div>
 
-                    <p class="tm-lead">ELITE VET vzniká jako moderní veterinární pracoviště, jehož odborný základ tvoří propojení klinické praxe, specializovaného vzdělávání, týmové spolupráce a důsledného přístupu ke každému pacientovi. Tým při otevření kliniky zahrnuje veterinární lékařky se zkušenostmi v chirurgii, interní a urgentní medicíně, oftalmologii, ultrasonografii, stomatologii a péči o kritické pacienty; veterinární sestry se zkušenostmi z každodenního klinického provozu; klientský servis s odborným veterinárním přesahem; a management s přímou zkušeností z veterinárních pracovišť i řízení provozu.</p>
+                    <p class="tm-lead">ELITE VET is being built as a modern veterinary facility whose professional foundation combines clinical practice, specialised training, teamwork and a thorough approach to every patient. At the opening of the clinic the team includes veterinarians experienced in surgery, internal and emergency medicine, ophthalmology, ultrasonography, dentistry and critical patient care; veterinary nurses experienced in everyday clinical operations; client service with a professional veterinary background; and management with direct experience of veterinary practices and running operations.</p>
 
                     <div class="tm-note">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             <path d="M9 12l2 2 4-4"/>
                         </svg>
-                        <p>Kromě lékařů a personálu přímo na naší pobočce s klinikou spolupracuje také řada externích specialistů a lékařů. Lidé níže tvoří <strong>hlavní odpovědný tým, který se postará o vaše mazlíčky</strong> — a tým se stále rozrůstá.</p>
+                        <p>Besides the doctors and staff at our own branch, a number of external specialists and doctors also work with the clinic. The people below make up the <strong>core team responsible for looking after your pets</strong> — and the team keeps growing.</p>
                     </div>
 
                     <t t-set="tym_ma_model" t-value="'elite.vet.team.section' in request.env"/>
@@ -472,12 +479,12 @@
                                             <div class="tm-head">
                                                 <t t-if="tm_m.has_image">
                                                     <input type="checkbox" class="tm-zoom-toggle" t-attf-id="evzoom-#{tm_m.id}" aria-hidden="true" tabindex="-1"/>
-                                                    <label class="tm-zoom-open" t-attf-for="evzoom-#{tm_m.id}" t-attf-title="Zvětšit fotku: #{tm_m.name}">
+                                                    <label class="tm-zoom-open" t-attf-for="evzoom-#{tm_m.id}" t-attf-title="Enlarge photo: #{tm_m.name}">
                                                         <img class="tm-avatar tm-avatar--photo"
                                                              t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_128?unique=#{tm_m.write_date}"
                                                              t-att-alt="tm_m.name" loading="lazy"/>
                                                     </label>
-                                                    <label class="tm-zoom-overlay" t-attf-for="evzoom-#{tm_m.id}" aria-label="Zavřít">
+                                                    <label class="tm-zoom-overlay" t-attf-for="evzoom-#{tm_m.id}" aria-label="Close">
                                                         <img class="tm-zoom-img"
                                                              t-attf-src="/web/image/elite.vet.team.member/#{tm_m.id}/image_1024?unique=#{tm_m.write_date}"
                                                              t-att-alt="tm_m.name" loading="lazy"/>
@@ -498,16 +505,36 @@
                                                 </div>
                                             </div>
                                             <span t-if="tm_m.badge" class="tm-tag">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                                    <polyline points="20 6 9 17 4 12"/>
-                                                </svg>
+                                                <!-- kdyz si klinika vybrala ikonu, pouzije se; jinak zustava fajfka jako doted -->
+                                                <t t-if="tm_m.badge_icon_id">
+                                                    <t t-call="elite_vet_team.specialization_icon">
+                                                        <t t-set="ev_icon_rec" t-value="tm_m.badge_icon_id"/>
+                                                        <t t-set="ev_size" t-value="16"/>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="20 6 9 17 4 12"/>
+                                                    </svg>
+                                                </t>
                                                 <span t-field="tm_m.badge"></span>
                                             </span>
+                                            <div t-if="tm_m.specialization_ids" class="tm-specs">
+                                                <t t-foreach="tm_m.specialization_ids" t-as="tm_s">
+                                                    <span class="tm-spec">
+                                                        <t t-call="elite_vet_team.specialization_icon">
+                                                            <t t-set="ev_icon_rec" t-value="tm_s.icon_id"/>
+                                                            <t t-set="ev_size" t-value="22"/>
+                                                        </t>
+                                                        <span t-field="tm_s.name"></span>
+                                                    </span>
+                                                </t>
+                                            </div>
                                             <p t-if="tm_m.perex" class="tm-perex"><span t-field="tm_m.perex"></span></p>
                                         </div>
                                         <details t-if="tm_m.fact_ids.filtered(lambda f: f.value)" class="tm-more">
                                             <summary>
-                                                Vzdělání, praxe a specializace
+                                                Education, experience and specialisation
                                                 <svg class="tm-more-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                                             </summary>
                                             <div class="tm-facts">
@@ -538,28 +565,28 @@
                             <line x1="22" y1="11" x2="16" y2="11"/>
                         </svg>
                     </div>
-                    <h2>Tým stále roste</h2>
-                    <p>Tým kliniky průběžně doplňujeme o další lékaře a odborný personál. Hledáme kolegy do nově vznikajícího týmu — od zkušených veterinářů až po čerstvé absolventy.</p>
+                    <h2>The team keeps growing</h2>
+                    <p>We keep adding more doctors and specialist staff to the clinic's team. We are looking for colleagues to join our newly forming team — from experienced vets to fresh graduates.</p>
                     <div class="tm-outro-cta">
-                        <a href="tel:+420728549095" class="ev-call ev-call--outro">
+                        <a t-attf-href="tel:#{ev_web.hr_phone or ev_web.phone or '+420728549095'}" class="ev-call ev-call--outro">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                             </svg>
-                            Kontakt pro nábor
+                            Recruitment contact
                         </a>
-                        <a href="mailto:info@elite-vet.cz?subject=Zájem o pozici v Elite Vet Karlovy Vary" class="tm-btn-ghost">
+                        <a t-attf-href="mailto:#{ev_web.hr_email or ev_web.email or 'info@elite-vet.cz'}?subject=Zájem o pozici v Elite Vet Karlovy Vary" class="tm-btn-ghost">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                             </svg>
-                            Poslat životopis
+                            Send your CV
                         </a>
                     </div>
                 </div>
             </section>
 
             <!-- =========================== AUTORSKÝ KREDIT =========================== -->
-            <div class="ev-footer-credit">Vytvořil <a href="https://www.michalvarys.eu/chytil-jste-se-do-site" target="_blank" rel="noopener">Michal Varys</a> · běží na <a href="https://www.varyshop.cz/jak-vypada-nas-system" target="_blank" rel="noopener">Varyshop</a></div>
+            <div class="ev-footer-credit">Created <a href="https://www.michalvarys.eu/chytil-jste-se-do-site" target="_blank" rel="noopener">Michal Varys</a> · runs on <a href="https://www.varyshop.cz/jak-vypada-nas-system" target="_blank" rel="noopener">Varyshop</a></div>
 
         </div>
 
@@ -614,7 +641,7 @@
     </template>
 
     <record id="nas_tym_page" model="website.page">
-        <field name="name">Náš tým</field>
+        <field name="name">Our team</field>
         <field name="url">/nas-tym</field>
         <field name="view_id" ref="nas_tym"/>
         <field name="is_published" eval="True"/>

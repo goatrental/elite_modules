@@ -24,13 +24,28 @@ def _seed_shift_types(env):
     Type = env["elite.vet.shift.type"]
     if Type.search_count([]):
         return
-    Type.create([
-        {"name": "Ranní služba",     "sequence": 10, "time_from": 8.0,  "time_to": 14.0, "color": "green"},
-        {"name": "Odpolední služba", "sequence": 20, "time_from": 14.0, "time_to": 20.0, "color": "orange"},
-        {"name": "Noční služba",     "sequence": 30, "time_from": 20.0, "time_to": 8.0,  "color": "purple"},
-        {"name": "Víkendová služba", "sequence": 40, "time_from": 10.0, "time_to": 18.0, "color": "pink"},
-        {"name": "Zavřeno",          "sequence": 90, "color": "red", "is_note": True},
+    # Zdrojovy jazyk je anglictina, stejne jako u sablon — cestina, nemcina
+    # a rustina se dopisuji jako preklady. Kdyby se zakladalo cesky, byla by
+    # cestina zdroj a anglicky preklad by ho prepsal.
+    PREKLADY = {
+        "Morning shift":   ("Ranní služba",     "Vormittagsdienst", "Утренняя смена"),
+        "Afternoon shift": ("Odpolední služba", "Nachmittagsdienst", "Дневная смена"),
+        "Night shift":     ("Noční služba",     "Nachtdienst",      "Ночная смена"),
+        "Weekend shift":   ("Víkendová služba", "Wochenenddienst",  "Смена в выходные"),
+        "Closed":          ("Zavřeno",          "Geschlossen",      "Закрыто"),
+    }
+    zaznamy = Type.create([
+        {"name": "Morning shift",   "sequence": 10, "time_from": 8.0,  "time_to": 14.0, "color": "green"},
+        {"name": "Afternoon shift", "sequence": 20, "time_from": 14.0, "time_to": 20.0, "color": "orange"},
+        {"name": "Night shift",     "sequence": 30, "time_from": 20.0, "time_to": 8.0,  "color": "purple"},
+        {"name": "Weekend shift",   "sequence": 40, "time_from": 10.0, "time_to": 18.0, "color": "pink"},
+        {"name": "Closed",          "sequence": 90, "color": "red", "is_note": True},
     ])
+    for zaznam in zaznamy:
+        cesky, nemecky, rusky = PREKLADY[zaznam.name]
+        zaznam.with_context(lang="cs_CZ").name = cesky
+        zaznam.with_context(lang="de_DE").name = nemecky
+        zaznam.with_context(lang="ru_RU").name = rusky
 
 
 def _seed_doctors(env):

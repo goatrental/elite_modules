@@ -1,0 +1,562 @@
+[
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Garantka veterinární kliniky · chirurgie měkkých tkání a interní medicína",
+  "en": "Professional guarantor of the clinic · soft tissue surgery and internal medicine",
+  "de": "Fachliche Garantin der Klinik · Weichteilchirurgie und innere Medizin",
+  "ru": "Профессиональный гарант клиники · хирургия мягких тканей и внутренние болезни"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "badge",
+  "cs": "Odborná garantka",
+  "en": "Professional guarantor",
+  "de": "Fachliche Garantin",
+  "ru": "Профессиональный гарант"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Jako garantka kliniky dohlíží na odborný standard poskytované péče, kontinuitu léčebných postupů a další rozvoj týmu. Její profesní profil spojuje zkušenosti z klinického provozu, terénní veterinární služby, chirurgického sálu i zahraničních stáží. Díky zkušenostem z terénu i chirurgického sálu spojuje systematický přístup s rychlým a rozhodným jednáním při řešení komplexních případů.",
+  "en": "As the clinic's guarantor she oversees the professional standard of care, the continuity of treatment procedures and the further development of the team. Her professional profile combines experience from clinical practice, mobile veterinary service, the operating theatre and placements abroad. Thanks to experience both in the field and in the operating theatre she combines a systematic approach with quick, decisive action when handling complex cases.",
+  "de": "Als Garantin der Klinik wacht sie über den fachlichen Standard der Versorgung, die Kontinuität der Behandlungsabläufe und die Weiterentwicklung des Teams. Ihr Berufsprofil verbindet Erfahrung aus dem Klinikbetrieb, dem mobilen tierärztlichen Dienst, dem Operationssaal sowie Auslandspraktika. Dank Erfahrung sowohl im Außendienst als auch im OP verbindet sie einen systematischen Ansatz mit schnellem und entschlossenem Handeln bei komplexen Fällen.",
+  "ru": "Как гарант клиники она следит за профессиональным стандартом оказываемой помощи, преемственностью лечебных процедур и дальнейшим развитием команды. Её профессиональный профиль объединяет опыт клинической работы, выездной ветеринарной службы, операционной и зарубежных стажировок. Благодаря опыту как в поле, так и в операционной она сочетает системный подход с быстрыми и решительными действиями при решении сложных случаев."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Veterinární sestra",
+  "en": "Veterinary nurse",
+  "de": "Veterinärassistentin",
+  "ru": "Ветеринарная медсестра"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Do kliniky přináší praktické zkušenosti z veterinárního provozu ordinace malých zvířat, kde se aktivně pohybovala již před zahájením odborného studia a následně v jeho průběhu. Její profesní přínos stojí na klinické asistenci, organizaci práce a klidné komunikaci v náročných situacích.",
+  "en": "She brings practical experience from the everyday running of a small animal practice, where she was already actively involved before starting her professional studies and then throughout them. Her professional contribution rests on clinical assistance, work organisation and calm communication in demanding situations.",
+  "de": "Sie bringt praktische Erfahrung aus dem Betrieb einer Kleintierpraxis mit, in der sie bereits vor Beginn ihres Fachstudiums und anschließend während des Studiums aktiv tätig war. Ihre Stärken liegen in der klinischen Assistenz, der Arbeitsorganisation und der ruhigen Kommunikation in anspruchsvollen Situationen.",
+  "ru": "Она приносит практический опыт из работы в ветеринарной практике для мелких животных, где активно участвовала ещё до начала профессионального обучения и затем во время него. Её сильные стороны — клиническая ассистенция, организация работы и спокойная коммуникация в сложных ситуациях."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Recepce a klientský servis / sestra · se zaměřením na pohybový aparát zvířat",
+  "en": "Reception and client service / nurse · focused on the animal musculoskeletal system",
+  "de": "Rezeption und Kundenservice / Assistentin · mit Schwerpunkt auf dem Bewegungsapparat der Tiere",
+  "ru": "Ресепшн и клиентский сервис / медсестра · с упором на опорно-двигательный аппарат животных"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Propojuje dlouholetou praxi v obchodním servisu a administrativě s odborným zájmem o zdraví zvířat, rehabilitaci, výživu a první pomoc. Na recepci zajišťuje klientský servis a organizační podporu s odborným přesahem do péče o zvířata.",
+  "en": "She combines many years of experience in commercial service and administration with a professional interest in animal health, rehabilitation, nutrition and first aid. At the reception she provides client service and organisational support with a professional grounding in animal care.",
+  "de": "Sie verbindet langjährige Erfahrung im Vertriebsservice und in der Verwaltung mit fachlichem Interesse an Tiergesundheit, Rehabilitation, Ernährung und Erster Hilfe. An der Rezeption sorgt sie für Kundenservice und organisatorische Unterstützung mit fachlichem Bezug zur Tierbetreuung.",
+  "ru": "Она сочетает многолетний опыт в торговом сервисе и администрировании с профессиональным интересом к здоровью животных, реабилитации, питанию и первой помощи. На ресепшене обеспечивает клиентский сервис и организационную поддержку с профессиональным уклоном в уход за животными."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Provoz a management kliniky · veterinární technik",
+  "en": "Clinic operations and management · veterinary technician",
+  "de": "Betrieb und Management der Klinik · Veterinärtechnikerin",
+  "ru": "Управление и менеджмент клиники · ветеринарный техник"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Spojuje odborné zázemí z veterinární praxe s projektovým a operativním řízením. Zkušenosti vrchní a sálové sestry doplňuje praxe projektové manažerky z mezinárodního prostředí; v ELITE VET odpovídá za koordinaci provozu, týmové procesy, vybavení a další rozvoj služeb.",
+  "en": "She combines a professional background in veterinary practice with project and operational management. Her experience as a head nurse and theatre nurse is complemented by work as a project manager in an international environment; at ELITE VET she is responsible for coordinating operations, team processes, equipment and the further development of services.",
+  "de": "Sie verbindet einen fachlichen Hintergrund aus der tierärztlichen Praxis mit Projekt- und Betriebsführung. Ihre Erfahrung als Ober- und OP-Schwester wird durch die Tätigkeit als Projektmanagerin in einem internationalen Umfeld ergänzt; bei ELITE VET verantwortet sie die Koordination des Betriebs, die Teamprozesse, die Ausstattung und die Weiterentwicklung der Leistungen.",
+  "ru": "Она сочетает профессиональную базу из ветеринарной практики с проектным и оперативным управлением. Её опыт старшей и операционной медсестры дополняется работой проектным менеджером в международной среде; в ELITE VET она отвечает за координацию работы, командные процессы, оснащение и дальнейшее развитие услуг."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Veterinární lékařka · interní medicína, všeobecná a akutní chirurgie, péče o kritické pacienty",
+  "en": "Veterinarian · internal medicine, general and emergency surgery, critical patient care",
+  "de": "Tierärztin · innere Medizin, allgemeine und Notfallchirurgie, Versorgung kritischer Patienten",
+  "ru": "Ветеринарный врач · внутренние болезни, общая и неотложная хирургия, уход за критическими пациентами"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Její odborné směřování stojí na akutní medicíně, chirurgii a péči o kritické pacienty. Praktické zkušenosti získávala při nočních službách, pohotovostní péči i během zahraniční stáže a dále je rozvíjí na renomovaném pracovišti AAvet.",
+  "en": "Her professional focus rests on emergency medicine, surgery and the care of critical patients. She gained practical experience on night shifts, in emergency care and during a placement abroad, and continues to develop it at the renowned AAvet practice.",
+  "de": "Ihr fachlicher Schwerpunkt liegt auf Notfallmedizin, Chirurgie und der Versorgung kritischer Patienten. Praktische Erfahrung sammelte sie in Nachtdiensten, in der Notfallversorgung und während eines Auslandspraktikums und entwickelt sie an der renommierten Einrichtung AAvet weiter.",
+  "ru": "Её профессиональное направление — неотложная медицина, хирургия и уход за критическими пациентами. Практический опыт она получала на ночных дежурствах, в неотложной помощи и во время зарубежной стажировки, а сейчас развивает его в известной клинике AAvet."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Veterinární sestra",
+  "en": "Veterinary nurse",
+  "de": "Veterinärassistentin",
+  "ru": "Ветеринарная медсестра"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Ve veterinární praxi působí řadu let a zkušenosti sbírala na pracovištích v České republice i během odborné stáže v Německu. V každodenním provozu staví na pečlivosti, spolehlivosti a vstřícném přístupu k pacientům i klientům.",
+  "en": "She has worked in veterinary practice for many years, gaining experience at practices in the Czech Republic and during a professional placement in Germany. In everyday operations she relies on thoroughness, reliability and a welcoming approach to patients and clients alike.",
+  "de": "Sie ist seit vielen Jahren in der tierärztlichen Praxis tätig und sammelte Erfahrung an Einrichtungen in Tschechien sowie während eines Fachpraktikums in Deutschland. Im täglichen Betrieb setzt sie auf Sorgfalt, Zuverlässigkeit und einen zugewandten Umgang mit Patienten und Kunden.",
+  "ru": "Она работает в ветеринарной практике много лет, накапливая опыт на рабочих местах в Чехии и во время профессиональной стажировки в Германии. В повседневной работе она опирается на тщательность, надёжность и заботливый подход как к пациентам, так и к клиентам."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Veterinární lékařka · interní medicína, akutní stavy a oftalmologie",
+  "en": "Veterinarian · internal medicine, emergency conditions and ophthalmology",
+  "de": "Tierärztin · innere Medizin, akute Zustände und Ophthalmologie",
+  "ru": "Ветеринарный врач · внутренние болезни, неотложные состояния и офтальмология"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Po absolvování Veterinární univerzity nastoupila bezprostředně na renomovanou referenční kliniku s nepřetržitým provozem. Zde získala intenzivní zkušenosti s akutními život ohrožujícími stavy a náročnými případy interní medicíny; současně systematicky rozvíjí zaměření na oftalmologii malých zvířat.",
+  "en": "After graduating from the University of Veterinary Sciences she joined a renowned round-the-clock referral clinic straight away. There she gained intensive experience with acute life-threatening conditions and demanding internal medicine cases; at the same time she is systematically developing a focus on small animal ophthalmology.",
+  "de": "Nach dem Abschluss der Veterinärmedizinischen Universität begann sie unmittelbar an einer renommierten Überweisungsklinik mit Rund-um-die-Uhr-Betrieb. Dort sammelte sie intensive Erfahrung mit akuten, lebensbedrohlichen Zuständen und anspruchsvollen Fällen der inneren Medizin; zugleich baut sie systematisch ihren Schwerpunkt in der Ophthalmologie der Kleintiere aus.",
+  "ru": "После окончания Ветеринарного университета она сразу поступила в известную референсную клинику круглосуточного режима. Там она получила интенсивный опыт работы с острыми, угрожающими жизни состояниями и сложными случаями внутренних болезней; одновременно систематически развивает специализацию в офтальмологии мелких животных."
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "role",
+  "cs": "Veterinární lékařka · pohotovostní a intenzivní péče, ultrasonografie a stomatologie",
+  "en": "Veterinarian · emergency and intensive care, ultrasonography and dentistry",
+  "de": "Tierärztin · Notfall- und Intensivmedizin, Ultrasonografie und Zahnheilkunde",
+  "ru": "Ветеринарный врач · неотложная и интенсивная помощь, ультрасонография и стоматология"
+ },
+ {
+  "model": "elite.vet.team.member",
+  "pole": "perex",
+  "cs": "Profesně se zaměřuje na urgentní a intenzivní péči, vnitřní lékařství, pokročilou diagnostiku a veterinární stomatologii. Má zkušenosti s vedením pohotovostních směn a řešením komplikovaných akutních, infekčních i neurologických stavů.",
+  "en": "Professionally she focuses on emergency and intensive care, internal medicine, advanced diagnostics and veterinary dentistry. She has experience leading emergency shifts and handling complicated acute, infectious and neurological conditions.",
+  "de": "Ihr fachlicher Schwerpunkt liegt auf Notfall- und Intensivmedizin, innerer Medizin, fortgeschrittener Diagnostik und tierärztlicher Zahnheilkunde. Sie hat Erfahrung in der Leitung von Notdiensten und in der Behandlung komplizierter akuter, infektiöser und neurologischer Zustände.",
+  "ru": "Профессионально специализируется на неотложной и интенсивной помощи, внутренних болезнях, продвинутой диагностике и ветеринарной стоматологии. Имеет опыт руководства дежурными сменами и ведения сложных острых, инфекционных и неврологических состояний."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Fakulta veterinárního lékařství VETUNI Brno.",
+  "en": "Faculty of Veterinary Medicine, VETUNI Brno.",
+  "de": "Fakultät für Veterinärmedizin, VETUNI Brünn.",
+  "ru": "Факультет ветеринарной медицины VETUNI Брно."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Fakulta veterinárního lékařství VETUNI Brno.",
+  "en": "Faculty of Veterinary Medicine, VETUNI Brno.",
+  "de": "Fakultät für Veterinärmedizin, VETUNI Brünn.",
+  "ru": "Факультет ветеринарной медицины VETUNI Брно."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Veterinární univerzita v Brně.",
+  "en": "University of Veterinary Sciences Brno.",
+  "de": "Veterinärmedizinische Universität Brünn.",
+  "ru": "Университет ветеринарных наук в Брно."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Univerzita agronomických věd a veterinární medicíny v Bukurešti.",
+  "en": "University of Agronomic Sciences and Veterinary Medicine in Bucharest.",
+  "de": "Universität für Agrarwissenschaften und Veterinärmedizin Bukarest.",
+  "ru": "Университет агрономических наук и ветеринарной медицины в Бухаресте."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Obor Veterinářství / Veterinární sestra na European College Pilsen.",
+  "en": "Veterinary Studies / Veterinary Nursing at European College Pilsen.",
+  "de": "Studiengang Veterinärwesen / Veterinärassistentin am European College Pilsen.",
+  "ru": "Специальность «Ветеринария / ветеринарная медсестра» в European College Pilsen."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Střední zemědělská škola v Dalovicích — obor Agropodnikání.",
+  "en": "Secondary Agricultural School in Dalovice — Agricultural Business.",
+  "de": "Landwirtschaftliche Fachschule in Dalovice — Studiengang Agrarunternehmen.",
+  "ru": "Средняя сельскохозяйственная школа в Даловице — специальность «Агропредпринимательство»."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Vysoká škola obchodní v Praze (Bc.); odborné předměty na TRIVIS — Nemoci zvířat a instrumentář, Chov, výživa a dietetika zvířat.",
+  "en": "University of Business in Prague (Bc.); specialist subjects at TRIVIS — Animal Diseases and Instruments, Animal Breeding, Nutrition and Dietetics.",
+  "de": "Hochschule für Wirtschaft in Prag (Bc.); Fachfächer an der TRIVIS — Tierkrankheiten und Instrumentarium, Tierzucht, Ernährung und Diätetik.",
+  "ru": "Высшая школа коммерции в Праге (бакалавр); профильные предметы в TRIVIS — болезни животных и инструментарий, разведение, питание и диетология животных."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Obor Veterinární technik.",
+  "en": "Veterinary Technician programme.",
+  "de": "Studiengang Veterinärtechnikerin.",
+  "ru": "Специальность «Ветеринарный техник»."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "PremiumVet Praha — chirurgie, interní medicína a výjezdová veterinární služba. Zahraniční zkušenosti zahrnují tříměsíční stáž na veterinární klinice v Tromsø v Norsku a šestiměsíční chirurgickou stáž v Centru São Vicente na Kapverdách.",
+  "en": "PremiumVet Prague — surgery, internal medicine and mobile veterinary service. Her international experience includes a three-month placement at a veterinary clinic in Tromsø, Norway, and a six-month surgical placement at the São Vicente Centre in Cape Verde.",
+  "de": "PremiumVet Prag — Chirurgie, innere Medizin und mobiler tierärztlicher Dienst. Zu den Auslandserfahrungen zählen ein dreimonatiges Praktikum an einer Tierklinik in Tromsø, Norwegen, und ein sechsmonatiges chirurgisches Praktikum im Zentrum São Vicente auf den Kapverden.",
+  "ru": "PremiumVet Прага — хирургия, внутренние болезни и выездная ветеринарная служба. Зарубежный опыт включает трёхмесячную стажировку в ветеринарной клинике в Тромсё (Норвегия) и шестимесячную хирургическую стажировку в центре São Vicente на Кабо-Верде."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Noční služby jako veterinární asistentka v Brně, zahraniční stáž ve Veterinární nemocnici Shirayamachó v Japonsku a klinická i noční pohotovostní péče na AAvet.",
+  "en": "Night shifts as a veterinary assistant in Brno, a placement abroad at the Shirayamachó Veterinary Hospital in Japan, and clinical and night emergency care at AAvet.",
+  "de": "Nachtdienste als Veterinärassistentin in Brünn, ein Auslandspraktikum am Tierkrankenhaus Shirayamachó in Japan sowie klinische und nächtliche Notfallversorgung bei AAvet.",
+  "ru": "Ночные дежурства в качестве ветеринарного ассистента в Брно, зарубежная стажировка в ветеринарной больнице Shirayamachó в Японии, а также клиническая и ночная неотложная помощь в AAvet."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Referenční klinika s nepřetržitým provozem se zaměřením na akutní medicínu a náročné interní případy. Zkušenosti s drobnými savci získávala na specializované klinice Jekl & Hauptman v Brně.",
+  "en": "A round-the-clock referral clinic focused on emergency medicine and demanding internal cases. She gained her experience with small mammals at the specialised Jekl & Hauptman clinic in Brno.",
+  "de": "Eine Überweisungsklinik mit Rund-um-die-Uhr-Betrieb mit Schwerpunkt auf Notfallmedizin und anspruchsvollen internistischen Fällen. Erfahrung mit Kleinsäugern sammelte sie an der spezialisierten Klinik Jekl & Hauptman in Brünn.",
+  "ru": "Референсная клиника круглосуточного режима с упором на неотложную медицину и сложные терапевтические случаи. Опыт работы с мелкими млекопитающими она получила в специализированной клинике Jekl & Hauptman в Брно."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Vedení pohotovostních směn, řešení krizových, infekčních a neurologických stavů.",
+  "en": "Leading emergency shifts, handling critical, infectious and neurological conditions.",
+  "de": "Leitung von Notdiensten, Behandlung kritischer, infektiöser und neurologischer Zustände.",
+  "ru": "Руководство дежурными сменами, ведение критических, инфекционных и неврологических состояний."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Aktivní odborná činnost ve veterinárním provozu ordinace malých zvířat před zahájením i během studia.",
+  "en": "Active professional work in a small animal practice both before and during her studies.",
+  "de": "Aktive fachliche Tätigkeit im Betrieb einer Kleintierpraxis vor und während des Studiums.",
+  "ru": "Активная профессиональная деятельность в ветеринарной практике для мелких животных до начала и во время учёбы."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Dlouholetá veterinární praxe, odborná stáž v Německu, zkušenosti z Veterinární kliniky Kleisslova v Plzni a z pracoviště Altavet v Praze.",
+  "en": "Many years of veterinary practice, a professional placement in Germany, and experience from the Kleisslova Veterinary Clinic in Pilsen and the Altavet practice in Prague.",
+  "de": "Langjährige tierärztliche Praxis, ein Fachpraktikum in Deutschland, Erfahrung aus der Tierklinik Kleisslova in Pilsen und der Einrichtung Altavet in Prag.",
+  "ru": "Многолетняя ветеринарная практика, профессиональная стажировка в Германии, опыт в Ветеринарной клинике Kleisslova в Пльзени и в клинике Altavet в Праге."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Dlouholetá praxe v obchodním servisu a administrativě; odborné znalosti v rehabilitaci, fyzioterapii, výživě a první pomoci psů.",
+  "en": "Many years of experience in commercial service and administration; specialist knowledge of canine rehabilitation, physiotherapy, nutrition and first aid.",
+  "de": "Langjährige Erfahrung im Vertriebsservice und in der Verwaltung; Fachkenntnisse in Rehabilitation, Physiotherapie, Ernährung und Erster Hilfe für Hunde.",
+  "ru": "Многолетний опыт в торговом сервисе и администрировании; профессиональные знания в области реабилитации, физиотерапии, питания и первой помощи собакам."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Zkušenosti jako vrchní a sálová sestra se zaměřením na ortopedii, chirurgii, diagnostické zobrazovací metody a pooperační rehabilitaci; praxe projektové manažerky v mezinárodním prostředí.",
+  "en": "Experience as a head nurse and theatre nurse focused on orthopaedics, surgery, diagnostic imaging and post-operative rehabilitation; work as a project manager in an international environment.",
+  "de": "Erfahrung als Ober- und OP-Schwester mit Schwerpunkt auf Orthopädie, Chirurgie, bildgebender Diagnostik und postoperativer Rehabilitation; Tätigkeit als Projektmanagerin in einem internationalen Umfeld.",
+  "ru": "Опыт работы старшей и операционной медсестрой с упором на ортопедию, хирургию, методы диагностической визуализации и послеоперационную реабилитацию; работа проектным менеджером в международной среде."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Chirurgie měkkých tkání a interní medicína.",
+  "en": "Soft tissue surgery and internal medicine.",
+  "de": "Weichteilchirurgie und innere Medizin.",
+  "ru": "Хирургия мягких тканей и внутренние болезни."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Všeobecná a akutní chirurgie, řešení akutních stavů a management kritických pacientů. Provádí preventivní chirurgické zákroky a v rámci pohotovostních služeb se zdokonaluje také v akutní chirurgii včetně operačního řešení GDV / torze žaludku.",
+  "en": "General and emergency surgery, management of acute conditions and of critical patients. She performs preventive surgical procedures and, during emergency shifts, is also developing her emergency surgery skills including the surgical management of GDV / gastric torsion.",
+  "de": "Allgemeine und Notfallchirurgie, Behandlung akuter Zustände und Management kritischer Patienten. Sie führt präventive chirurgische Eingriffe durch und vervollkommnet sich im Notdienst auch in der Notfallchirurgie einschließlich der operativen Behandlung der Magendrehung (GDV).",
+  "ru": "Общая и неотложная хирургия, ведение острых состояний и критических пациентов. Выполняет профилактические хирургические вмешательства, а во время дежурств совершенствуется также в неотложной хирургии, включая оперативное лечение GDV / заворота желудка."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Interní medicína psů, koček a drobných savců.",
+  "en": "Internal medicine of dogs, cats and small mammals.",
+  "de": "Innere Medizin bei Hunden, Katzen und Kleinsäugern.",
+  "ru": "Внутренние болезни собак, кошек и мелких млекопитающих."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Urgentní a intenzivní péče, vnitřní lékařství, ultrasonografie včetně protokolů AFAST a TFAST, radiologická diagnostika a veterinární stomatologie včetně chirurgických stomatologických zákroků.",
+  "en": "Emergency and intensive care, internal medicine, ultrasonography including the AFAST and TFAST protocols, radiological diagnostics and veterinary dentistry including surgical dental procedures.",
+  "de": "Notfall- und Intensivmedizin, innere Medizin, Ultrasonografie einschließlich der Protokolle AFAST und TFAST, radiologische Diagnostik und tierärztliche Zahnheilkunde einschließlich chirurgischer zahnmedizinischer Eingriffe.",
+  "ru": "Неотложная и интенсивная помощь, внутренние болезни, ультрасонография, включая протоколы AFAST и TFAST, лучевая диагностика и ветеринарная стоматология, включая хирургические стоматологические вмешательства."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Asistence u vyšetřovacích a chirurgických výkonů, péče o hospitalizované pacienty, laboratorní práce, krizová komunikace a organizace práce.",
+  "en": "Assisting with examinations and surgical procedures, care of hospitalised patients, laboratory work, communication in critical situations and work organisation.",
+  "de": "Assistenz bei Untersuchungen und chirurgischen Eingriffen, Betreuung stationärer Patienten, Laborarbeit, Krisenkommunikation und Arbeitsorganisation.",
+  "ru": "Ассистирование при обследованиях и хирургических вмешательствах, уход за стационарными пациентами, лабораторная работа, кризисная коммуникация и организация работы."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Certifikace pro nakládání s veterinárními léčivými přípravky, pokročilá znalost systému WinVet a péče o pacienty.",
+  "en": "Certification for handling veterinary medicinal products, advanced knowledge of the WinVet system and patient care.",
+  "de": "Zertifizierung für den Umgang mit Tierarzneimitteln, fortgeschrittene Kenntnisse des Systems WinVet und Patientenbetreuung.",
+  "ru": "Сертификация по обращению с ветеринарными лекарственными препаратами, продвинутое знание системы WinVet и уход за пациентами."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Měkké techniky v rehabilitaci zvířat Level I., Dornova metoda pro psy a První pomoc pro psy.",
+  "en": "Soft techniques in animal rehabilitation Level I, the Dorn method for dogs, and canine first aid.",
+  "de": "Sanfte Techniken in der Tierrehabilitation Level I, die Dorn-Methode für Hunde und Erste Hilfe für Hunde.",
+  "ru": "«Мягкие техники в реабилитации животных» уровень I, метод Дорна для собак и «Первая помощь собакам»."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Kompletní řízení kliniky, plánování provozu a efektivita týmu, výběr a nákup moderního přístrojového vybavení, komunikace s partnery a dodavateli, rozvoj portfolia služeb, zavádění interních systémů a podmínky pro vysoký standard péče i spokojenost personálu.",
+  "en": "Complete management of the clinic, operational planning and team efficiency, selection and purchase of modern equipment, communication with partners and suppliers, development of the service portfolio, introduction of internal systems, and creating the conditions for a high standard of care and staff satisfaction.",
+  "de": "Umfassende Leitung der Klinik, Betriebsplanung und Teameffizienz, Auswahl und Beschaffung moderner Geräteausstattung, Kommunikation mit Partnern und Lieferanten, Ausbau des Leistungsportfolios, Einführung interner Systeme sowie Rahmenbedingungen für einen hohen Versorgungsstandard und die Zufriedenheit des Personals.",
+  "ru": "Полное управление клиникой, планирование работы и эффективность команды, выбор и закупка современного приборного оснащения, коммуникация с партнёрами и поставщиками, развитие портфеля услуг, внедрение внутренних систем и создание условий для высокого стандарта помощи и удовлетворённости персонала."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Ucelený specializační cyklus Chirurgie měkkých tkání pod hlavičkou VetCoaching.",
+  "en": "The complete Soft Tissue Surgery specialisation course run by VetCoaching.",
+  "de": "Ein vollständiger Spezialisierungszyklus Weichteilchirurgie unter der Leitung von VetCoaching.",
+  "ru": "Полный цикл специализации по хирургии мягких тканей под эгидой VetCoaching."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Urgentní medicína, chirurgie, onkologie a urologie; kurzy a semináře Péče o akutního a kritického pacienta, CPR u psa a kočky (MVDr. Novák) a chirurgické trendy u očních onemocnění (MVDr. Renata Stavinohová). Plánuje účast na odborném semináři Akutní pacient pod vedením MVDr. Raušerové.",
+  "en": "Emergency medicine, surgery, oncology and urology; courses and seminars on the Care of Acute and Critical Patients, CPR in dogs and cats (MVDr. Novák) and surgical trends in eye diseases (MVDr. Renata Stavinohová). She plans to attend the Acute Patient seminar led by MVDr. Raušerová.",
+  "de": "Notfallmedizin, Chirurgie, Onkologie und Urologie; Kurse und Seminare zur Versorgung des akuten und kritischen Patienten, CPR bei Hund und Katze (Dr. Novák) und chirurgische Trends bei Augenerkrankungen (Dr. Renata Stavinohová). Geplant ist die Teilnahme am Fachseminar Akutpatient unter der Leitung von Dr. Raušerová.",
+  "ru": "Неотложная медицина, хирургия, онкология и урология; курсы и семинары «Уход за острым и критическим пациентом», СЛР у собак и кошек (д-р Новак) и хирургические тренды при глазных заболеваниях (д-р Рената Ставинохова). Планирует участие в профессиональном семинаре «Острый пациент» под руководством д-ра Раушеровой."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Oftalmologie v praxi malých zvířat (VetCoaching, Žilina), Understanding Ophthalmology (Jablonec nad Nisou), praktický workshop diagnostiky slepoty u psů a koček na akademii Medipet; dále gastroenterologie, urologie koček a urgentní medicína.",
+  "en": "Ophthalmology in small animal practice (VetCoaching, Žilina), Understanding Ophthalmology (Jablonec nad Nisou), a practical workshop on diagnosing blindness in dogs and cats at the Medipet academy; also gastroenterology, feline urology and emergency medicine.",
+  "de": "Ophthalmologie in der Kleintierpraxis (VetCoaching, Žilina), Understanding Ophthalmology (Jablonec nad Nisou), ein praktischer Workshop zur Diagnostik der Erblindung bei Hund und Katze an der Medipet-Akademie; außerdem Gastroenterologie, Urologie der Katze und Notfallmedizin.",
+  "ru": "Офтальмология в практике мелких животных (VetCoaching, Жилина), Understanding Ophthalmology (Яблонец-над-Нисоу), практический воркшоп по диагностике слепоты у собак и кошек в академии Medipet; а также гастроэнтерология, урология кошек и неотложная медицина."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Certifikovaný program Abdominal Ultrasonography in Companion Animals (Zet Diagnostic), Fundamentals of Veterinary Dentistry (Vetakademos) a Veterinary Dental Prosthetics (RSVD).",
+  "en": "The certified Abdominal Ultrasonography in Companion Animals programme (Zet Diagnostic), Fundamentals of Veterinary Dentistry (Vetakademos) and Veterinary Dental Prosthetics (RSVD).",
+  "de": "Zertifiziertes Programm Abdominal Ultrasonography in Companion Animals (Zet Diagnostic), Fundamentals of Veterinary Dentistry (Vetakademos) und Veterinary Dental Prosthetics (RSVD).",
+  "ru": "Сертифицированная программа Abdominal Ultrasonography in Companion Animals (Zet Diagnostic), Fundamentals of Veterinary Dentistry (Vetakademos) и Veterinary Dental Prosthetics (RSVD)."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Ucelená řada workshopů Veterinární sestra I.–III. na klinice Jaggy v Praze.",
+  "en": "The complete Veterinary Nurse I–III workshop series at the Jaggy clinic in Prague.",
+  "de": "Eine vollständige Workshop-Reihe Veterinärassistentin I–III an der Klinik Jaggy in Prag.",
+  "ru": "Полный цикл воркшопов «Ветеринарная медсестра I–III» в клинике Jaggy в Праге."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Pečlivost, vřelý přístup k pacientům a spolehlivost při zajištění hladkého chodu ordinace.",
+  "en": "Thoroughness, a warm approach to patients and reliability in keeping the practice running smoothly.",
+  "de": "Sorgfalt, ein herzlicher Umgang mit den Patienten und Zuverlässigkeit bei der Gewährleistung eines reibungslosen Praxisbetriebs.",
+  "ru": "Тщательность, тёплый подход к пациентам и надёжность в обеспечении бесперебойной работы клиники."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Polština B2, němčina B1, angličtina A2.",
+  "en": "Polish B2, German B1, English A2.",
+  "de": "Polnisch B2, Deutsch B1, Englisch A2.",
+  "ru": "Польский B2, немецкий B1, английский A2."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Kurz radiační ochrany OZARO, Veterinární sestra — partner v krizových situacích, Hill's Vet Academy, Royal Canin Academy a odborné semináře zaměřené na neurologickou péči u MVDr. Aleše Tomka, DipECVN.",
+  "en": "The OZARO radiation protection course, Veterinary Nurse — a partner in critical situations, Hill's Vet Academy, Royal Canin Academy, and specialist seminars on neurological care with MVDr. Aleš Tomek, DipECVN.",
+  "de": "OZARO-Kurs für Strahlenschutz, Veterinärassistentin — Partnerin in Krisensituationen, Hill's Vet Academy, Royal Canin Academy und Fachseminare zur neurologischen Versorgung bei Dr. Aleš Tomek, DipECVN.",
+  "ru": "Курс радиационной защиты OZARO, «Ветеринарная медсестра — партнёр в кризисных ситуациях», Hill's Vet Academy, Royal Canin Academy и профессиональные семинары по неврологической помощи у д-ра Алеша Томека, DipECVN."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Angličtina.",
+  "en": "English.",
+  "de": "Englisch.",
+  "ru": "Английский."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Angličtina B2, španělština A2, japonština N4.",
+  "en": "English B2, Spanish A2, Japanese N4.",
+  "de": "Englisch B2, Spanisch A2, Japanisch N4.",
+  "ru": "Английский B2, испанский A2, японский N4."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Angličtina.",
+  "en": "English.",
+  "de": "Englisch.",
+  "ru": "Английский."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Plynulá angličtina.",
+  "en": "Fluent English.",
+  "de": "Fließendes Englisch.",
+  "ru": "Свободный английский."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Dlouholeté zkušenosti z manažerských pozic a sociálních služeb; spolehlivost, klid v krizových situacích a empatická komunikace s majiteli zvířat.",
+  "en": "Many years of experience in management positions and social services; reliability, calm in critical situations and empathetic communication with animal owners.",
+  "de": "Langjährige Erfahrung in Führungspositionen und im Sozialwesen; Zuverlässigkeit, Ruhe in Krisensituationen und einfühlsame Kommunikation mit Tierhaltern.",
+  "ru": "Многолетний опыт на руководящих должностях и в социальных службах; надёжность, спокойствие в кризисных ситуациях и эмпатичное общение с владельцами животных."
+ },
+ {
+  "model": "elite.vet.team.fact",
+  "pole": "value",
+  "cs": "Plynulá angličtina.",
+  "en": "Fluent English.",
+  "de": "Fließendes Englisch.",
+  "ru": "Свободный английский."
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Vzdělání",
+  "en": "Education",
+  "de": "Ausbildung",
+  "ru": "Образование"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Praxe",
+  "en": "Experience",
+  "de": "Praxis",
+  "ru": "Опыт"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Specializace",
+  "en": "Specialisation",
+  "de": "Spezialisierung",
+  "ru": "Специализация"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Další vzdělávání",
+  "en": "Further training",
+  "de": "Weiterbildung",
+  "ru": "Дополнительное образование"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Jazyky",
+  "en": "Languages",
+  "de": "Sprachen",
+  "ru": "Языки"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Praxe a zaměření",
+  "en": "Experience and focus",
+  "de": "Praxis und Schwerpunkt",
+  "ru": "Опыт и направление"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Zaměření",
+  "en": "Focus",
+  "de": "Schwerpunkt",
+  "ru": "Направление"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Dovednosti",
+  "en": "Skills",
+  "de": "Fähigkeiten",
+  "ru": "Навыки"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Náplň práce",
+  "en": "Responsibilities",
+  "de": "Aufgaben",
+  "ru": "Обязанности"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Další zkušenosti",
+  "en": "Other experience",
+  "de": "Weitere Erfahrung",
+  "ru": "Дополнительный опыт"
+ },
+ {
+  "model": "elite.vet.team.fact.label",
+  "pole": "name",
+  "cs": "Profesní přístup",
+  "en": "Professional approach",
+  "de": "Berufliche Haltung",
+  "ru": "Профессиональный подход"
+ },
+ {
+  "model": "elite.vet.team.section",
+  "pole": "name",
+  "cs": "Veterinární lékařky",
+  "en": "Veterinarians",
+  "de": "Tierärztinnen",
+  "ru": "Ветеринарные врачи"
+ },
+ {
+  "model": "elite.vet.team.section",
+  "pole": "name",
+  "cs": "Veterinární sestry",
+  "en": "Veterinary nurses",
+  "de": "Veterinärassistentinnen",
+  "ru": "Ветеринарные медсёстры"
+ },
+ {
+  "model": "elite.vet.team.section",
+  "pole": "name",
+  "cs": "Recepce a klientský servis",
+  "en": "Reception and client service",
+  "de": "Rezeption & Kundenservice",
+  "ru": "Ресепшн и клиентский сервис"
+ },
+ {
+  "model": "elite.vet.team.section",
+  "pole": "name",
+  "cs": "Provoz a management",
+  "en": "Operations and management",
+  "de": "Betrieb & Management",
+  "ru": "Управление и менеджмент"
+ }
+]

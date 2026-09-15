@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Ikony, ktere modul zaklada pri instalaci. 3D emoji z Microsoft
+         Fluent Emoji (MIT licence, volne pouzitelne i komercne).
+
+         noupdate="1" schvalne: upgrade modulu nesmi prepsat nazev, ktery si
+         klinika zmenila, ani vratit ikonu, kterou schovala. Vlastni ikony si
+         klinika pridava v Nas tym -> Ikony, nahranim obrazku. -->
+    <data noupdate="1">
+        <record id="icon_dentistry" model="elite.vet.team.icon">
+            <field name="name">Zub</field>
+            <field name="sequence">10</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/dentistry.png"/>
+        </record>
+        <record id="icon_eye" model="elite.vet.team.icon">
+            <field name="name">Oko</field>
+            <field name="sequence">20</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/eye.png"/>
+        </record>
+        <record id="icon_gloves" model="elite.vet.team.icon">
+            <field name="name">Rukavice</field>
+            <field name="sequence">30</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/gloves.png"/>
+        </record>
+        <record id="icon_scissors" model="elite.vet.team.icon">
+            <field name="name">Nůžky</field>
+            <field name="sequence">32</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/scissors.png"/>
+        </record>
+        <record id="icon_needle" model="elite.vet.team.icon">
+            <field name="name">Jehla a nit</field>
+            <field name="sequence">34</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/needle.png"/>
+        </record>
+        <record id="icon_labcoat" model="elite.vet.team.icon">
+            <field name="name">Plášť</field>
+            <field name="sequence">36</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/labcoat.png"/>
+        </record>
+        <record id="icon_medical" model="elite.vet.team.icon">
+            <field name="name">Lékařský znak</field>
+            <field name="sequence">38</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/medical.png"/>
+        </record>
+        <record id="icon_ultrasound" model="elite.vet.team.icon">
+            <field name="name">Sonda</field>
+            <field name="sequence">40</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/ultrasound.png"/>
+        </record>
+        <record id="icon_internal" model="elite.vet.team.icon">
+            <field name="name">Srdce anatomické</field>
+            <field name="sequence">50</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/internal.png"/>
+        </record>
+        <record id="icon_lungs" model="elite.vet.team.icon">
+            <field name="name">Plíce</field>
+            <field name="sequence">52</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/lungs.png"/>
+        </record>
+        <record id="icon_brain" model="elite.vet.team.icon">
+            <field name="name">Mozek</field>
+            <field name="sequence">54</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/brain.png"/>
+        </record>
+        <record id="icon_bone" model="elite.vet.team.icon">
+            <field name="name">Kost</field>
+            <field name="sequence">56</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/bone.png"/>
+        </record>
+        <record id="icon_blood" model="elite.vet.team.icon">
+            <field name="name">Kapka krve</field>
+            <field name="sequence">58</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/blood.png"/>
+        </record>
+        <record id="icon_stethoscope" model="elite.vet.team.icon">
+            <field name="name">Stetoskop</field>
+            <field name="sequence">60</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/stethoscope.png"/>
+        </record>
+        <record id="icon_emergency" model="elite.vet.team.icon">
+            <field name="name">Maják</field>
+            <field name="sequence">62</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/emergency.png"/>
+        </record>
+        <record id="icon_ambulance" model="elite.vet.team.icon">
+            <field name="name">Sanitka</field>
+            <field name="sequence">64</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/ambulance.png"/>
+        </record>
+        <record id="icon_crutch" model="elite.vet.team.icon">
+            <field name="name">Berle</field>
+            <field name="sequence">66</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/crutch.png"/>
+        </record>
+        <record id="icon_prevention" model="elite.vet.team.icon">
+            <field name="name">Injekce</field>
+            <field name="sequence">70</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/prevention.png"/>
+        </record>
+        <record id="icon_pill" model="elite.vet.team.icon">
+            <field name="name">Tableta</field>
+            <field name="sequence">72</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/pill.png"/>
+        </record>
+        <record id="icon_thermometer" model="elite.vet.team.icon">
+            <field name="name">Teploměr</field>
+            <field name="sequence">74</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/thermometer.png"/>
+        </record>
+        <record id="icon_bandage" model="elite.vet.team.icon">
+            <field name="name">Náplast</field>
+            <field name="sequence">76</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/bandage.png"/>
+        </record>
+        <record id="icon_dermatology" model="elite.vet.team.icon">
+            <field name="name">Lahvička</field>
+            <field name="sequence">78</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/dermatology.png"/>
+        </record>
+        <record id="icon_diagnostics" model="elite.vet.team.icon">
+            <field name="name">Mikroskop</field>
+            <field name="sequence">90</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/diagnostics.png"/>
+        </record>
+        <record id="icon_lab" model="elite.vet.team.icon">
+            <field name="name">Zkumavka</field>
+            <field name="sequence">92</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/lab.png"/>
+        </record>
+        <record id="icon_dna" model="elite.vet.team.icon">
+            <field name="name">DNA</field>
+            <field name="sequence">94</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/dna.png"/>
+        </record>
+        <record id="icon_microbe" model="elite.vet.team.icon">
+            <field name="name">Mikrob</field>
+            <field name="sequence">96</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/microbe.png"/>
+        </record>
+        <record id="icon_magnifier" model="elite.vet.team.icon">
+            <field name="name">Lupa</field>
+            <field name="sequence">98</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/magnifier.png"/>
+        </record>
+        <record id="icon_dog" model="elite.vet.team.icon">
+            <field name="name">Pes</field>
+            <field name="sequence">110</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/dog.png"/>
+        </record>
+        <record id="icon_guide_dog" model="elite.vet.team.icon">
+            <field name="name">Vodicí pes</field>
+            <field name="sequence">112</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/guide_dog.png"/>
+        </record>
+        <record id="icon_service_dog" model="elite.vet.team.icon">
+            <field name="name">Asistenční pes</field>
+            <field name="sequence">114</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/service_dog.png"/>
+        </record>
+        <record id="icon_cat" model="elite.vet.team.icon">
+            <field name="name">Kočka</field>
+            <field name="sequence">116</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/cat.png"/>
+        </record>
+        <record id="icon_small_mammals" model="elite.vet.team.icon">
+            <field name="name">Králík</field>
+            <field name="sequence">118</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/small_mammals.png"/>
+        </record>
+        <record id="icon_hamster" model="elite.vet.team.icon">
+            <field name="name">Křeček</field>
+            <field name="sequence">120</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/hamster.png"/>
+        </record>
+        <record id="icon_mouse" model="elite.vet.team.icon">
+            <field name="name">Myš</field>
+            <field name="sequence">122</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/mouse.png"/>
+        </record>
+        <record id="icon_rat" model="elite.vet.team.icon">
+            <field name="name">Potkan</field>
+            <field name="sequence">124</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/rat.png"/>
+        </record>
+        <record id="icon_hedgehog" model="elite.vet.team.icon">
+            <field name="name">Ježek</field>
+            <field name="sequence">126</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/hedgehog.png"/>
+        </record>
+        <record id="icon_bird" model="elite.vet.team.icon">
+            <field name="name">Pták</field>
+            <field name="sequence">128</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/bird.png"/>
+        </record>
+        <record id="icon_parrot" model="elite.vet.team.icon">
+            <field name="name">Papoušek</field>
+            <field name="sequence">130</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/parrot.png"/>
+        </record>
+        <record id="icon_reptile" model="elite.vet.team.icon">
+            <field name="name">Želva</field>
+            <field name="sequence">132</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/reptile.png"/>
+        </record>
+        <record id="icon_snake" model="elite.vet.team.icon">
+            <field name="name">Had</field>
+            <field name="sequence">134</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/snake.png"/>
+        </record>
+        <record id="icon_lizard" model="elite.vet.team.icon">
+            <field name="name">Ještěrka</field>
+            <field name="sequence">136</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/lizard.png"/>
+        </record>
+        <record id="icon_fish" model="elite.vet.team.icon">
+            <field name="name">Ryba</field>
+            <field name="sequence">138</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/fish.png"/>
+        </record>
+        <record id="icon_frog" model="elite.vet.team.icon">
+            <field name="name">Žába</field>
+            <field name="sequence">140</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/frog.png"/>
+        </record>
+        <record id="icon_butterfly" model="elite.vet.team.icon">
+            <field name="name">Motýl</field>
+            <field name="sequence">142</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/butterfly.png"/>
+        </record>
+        <record id="icon_horse" model="elite.vet.team.icon">
+            <field name="name">Kůň</field>
+            <field name="sequence">144</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/horse.png"/>
+        </record>
+        <record id="icon_cow" model="elite.vet.team.icon">
+            <field name="name">Kráva</field>
+            <field name="sequence">146</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/cow.png"/>
+        </record>
+        <record id="icon_pig" model="elite.vet.team.icon">
+            <field name="name">Prase</field>
+            <field name="sequence">148</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/pig.png"/>
+        </record>
+        <record id="icon_sheep" model="elite.vet.team.icon">
+            <field name="name">Ovce</field>
+            <field name="sequence">150</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/sheep.png"/>
+        </record>
+        <record id="icon_goat" model="elite.vet.team.icon">
+            <field name="name">Koza</field>
+            <field name="sequence">152</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/goat.png"/>
+        </record>
+        <record id="icon_paw" model="elite.vet.team.icon">
+            <field name="name">Tlapky</field>
+            <field name="sequence">154</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/paw.png"/>
+        </record>
+        <record id="icon_heart" model="elite.vet.team.icon">
+            <field name="name">Srdce</field>
+            <field name="sequence">170</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/heart.png"/>
+        </record>
+        <record id="icon_mending_heart" model="elite.vet.team.icon">
+            <field name="name">Srdce s náplastí</field>
+            <field name="sequence">172</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/mending_heart.png"/>
+        </record>
+        <record id="icon_sparkles" model="elite.vet.team.icon">
+            <field name="name">Jiskřičky</field>
+            <field name="sequence">174</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/sparkles.png"/>
+        </record>
+        <record id="icon_handshake" model="elite.vet.team.icon">
+            <field name="name">Podání ruky</field>
+            <field name="sequence">176</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/handshake.png"/>
+        </record>
+        <record id="icon_shield" model="elite.vet.team.icon">
+            <field name="name">Štít</field>
+            <field name="sequence">178</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/shield.png"/>
+        </record>
+        <record id="icon_star" model="elite.vet.team.icon">
+            <field name="name">Hvězda</field>
+            <field name="sequence">180</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/star.png"/>
+        </record>
+        <record id="icon_trophy" model="elite.vet.team.icon">
+            <field name="name">Pohár</field>
+            <field name="sequence">182</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/trophy.png"/>
+        </record>
+        <record id="icon_hospital" model="elite.vet.team.icon">
+            <field name="name">Nemocnice</field>
+            <field name="sequence">200</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/hospital.png"/>
+        </record>
+        <record id="icon_house" model="elite.vet.team.icon">
+            <field name="name">Dům</field>
+            <field name="sequence">202</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/house.png"/>
+        </record>
+        <record id="icon_clipboard" model="elite.vet.team.icon">
+            <field name="name">Podložka</field>
+            <field name="sequence">204</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/clipboard.png"/>
+        </record>
+        <record id="icon_calendar" model="elite.vet.team.icon">
+            <field name="name">Kalendář</field>
+            <field name="sequence">206</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/calendar.png"/>
+        </record>
+        <record id="icon_clock" model="elite.vet.team.icon">
+            <field name="name">Budík</field>
+            <field name="sequence">208</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/clock.png"/>
+        </record>
+        <record id="icon_bell" model="elite.vet.team.icon">
+            <field name="name">Zvonek</field>
+            <field name="sequence">210</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/bell.png"/>
+        </record>
+        <record id="icon_phone" model="elite.vet.team.icon">
+            <field name="name">Telefon</field>
+            <field name="sequence">212</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/phone.png"/>
+        </record>
+        <record id="icon_mail" model="elite.vet.team.icon">
+            <field name="name">Obálka</field>
+            <field name="sequence">214</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/mail.png"/>
+        </record>
+        <record id="icon_car" model="elite.vet.team.icon">
+            <field name="name">Auto</field>
+            <field name="sequence">216</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/car.png"/>
+        </record>
+        <record id="icon_camera" model="elite.vet.team.icon">
+            <field name="name">Fotoaparát</field>
+            <field name="sequence">218</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/camera.png"/>
+        </record>
+        <record id="icon_graduation" model="elite.vet.team.icon">
+            <field name="name">Absolventská čepice</field>
+            <field name="sequence">220</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/graduation.png"/>
+        </record>
+        <record id="icon_books" model="elite.vet.team.icon">
+            <field name="name">Knihy</field>
+            <field name="sequence">222</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/books.png"/>
+        </record>
+        <record id="icon_briefcase" model="elite.vet.team.icon">
+            <field name="name">Aktovka</field>
+            <field name="sequence">224</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/briefcase.png"/>
+        </record>
+        <record id="icon_scale" model="elite.vet.team.icon">
+            <field name="name">Váha</field>
+            <field name="sequence">226</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/scale.png"/>
+        </record>
+        <record id="icon_ruler" model="elite.vet.team.icon">
+            <field name="name">Pravítko</field>
+            <field name="sequence">228</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/ruler.png"/>
+        </record>
+        <record id="icon_bulb" model="elite.vet.team.icon">
+            <field name="name">Žárovka</field>
+            <field name="sequence">230</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/bulb.png"/>
+        </record>
+        <record id="icon_soap" model="elite.vet.team.icon">
+            <field name="name">Mýdlo</field>
+            <field name="sequence">232</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/soap.png"/>
+        </record>
+        <record id="icon_shower" model="elite.vet.team.icon">
+            <field name="name">Sprcha</field>
+            <field name="sequence">234</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/shower.png"/>
+        </record>
+        <record id="icon_broom" model="elite.vet.team.icon">
+            <field name="name">Koště</field>
+            <field name="sequence">236</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/broom.png"/>
+        </record>
+        <record id="icon_knife" model="elite.vet.team.icon">
+            <field name="name">Nůž</field>
+            <field name="sequence">260</field>
+            <field name="image" type="base64" file="elite_vet_team/static/src/img/spec/knife.png"/>
+        </record>
+    </data>
+</odoo>
