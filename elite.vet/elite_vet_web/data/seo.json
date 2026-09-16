@@ -1,0 +1,77 @@
+[
+ {
+  "stranka": "website.homepage_page",
+  "title": {
+   "en_US": "Veterinary clinic Karlovy Vary — Elite Vet",
+   "cs_CZ": "Veterinární klinika Karlovy Vary — Elite Vet",
+   "de_DE": "Tierklinik Karlovy Vary — Elite Vet",
+   "ru_RU": "Ветеринарная клиника Карловы Вары — Elite Vet"
+  },
+  "description": {
+   "en_US": "Elite Vet veterinary clinic, Karlovy Vary — modern care for dogs, cats and small mammals: prevention, surgery, internal medicine, diagnostics, dentistry and ophthalmology. Extended opening hours including weekends.",
+   "cs_CZ": "Veterinární klinika Elite Vet Karlovy Vary — moderní péče o psy, kočky a drobné savce: prevence, chirurgie, interní medicína, diagnostika, stomatologie i oftalmologie. Rozšířená provozní doba včetně víkendů.",
+   "de_DE": "Tierklinik Elite Vet in Karlovy Vary — moderne Versorgung für Hunde, Katzen, Kleinsäuger: Chirurgie, innere Medizin, Diagnostik, Zahnheilkunde, Ophthalmologie.",
+   "ru_RU": "Ветеринарная клиника Elite Vet в Карловых Варах — помощь собакам, кошкам и мелким млекопитающим: хирургия, терапия, диагностика, стоматология, офтальмология."
+  }
+ },
+ {
+  "stranka": "elite_vet_web.rezervace_page",
+  "title": {
+   "en_US": "Book an appointment | Elite Vet Karlovy Vary",
+   "cs_CZ": "Rezervace termínu | Elite Vet Karlovy Vary",
+   "de_DE": "Termin buchen | Elite Vet Karlovy Vary",
+   "ru_RU": "Запись на приём | Elite Vet Карловы Вары"
+  },
+  "description": {
+   "en_US": "Book online at the Elite Vet veterinary clinic in Karlovy Vary. Choose a free appointment with our doctors, or call the reception. Answers to the most common questions before your visit.",
+   "cs_CZ": "Objednejte se online do veterinární kliniky Elite Vet v Karlových Varech. Vyberte si volný termín u našich lékařů, nebo zavolejte na recepci. Odpovědi na nejčastější otázky před návštěvou.",
+   "de_DE": "Buchen Sie online in der Tierklinik Elite Vet in Karlovy Vary. Wählen Sie einen freien Termin bei unseren Ärzten oder rufen Sie die Rezeption an. Antworten auf die häufigsten Fragen vor Ihrem Besuch.",
+   "ru_RU": "Запишитесь онлайн в ветеринарную клинику Elite Vet в Карловых Варах. Выберите свободное время у наших врачей или позвоните на ресепшн. Ответы на частые вопросы перед визитом."
+  }
+ },
+ {
+  "stranka": "elite_vet_web.cenik_page",
+  "title": {
+   "en_US": "Price list | Elite Vet Karlovy Vary",
+   "cs_CZ": "Ceník | Elite Vet Karlovy Vary",
+   "de_DE": "Preisliste | Elite Vet Karlovy Vary",
+   "ru_RU": "Прайс-лист | Elite Vet Карловы Вары"
+  },
+  "description": {
+   "en_US": "Price list of the Elite Vet veterinary clinic in Karlovy Vary — vaccination of dogs, cats and rabbits, clinical examination, nail trimming and expression of anal glands. We always tell you the final price before the treatment.",
+   "cs_CZ": "Ceník veterinární kliniky Elite Vet Karlovy Vary — vakcinace psů, koček a králíků, klinické vyšetření, stříhání drápků a vymačkání análních žlázek. Konečnou cenu vždy sdělíme před ošetřením.",
+   "de_DE": "Preisliste der Tierklinik Elite Vet Karlovy Vary — Impfung von Hunden, Katzen und Kaninchen, klinische Untersuchung, Krallenschneiden und Ausdrücken der Analdrüsen. Den Endpreis nennen wir immer vor der Behandlung.",
+   "ru_RU": "Прайс-лист ветеринарной клиники Elite Vet в Карловых Варах — вакцинация собак, кошек и кроликов, клинический осмотр, стрижка когтей и чистка параанальных желёз. Итоговую цену мы всегда сообщаем до лечения."
+  }
+ },
+ {
+  "stranka": "elite_vet_calendar.rozpis_lekaru_page",
+  "title": {
+   "en_US": "Duty schedule | Elite Vet Karlovy Vary",
+   "cs_CZ": "Rozpis služeb | Elite Vet Karlovy Vary",
+   "de_DE": "Dienstplan | Elite Vet Karlovy Vary",
+   "ru_RU": "График работы | Elite Vet Карловы Вары"
+  },
+  "description": {
+   "en_US": "Duty schedule of the Elite Vet veterinary clinic in Karlovy Vary — a monthly calendar with morning and afternoon shifts and the weekend shifts of our doctors.",
+   "cs_CZ": "Rozpis ordinačních služeb veterinární kliniky Elite Vet Karlovy Vary — měsíční kalendář s ranní a odpolední službou a s víkendovými službami našich lékařek.",
+   "de_DE": "Dienstplan der Tierklinik Elite Vet Karlovy Vary — Monatskalender mit Vormittags- und Nachmittagsdienst sowie den Wochenenddiensten unserer Ärztinnen.",
+   "ru_RU": "График работы ветеринарной клиники Elite Vet в Карловых Варах — месячный календарь с утренними и дневными сменами и с выходными сменами наших врачей."
+  }
+ },
+ {
+  "stranka": "elite_vet_team.nas_tym_page",
+  "title": {
+   "en_US": "Our team | Elite Vet Karlovy Vary",
+   "cs_CZ": "Náš tým | Elite Vet Karlovy Vary",
+   "de_DE": "Unser Team | Elite Vet Karlovy Vary",
+   "ru_RU": "Наша команда | Elite Vet Карловы Вары"
+  },
+  "description": {
+   "en_US": "The team opening the Elite Vet veterinary clinic in Karlovy Vary — veterinarians, veterinary nurses, client service and management. Education, experience, specialisation and languages of the whole team.",
+   "cs_CZ": "Tým, který otevírá veterinární kliniku Elite Vet v Karlových Varech — veterinární lékařky, veterinární sestry, klientský servis a management. Vzdělání, praxe, specializace a jazyky celého týmu.",
+   "de_DE": "Das Team, das die Tierklinik Elite Vet in Karlovy Vary eröffnet — Tierärztinnen, tiermedizinische Fachangestellte, Kundenservice und Management. Ausbildung, Praxis, Spezialisierung und Sprachen des gesamten Teams.",
+   "ru_RU": "Команда, которая открывает ветеринарную клинику Elite Vet в Карловых Варах — ветеринарные врачи, медсёстры, клиентский сервис и менеджмент. Образование, опыт, специализация и языки всей команды."
+  }
+ }
+]

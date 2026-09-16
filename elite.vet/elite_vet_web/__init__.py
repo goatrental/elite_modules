@@ -135,6 +135,7 @@ def _pri_instalaci(env):
     from .models.seed import seed_galerie, seed_obsah
     _priradit_stranky_k_webu(env)
     _nastav_homepage(env)
+    _nastav_seo(env)
     _seed_sluzby(env)
     seed_galerie(env)
     seed_obsah(env)
@@ -208,3 +209,45 @@ def _nastav_homepage(env):
         "webum, takze to necham na cloveku: Nastaveni -> Technicke -> Web -> "
         "Stranky, najit '/' webu Elite Vet a v poli Zobrazeni vybrat "
         "elite_vet_web.homepage.")
+
+
+def _nastav_seo(env):
+    """Zapise SEO titulek a popis na zaznamy stranek, ve vsech ctyrech jazycich.
+
+    Odoo bere meta popis z pole `website_meta_description` na zaznamu stranky,
+    ne z `<t t-set="meta_description">` v sablone — ten tise ignoruje. Stranky
+    proto zadny popis do vyhledavacu nemely, ani cesky.
+
+    Texty se neberou z hlavy: jsou to tytez vety, ktere uz v sablonach jsou,
+    i s preklady z i18n/*.po. Vytazene jsou v data/seo.json.
+
+    Vyplnene pole se nikdy neprepisuje — co si klinika napsala, zustane.
+    """
+    import json
+    import os
+
+    cesta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "seo.json")
+    if not os.path.exists(cesta):
+        _logger.warning("SEO: soubor %s nenalezen, preskakuji.", cesta)
+        return
+    with open(cesta, encoding="utf-8") as soubor:
+        stranky = json.load(soubor)
+
+    # en_US je zdroj, ne jeden z jazyku: zapisuje se prvni, jinak by ostatni
+    # jazyky bez vlastniho prekladu zdedily to, co se do nej napsalo naposled.
+    PORADI = ["en_US", "cs_CZ", "de_DE", "ru_RU"]
+    zapsano = 0
+    for radek in stranky:
+        stranka = env.ref(radek["stranka"], raise_if_not_found=False)
+        if not stranka:
+            continue
+        for pole, hodnoty in (("website_meta_title", radek.get("title") or {}),
+                              ("website_meta_description", radek.get("description") or {})):
+            if (stranka[pole] or "").strip():
+                continue                      # klinika uz si to vyplnila
+            for jazyk in PORADI:
+                text = hodnoty.get(jazyk)
+                if text:
+                    stranka.with_context(lang=jazyk)[pole] = text
+            zapsano += 1
+    _logger.info("SEO: doplneno %s hodnot na strankach.", zapsano)

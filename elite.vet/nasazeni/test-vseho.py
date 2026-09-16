@@ -436,6 +436,28 @@ for start, cil, ocekavano in (("/de", "/cs", "cs-CZ"), ("/en", "/cs", "cs-CZ"),
                               ("/de", "/ru", "ru-RU")):
     mam = prejdi([start, cil])
     krok("z %s na %s prepne na %s" % (start, cil, ocekavano), mam == ocekavano, mam)
+
+print("\n===== 16. SEO TITULEK A POPIS =====")
+# Odoo bere meta popis ze zaznamu stranky, ne z <t t-set="meta_description">
+# v sablone — ten tise ignoruje. Stranky proto dlouho zadny popis nemely.
+import re
+
+for cesta, jazyk, znacka in (("/", "cs-CZ,cs", "cs"), ("/de/", "de-DE,de", "de"),
+                             ("/en/", "en-US,en", "en"), ("/ru/", "ru-RU,ru", "ru"),
+                             ("/cenik", "cs-CZ,cs", "cs"), ("/de/cenik", "de-DE,de", "de"),
+                             ("/ru/rozpis-lekaru", "ru-RU,ru", "ru"),
+                             ("/en/nas-tym", "en-US,en", "en")):
+    html = stahni(cesta, jazyk)
+    titulek = (re.search(r"<title>([^<]*)</title>", html) or [None, ""])[1]
+    popis = (re.search(r'<meta name="description" content="([^"]*)"', html) or [None, ""])[1]
+    krok("%s (%s): ma titulek" % (cesta, znacka), bool(titulek.strip()), titulek[:60])
+    krok("%s (%s): ma meta popis" % (cesta, znacka), len(popis.strip()) > 40, popis[:60])
+    if znacka == "ru":
+        krok("%s: popis je v azbuce" % cesta,
+             any("\u0400" <= z <= "\u04ff" for z in popis), popis[:60])
+    if znacka == "de":
+        krok("%s: popis neni cesky" % cesta,
+             "služb" not in popis.lower() and "lékař" not in popis.lower(), popis[:60])
 print("\n===== SHRNUTI =====")
 prosle = sum(1 for ok, _, _ in vysledky if ok)
 print("proslo %s z %s kontrol" % (prosle, len(vysledky)))

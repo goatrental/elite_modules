@@ -145,8 +145,18 @@ docker compose exec -i odoo odoo shell -c /etc/odoo/odoo.conf -d DATABAZE \
     --no-http < nasazeni/test-vseho.py
 ```
 
-Na lokále hlásí **119 z 119 kontrol**. Skript po sobě uklízí, ale sahá do ostrých
+Na lokále hlásí **139 z 139 kontrol**. Skript po sobě uklízí, ale sahá do ostrých
 dat — pouštěj ho až po záloze.
+
+Druhá kontrola se dívá na to, co člověk opravdu vidí — titulek v záložce,
+meta popis pro vyhledávače a text stránky ve všech čtyřech jazycích:
+
+```bash
+node nasazeni/kontrola-stranek.js https://www.elite-vet.cz
+```
+
+Na lokále hlásí **0 problémů z 20 kombinací**. Na ostrém webu před nasazením
+hlásila 26 problémů — co přesně opraví nasazení, je v tabulce níž.
 
 Ověř taky, že se u jazyka v adrese vrací i správný `<html lang>` — skript to
 kontroluje sám, protože bez hlavičky `Accept-Language` Odoo vrací angličtinu
@@ -176,6 +186,21 @@ a přepni tam a zpátky.
 kteří mají specializaci vyplněnou na kartě v **Náš tým → Členové týmu**
 (a lékařka musí mít kartu přiřazenou). Zatím je nemá nikdo, takže po nasazení
 to vypadá stejně jako dnes, dokud je klinika nedoplní.
+
+## Co je dnes na ostrém webu rozbité a nasazení to spraví
+
+Změřeno na www.elite-vet.cz skriptem `kontrola-stranek.js` (26 problémů):
+
+| co | kde | po nasazení |
+|---|---|---|
+| chybí meta popis pro vyhledávače | `/rezervacni-system`, `/cenik`, `/rozpis-lekaru`, `/nas-tym` ve všech 4 jazycích | doplní se sám při instalaci (hook `_nastav_seo`) |
+| titulek stránky je česky i v cizích jazycích | `/cenik` na `/de`, `/en`, `/ru`; `/nas-tym` a `/rezervacni-system` na `/ru` | titulky jsou v šabloně a přeložené v `i18n/*.po` |
+| názvy směn a poznámky jsou česky ve všech jazycích | `/rozpis-lekaru` na `/de`, `/en`, `/ru` | doplní krok 4 (`preklady-dat.py`) |
+
+Meta popis Odoo bere z pole `website_meta_description` na **záznamu stránky**,
+ne z `<t t-set="meta_description">` v šabloně — ten tiše ignoruje. Proto ho
+zapisuje instalační hook, ve všech čtyřech jazycích, a **už vyplněné pole
+nikdy nepřepíše** — co si klinika napsala sama, zůstane.
 
 ## Na co si dát pozor později
 
