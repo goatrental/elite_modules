@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="gelato_delivery.DeliverySwitch">
+        <div t-if="state.loaded" class="o_gelato_switch"
+             t-att-class="{ 'o_gelato_switch_off': !state.enabled, 'o_gelato_switch_closed': state.enabled and !state.openNow }">
+            <div class="o_gelato_switch_main">
+                <span class="o_gelato_switch_title">Rozvoz</span>
+                <label class="o_gelato_switch_toggle" t-att-title="labels.toggle">
+                    <input type="checkbox"
+                           t-att-checked="state.enabled"
+                           t-on-change="onToggle"/>
+                    <span class="o_gelato_switch_slider"/>
+                </label>
+                <span class="o_gelato_switch_state" t-esc="statusLabel"/>
+            </div>
+            <div class="o_gelato_switch_hours">
+                <span class="o_gelato_switch_hours_label" t-esc="labels.from"/>
+                <input type="time" class="o_gelato_switch_time"
+                       t-att-value="state.from"
+                       t-on-change="(ev) => this.onHoursChange('from', ev)"/>
+                <span class="o_gelato_switch_hours_label" t-esc="labels.to"/>
+                <input type="time" class="o_gelato_switch_time"
+                       t-att-value="state.to"
+                       t-on-change="(ev) => this.onHoursChange('to', ev)"/>
+                <span class="o_gelato_switch_hint" t-esc="labels.hint"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="gelato_delivery.BoardWithSwitch" t-inherit="web.KanbanView" t-inherit-mode="primary">
+        <xpath expr="//t[@t-component='props.Renderer']" position="before">
+            <GelatoDeliverySwitch/>
+        </xpath>
+    </t>
+
+</templates>

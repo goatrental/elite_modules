@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_gelato_delivery" model="ir.ui.view">
+        <field name="name">res.config.settings.form.gelato.delivery</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='website_info_settings']" position="after">
+                <block title="Delivery settings" name="gelato_delivery_settings">
+                    <!-- The on/off switch and the ordering hours deliberately
+                         live on the Today's menu board instead. The shop staff
+                         have no access to this page, and they are the ones who
+                         need to close the delivery. -->
+                    <setting id="gelato_delivery_email_setting"
+                             string="Email for orders"
+                             help="Where new delivery orders are sent.">
+                        <field name="gelato_delivery_email" placeholder="gelatokv@seznam.cz"/>
+                    </setting>
+                    <setting id="gelato_delivery_fee_setting"
+                             string="Delivery"
+                             help="The delivery fee and the amount above which it is free. Leave zeros if you always deliver for free.">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="gelato_delivery_fee" string="Delivery fee (CZK)" class="col-lg-5 o_light_label"/>
+                                <field name="gelato_delivery_fee"/>
+                            </div>
+                            <div class="row">
+                                <label for="gelato_delivery_fee_vat_rate" string="Delivery VAT (%)" class="col-lg-5 o_light_label"/>
+                                <field name="gelato_delivery_fee_vat_rate"/>
+                            </div>
+                            <div class="row">
+                                <label for="gelato_delivery_free_from" string="Free from (CZK)" class="col-lg-5 o_light_label"/>
+                                <field name="gelato_delivery_free_from"/>
+                            </div>
+                            <div class="row">
+                                <label for="gelato_delivery_fee_base" string="Apply threshold" class="col-lg-5 o_light_label"/>
+                                <field name="gelato_delivery_fee_base"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="gelato_delivery_min_days_setting"
+                             string="Earliest possible slot"
+                             help="How many days ahead customers must order. 0 means they can order for today.">
+                        <field name="gelato_delivery_min_days"/>
+                    </setting>
+                    <setting id="gelato_delivery_promo_note_setting"
+                             string="Note above the promo code"
+                             help="A short line above the promo code field. An empty field hides the note.">
+                        <field name="gelato_delivery_promo_note" placeholder="Got a code from Instagram? Enter it here."/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
