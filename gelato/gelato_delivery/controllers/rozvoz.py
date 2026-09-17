@@ -1,10 +1,19 @@
 import re
 from datetime import timedelta
 
+import werkzeug.exceptions
+
 from odoo import _, fields, http
 from odoo.http import request
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+def _sitemap_rozvoz(env, rule, qs):
+    """Keep /rozvoz out of the sitemap of websites it does not belong to."""
+    if not env["website"].get_current_website().gelato_delivery_site:
+        return []
+    return None
 
 
 class GelatoRozvoz(http.Controller):
@@ -14,7 +23,19 @@ class GelatoRozvoz(http.Controller):
     is read and written through sudo(). In exchange, everything that arrives
     from the browser is validated again here - the price is always worked out
     on the server and never taken from the form.
+
+    Every route here first checks that delivery belongs to the website being
+    asked. A route is registered once per database, so without that check the
+    gelateria's order form would answer on every other website in the same
+    database - flavours, prices and all.
     """
+
+    def _delivery_website(self):
+        """The website asking, but only if delivery lives on it."""
+        website = request.website
+        if not website or not website.gelato_delivery_site:
+            raise werkzeug.exceptions.NotFound()
+        return website
 
     # ------------------------------------------------------------------
     # Data for the page
@@ -84,9 +105,10 @@ class GelatoRozvoz(http.Controller):
         type="http",
         auth="public",
         website=True,
-        sitemap=True,
+        sitemap=_sitemap_rozvoz,
     )
     def rozvoz(self, **kwargs):
+        self._delivery_website()
         return request.render("gelato_delivery.rozvoz", self._page_values())
 
     # ------------------------------------------------------------------
@@ -100,6 +122,7 @@ class GelatoRozvoz(http.Controller):
         methods=["POST"],
     )
     def overit_kod(self, code=None, **kwargs):
+        self._delivery_website()
         promo = request.env["gelato.promo.code"].sudo().find_valid(code)
         if not promo:
             return {
@@ -125,6 +148,7 @@ class GelatoRozvoz(http.Controller):
         methods=["POST"],
     )
     def overit_adresu(self, address=None, postcode=None, **kwargs):
+        self._delivery_website()
         result = self._locate_address(address, postcode)
         zone = result["zone"]
 
@@ -219,7 +243,7 @@ class GelatoRozvoz(http.Controller):
         methods=["POST"],
     )
     def objednat(self, **payload):
-        website = request.website
+        website = self._delivery_website()
         if not website.gelato_delivery_enabled:
             return {"success": False, "error": _("Delivery is paused right now.")}
 

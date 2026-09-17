@@ -17,6 +17,13 @@ class Website(models.Model):
         help="When switched off, the /rozvoz page stays but shows a notice "
         "instead of the order form.",
     )
+    gelato_delivery_site = fields.Boolean(
+        string="Delivery lives on this website",
+        default=False,
+        help="Only the website with this ticked serves the /rozvoz page. "
+        "One database can host several websites and the gelateria's delivery "
+        "has no business appearing on somebody else's site.",
+    )
     gelato_order_from = fields.Float(
         string="Orders from",
         default=11.0,

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 09:21+0000\n"
-"PO-Revision-Date: 2026-09-17 09:21+0000\n"
+"POT-Creation-Date: 2026-09-17 10:38+0000\n"
+"PO-Revision-Date: 2026-09-17 10:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1079,6 +1079,12 @@ msgid "Delivery is running"
 msgstr ""
 
 #. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_delivery_site
+#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_delivery_site
+msgid "Delivery lives on this website"
+msgstr ""
+
+#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
 msgid "Delivery order"
 msgstr ""
@@ -1958,6 +1964,13 @@ msgid "One bullet per line..."
 msgstr ""
 
 #. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid ""
+"One database can host several websites. Only the one ticked here answers on "
+"/rozvoz."
+msgstr ""
+
+#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
 msgid "One of the extras is no longer available."
@@ -1976,6 +1989,15 @@ msgstr ""
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_zone__color
 msgid "Only so you can tell the zones apart while drawing."
+msgstr ""
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_site
+#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_site
+msgid ""
+"Only the website with this ticked serves the /rozvoz page. One database can "
+"host several websites and the gelateria's delivery has no business appearing"
+" on somebody else's site."
 msgstr ""
 
 #. module: gelato_delivery
@@ -2576,6 +2598,11 @@ msgstr ""
 msgid ""
 "The delivery fee and the amount above which it is free. Leave zeros if you "
 "always deliver for free."
+msgstr ""
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "The delivery page belongs to this website."
 msgstr ""
 
 #. module: gelato_delivery

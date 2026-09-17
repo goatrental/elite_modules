@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 09:21+0000\n"
-"PO-Revision-Date: 2026-09-17 09:21+0000\n"
+"POT-Creation-Date: 2026-09-17 10:38+0000\n"
+"PO-Revision-Date: 2026-09-17 10:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1257,6 +1257,12 @@ msgid "Delivery is running"
 msgstr "Rozvoz zapnutý"
 
 #. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_delivery_site
+#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_delivery_site
+msgid "Delivery lives on this website"
+msgstr "Rozvoz patří k tomuhle webu"
+
+#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
 msgid "Delivery order"
 msgstr "Objednávka rozvozu"
@@ -2173,6 +2179,11 @@ msgid "One bullet per line..."
 msgstr "Jedna odrážka na řádek..."
 
 #. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "One database can host several websites. Only the one ticked here answers on /rozvoz."
+msgstr "V jedné databázi může běžet víc webů. Na /rozvoz odpoví jen ten zaškrtnutý."
+
+#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
 msgid "One of the extras is no longer available."
@@ -2192,6 +2203,12 @@ msgstr "Jedna věta pod názvem na webu."
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_zone__color
 msgid "Only so you can tell the zones apart while drawing."
 msgstr "Jen abyste od sebe zóny při kreslení rozeznali."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_site
+#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_site
+msgid "Only the website with this ticked serves the /rozvoz page. One database can host several websites and the gelateria's delivery has no business appearing on somebody else's site."
+msgstr "Stránku /rozvoz obslouží jen web, který tohle má zaškrtnuté. V jedné databázi může běžet víc webů a rozvoz gelaterie nemá co dělat na cizím webu."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__delivery_postcode
@@ -2837,6 +2854,11 @@ msgid ""
 msgstr ""
 "Cena dopravy a hranice, od které je zdarma. Nechte nuly, pokud vozíte zdarma"
 " vždy."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "The delivery page belongs to this website."
+msgstr "Stránka rozvozu patří k tomuhle webu."
 
 #. module: gelato_delivery
 #. odoo-python

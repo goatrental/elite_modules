@@ -12,6 +12,11 @@
                          live on the Today's menu board instead. The shop staff
                          have no access to this page, and they are the ones who
                          need to close the delivery. -->
+                    <setting id="gelato_delivery_site_setting"
+                             title="One database can host several websites. Only the one ticked here answers on /rozvoz."
+                             help="The delivery page belongs to this website.">
+                        <field name="gelato_delivery_site"/>
+                    </setting>
                     <setting id="gelato_delivery_email_setting"
                              string="Email for orders"
                              help="Where new delivery orders are sent.">

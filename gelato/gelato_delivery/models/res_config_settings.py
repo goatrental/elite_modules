@@ -4,6 +4,10 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
+    gelato_delivery_site = fields.Boolean(
+        related="website_id.gelato_delivery_site",
+        readonly=False,
+    )
     gelato_delivery_email = fields.Char(
         related="website_id.gelato_delivery_email",
         readonly=False,

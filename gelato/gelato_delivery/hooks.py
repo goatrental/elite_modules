@@ -1,18 +1,28 @@
-from odoo import api, SUPERUSER_ID
-
 MENU_NAME = "Rozvoz"
 MENU_URL = "/rozvoz"
 
 
-def _add_menu(env):
-    """Put the delivery page into the top menu of every website.
+def _claim_website(env):
+    """Say which website the delivery belongs to.
+
+    Installing the module cannot guess, so it takes the websites that already
+    exist - on a normal install that is the one site the shop has. Anything
+    created later stays untouched and the delivery will not appear on it.
+    """
+    websites = env["website"].search([])
+    websites.write({"gelato_delivery_site": True})
+    return websites
+
+
+def _add_menu(env, websites):
+    """Put the delivery page into the top menu of the delivery websites.
 
     The menu carries ``website_id`` on purpose - a menu without it shows up on
     every website in the database, which is wrong the moment a second site is
     added here.
     """
     Menu = env["website.menu"]
-    for website in env["website"].search([]):
+    for website in websites:
         exists = Menu.search(
             [("website_id", "=", website.id), ("url", "=", MENU_URL)], limit=1
         )
@@ -44,7 +54,8 @@ def _build_customers(env):
 
 
 def post_init_hook(env):
-    _add_menu(env)
+    websites = _claim_website(env)
+    _add_menu(env, websites)
     _build_customers(env)
 
 

@@ -45,6 +45,11 @@ class Website(models.Model):
         that is why the settings screen warns about exactly that case.
         """
         domains = super()._get_blocked_third_party_domains_list()
+        # Only for a website that actually measures. Another website in the
+        # same database has nothing to do with our Google or Meta account and
+        # must not get its own scripts blocked because of us.
+        if not (self.gelato_gtm_id or self.gelato_meta_pixel_id):
+            return domains
         for domain in TRACKING_DOMAINS:
             if domain not in domains:
                 domains.append(domain)
