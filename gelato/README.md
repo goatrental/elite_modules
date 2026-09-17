@@ -74,15 +74,9 @@ docker compose exec db dropdb -U odoo gelato
 
 ## Nasazení na server
 
-Postup je stejný jako u ostatních projektů — viz `/web-to-server`. Ve zkratce:
-
-1. Zkopírovat složku `gelato/` do `extra-addons` (moduly musí být **jednu
-   úroveň** pod addons cestou, ne hlouběji).
-2. Restartovat kontejner.
-3. Nainstalovat moduly s `--addons-path`.
-4. Nastavit **odchozí poštovní server**. Bez něj neodejde ani potvrzení
-   zákazníkovi, ani přehled obchodu — Odoo je jen odloží do fronty.
-5. `theme_gelato` přiřadit webu, jinak se použije defaultní vzhled Odoo.
+Celý postup krok za krokem je v **[nasazeni/README.md](nasazeni/README.md)** —
+kopírování modulů, instalace, přiřazení tématu, odchozí pošta, co nastavit
+v Odoo a jak ověřit, že to jede.
 
 ---
 
