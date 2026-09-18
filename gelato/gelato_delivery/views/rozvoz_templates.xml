@@ -370,14 +370,16 @@
                                                    placeholder="360 05"
                                                    inputmode="numeric" autocomplete="postal-code"/>
                                         </div>
-                                        <!-- We only drive around Karlovy Vary, so the town is
-                                             not a question - it is here so the address on the
-                                             order reads in full. -->
+                                        <!-- Typed, not chosen. Most of it is Karlovy Vary,
+                                             but the villages around it are not, and a list
+                                             of one town told the customer they were in the
+                                             wrong place. Where we actually drive is settled
+                                             by the address on the map, not by this. -->
                                         <div class="gl-rz-field">
                                             <label for="gelatoCity">Town</label>
-                                            <select id="gelatoCity" name="delivery_city">
-                                                <option value="Karlovy Vary">Karlovy Vary</option>
-                                            </select>
+                                            <input type="text" id="gelatoCity" name="delivery_city"
+                                                   placeholder="Karlovy Vary"
+                                                   autocomplete="address-level2"/>
                                         </div>
                                     </div>
 

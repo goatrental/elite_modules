@@ -1963,15 +1963,6 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         margin-top: 18px;
     }
 
-    select#gelatoCity {
-        width: 100%;
-        padding: 12px 14px;
-        border: 1px solid rgba(255, 255, 255, .15);
-        border-radius: 10px;
-        background: rgba(255, 255, 255, .04);
-        color: $gl-text;
-        font: inherit;
-    }
 }
 
 @media (max-width: 768px) {
