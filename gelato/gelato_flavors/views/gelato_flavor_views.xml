@@ -36,7 +36,7 @@
                             <div class="o_gelato_tile_switch">
                                 <field name="available" widget="boolean_toggle" nolabel="1"/>
                                 <span class="o_gelato_tile_state">
-                                    <span t-if="record.available.raw_value">Churning today</span>
+                                    <span t-if="record.available.raw_value">Mixing today</span>
                                     <span t-else="">Switched off</span>
                                 </span>
                             </div>
@@ -141,7 +141,7 @@
         <field name="context">{'search_default_group_category': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiley_face">There are no flavours yet.</p>
-            <p>Flavours are created by the manager under <b>Flavours</b>. Here you only switch what was churned today.</p>
+            <p>Flavours are created by the manager under <b>Flavours</b>. Here you only switch what was mixed today.</p>
         </field>
     </record>
 

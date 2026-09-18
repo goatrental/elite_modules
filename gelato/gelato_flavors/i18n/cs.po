@@ -132,8 +132,8 @@ msgstr "Čokoláda"
 
 #. module: gelato_flavors
 #: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_view_kanban
-msgid "Churning today"
-msgstr "Dnes točíme"
+msgid "Mixing today"
+msgstr "Dnes mícháme"
 
 #. module: gelato_flavors
 #: model:gelato.flavor,name:gelato_flavors.flavor_kokos
@@ -296,7 +296,7 @@ msgstr "Příchutě"
 #: model_terms:ir.actions.act_window,help:gelato_flavors.gelato_flavor_action_board
 msgid ""
 "Flavours are created by the manager under <b>Flavours</b>. Here you only "
-"switch what was churned today."
+"switch what was mixed today."
 msgstr "Příchutě zakládá správce v menu <b>Příchutě</b>. Tady se pak už jen přepíná, co se dneska míchalo."
 
 #. module: gelato_flavors

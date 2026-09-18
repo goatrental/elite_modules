@@ -7,9 +7,9 @@
 Gelato - Flavours
 =================
 
-Gelato is churned fresh every day and the menu changes with it. This module
+Gelato is mixed fresh every day and the menu changes with it. This module
 gives the shop staff a single screen where each flavour has one button:
-**churning today / off**. Nothing else to click, nothing to save.
+**mixing today / off**. Nothing else to click, nothing to save.
 
 The flavour list is not fixed - flavours can be added, renamed or archived
 at any time without touching the website code.

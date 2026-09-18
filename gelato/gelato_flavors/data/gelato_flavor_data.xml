@@ -6,7 +6,7 @@
     staff can rename, switch or archive them and an upgrade will not undo that.
 
     available="True" is deliberate: right after installation the website has
-    something to show. The staff then switch off whatever was not churned.
+    something to show. The staff then switch off whatever was not mixed.
 -->
 <odoo noupdate="1">
 

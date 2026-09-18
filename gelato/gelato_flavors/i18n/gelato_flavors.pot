@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 08:05+0000\n"
-"PO-Revision-Date: 2026-09-18 08:05+0000\n"
+"POT-Creation-Date: 2026-09-18 14:57+0000\n"
+"PO-Revision-Date: 2026-09-18 14:57+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -127,11 +127,6 @@ msgstr ""
 #. module: gelato_flavors
 #: model:gelato.flavor,name:gelato_flavors.flavor_cokolada
 msgid "Chocolate"
-msgstr ""
-
-#. module: gelato_flavors
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_view_kanban
-msgid "Churning today"
 msgstr ""
 
 #. module: gelato_flavors
@@ -295,7 +290,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:gelato_flavors.gelato_flavor_action_board
 msgid ""
 "Flavours are created by the manager under <b>Flavours</b>. Here you only "
-"switch what was churned today."
+"switch what was mixed today."
 msgstr ""
 
 #. module: gelato_flavors
@@ -389,6 +384,11 @@ msgstr ""
 #. module: gelato_flavors
 #: model:gelato.flavor,name:gelato_flavors.flavor_mangovy_sorbet
 msgid "Mango sorbet"
+msgstr ""
+
+#. module: gelato_flavors
+#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_view_kanban
+msgid "Mixing today"
 msgstr ""
 
 #. module: gelato_flavors

@@ -92,7 +92,7 @@ V adminu **jedna aplikace Rozvoz**:
 
 | Menu | K čemu |
 |---|---|
-| Dnešní nabídka | co se dnes točí, hodiny pro objednávky, vypínač rozvozu |
+| Dnešní nabídka | co se dnes míchá, hodiny pro objednávky, vypínač rozvozu |
 | Objednávky | board, každá objednávka s obsahem a adresou |
 | Zákazníci | kontakty, sbírají se automaticky z objednávek |
 | Nastavení | zóny, termoboxy, balíčky, doplňky, slevové kódy |
