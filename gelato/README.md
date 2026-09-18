@@ -15,6 +15,17 @@ dá se nainstalovat i vynechat, nic jiného se tím nerozbije. `theme_gelato` je
 Odoo téma, takže se po instalaci musí ještě **přiřadit webu** (Web → Vzhled),
 jinak se nikde neprojeví.
 
+### Co jde na ostrý web
+
+Na gelatokv.cz **už web běží** a přidává se k němu jen rozvoz. Instaluje se
+proto **jediný modul — `gelato_delivery`**; `gelato_flavors` si Odoo doplní
+samo jako závislost. `theme_gelato` se znovu nenasazuje, `gelato_tracking`
+zatím ne.
+
+Postup je v [nasazeni/README.md](nasazeni/README.md), část A. Část B je jen
+pro zakládání celého webu na prázdné databázi — na běžícím webu by přepsala,
+co tam je.
+
 ---
 
 ## Lokální vývoj
