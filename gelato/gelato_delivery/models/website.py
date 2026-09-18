@@ -119,11 +119,27 @@ class Website(models.Model):
             hours, minutes = (hours + 1) % 24, 0
         return "%d:%02d" % (hours, minutes)
 
+    def _gelato_shop_tz(self):
+        """The gelateria's own clock.
+
+        Never the reader's. The hours say when the gelateria takes orders,
+        so somebody opening the page from Bangkok has to be told what is
+        true in Karlovy Vary. This used to take the timezone off the
+        logged-in user, which closed the page in the middle of a Czech
+        afternoon for anyone travelling - and would have done the same to
+        the shop the moment a staff account had a timezone set on it.
+
+        The company keeps the real one; Prague is the fallback, because a
+        gelateria in Karlovy Vary is not going to be anywhere else.
+        """
+        partner = self.company_id.partner_id if self.company_id else False
+        return (partner and partner.tz) or "Europe/Prague"
+
     def _gelato_local_now(self):
-        """The time in the shop, not on the server."""
+        """The time in the shop, not on the server and not on the visitor."""
         self.ensure_one()
         return fields.Datetime.context_timestamp(
-            self.with_context(tz=self.env.user.tz or "Europe/Prague"),
+            self.with_context(tz=self._gelato_shop_tz()),
             fields.Datetime.now(),
         )
 
