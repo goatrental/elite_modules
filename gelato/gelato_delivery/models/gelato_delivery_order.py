@@ -6,15 +6,6 @@ from odoo.tools.misc import format_date
 
 _logger = logging.getLogger(__name__)
 
-TIME_SLOTS = [
-    ("asap", "As soon as possible"),
-    ("11_13", "11:00 to 13:00"),
-    ("13_15", "13:00 to 15:00"),
-    ("15_17", "15:00 to 17:00"),
-    ("17_19", "17:00 to 19:00"),
-    ("19_20", "19:00 to 20:00"),
-]
-
 
 class GelatoDeliveryOrder(models.Model):
     _name = "gelato.delivery.order"
@@ -28,37 +19,6 @@ class GelatoDeliveryOrder(models.Model):
         copy=False,
         readonly=True,
         default=lambda self: _("New"),
-    )
-    stage_id = fields.Many2one(
-        comodel_name="gelato.delivery.stage",
-        string="Stage",
-        group_expand="_read_group_stage_ids",
-        default=lambda self: self._default_stage(),
-        ondelete="restrict",
-        index=True,
-        copy=False,
-        tracking=True,
-        help="Which column of the order board the order sits in.",
-    )
-    # Columns whose email has already gone out, so dragging a card back and
-    # forth does not mail the customer twice.
-    mailed_stage_ids = fields.Many2many(
-        comodel_name="gelato.delivery.stage",
-        relation="gelato_order_mailed_stage_rel",
-        column1="order_id",
-        column2="stage_id",
-        string="Columns already emailed",
-        copy=False,
-    )
-    # The same guard for text messages. Kept apart from the email list,
-    # because a column can send one, the other, or both.
-    texted_stage_ids = fields.Many2many(
-        comodel_name="gelato.delivery.stage",
-        relation="gelato_order_texted_stage_rel",
-        column1="order_id",
-        column2="stage_id",
-        string="Columns already texted",
-        copy=False,
     )
 
     # ------------------------------------------------------------------
@@ -81,6 +41,12 @@ class GelatoDeliveryOrder(models.Model):
         help="Only written down for the driver - the zone is decided by the "
         "address on the map.",
     )
+    delivery_city = fields.Char(
+        string="Town",
+        default="Karlovy Vary",
+        help="We only drive around Karlovy Vary, so the website does not "
+        "ask - it is here so the address on the order reads in full.",
+    )
     zone_id = fields.Many2one(
         comodel_name="gelato.delivery.zone",
         string="Zone",
@@ -95,12 +61,14 @@ class GelatoDeliveryOrder(models.Model):
         help="When this is off the address could not be located, the order "
         "was let through anyway and the fee needs confirming on the phone.",
     )
-    delivery_date = fields.Date(string="Delivery date", required=True, tracking=True)
-    delivery_time = fields.Selection(
-        selection=TIME_SLOTS,
-        string="Delivery time",
-        default="asap",
+    # Orders are for now, not for a slot somebody picks. The date is kept
+    # because the overviews and the customer history group by it, but nobody
+    # types it in - it is the day the order came.
+    delivery_date = fields.Date(
+        string="Ordered on",
         required=True,
+        tracking=True,
+        default=fields.Date.context_today,
     )
     note = fields.Text(
         string="Customer note",
@@ -110,22 +78,31 @@ class GelatoDeliveryOrder(models.Model):
 
     # ------------------------------------------------------------------
     # What was ordered
+    #
+    # One order is a basket. A customer buys a 1 l box for themselves and a
+    # half-litre for the neighbour, each with its own flavours, so the box
+    # cannot live on the order itself - every line is its own item.
     # ------------------------------------------------------------------
-    box_id = fields.Many2one(
-        comodel_name="gelato.delivery.box",
-        string="Thermal box",
-        required=True,
-        ondelete="restrict",
+    item_ids = fields.One2many(
+        comodel_name="gelato.delivery.order.item",
+        inverse_name="order_id",
+        string="Items",
     )
-    box_price = fields.Float(string="Box price", digits=(10, 2))
+    flavor_line_ids = fields.One2many(
+        comodel_name="gelato.delivery.order.flavor",
+        inverse_name="order_id",
+        string="Flavours",
+        readonly=True,
+        help="Every flavour in the order, across all the boxes. Filled in "
+        "through the items.",
+    )
     flavor_ids = fields.Many2many(
         comodel_name="gelato.flavor",
         string="Chosen flavours",
-    )
-    addon_line_ids = fields.One2many(
-        comodel_name="gelato.delivery.order.addon",
-        inverse_name="order_id",
-        string="Extras",
+        compute="_compute_flavor_ids",
+        store=True,
+        help="Which flavours are in the order, without the counts. Kept so "
+        "the list can be searched and grouped by flavour.",
     )
 
     # ------------------------------------------------------------------
@@ -148,8 +125,8 @@ class GelatoDeliveryOrder(models.Model):
     # ------------------------------------------------------------------
     # Amounts
     # ------------------------------------------------------------------
-    amount_addons = fields.Float(
-        string="Extras total",
+    amount_items = fields.Float(
+        string="Items total",
         compute="_compute_amounts",
         store=True,
         digits=(10, 2),
@@ -171,19 +148,15 @@ class GelatoDeliveryOrder(models.Model):
         help="Written down when the order is created, so a later change to "
         "the code does not change the price of an old order.",
     )
+    # Written down rather than derived. A code can be for the whole
+    # order, for one product or for the drive, so the percentage alone no
+    # longer says what came off - and an order already driven must not
+    # reprice itself because somebody edited the code afterwards.
     amount_discount = fields.Float(
         string="Discount",
-        compute="_compute_amounts",
-        store=True,
         digits=(10, 2),
     )
     delivery_fee = fields.Float(string="Delivery", digits=(10, 2))
-    delivery_vat_rate = fields.Float(
-        string="Delivery VAT rate (%)",
-        digits=(5, 2),
-        help="Written down when the order is created, so a later change to the "
-        "setting does not alter an old order.",
-    )
     amount_total = fields.Float(
         string="Total",
         compute="_compute_amounts",
@@ -191,27 +164,6 @@ class GelatoDeliveryOrder(models.Model):
         digits=(10, 2),
         tracking=True,
     )
-    amount_vat = fields.Float(
-        string="VAT",
-        compute="_compute_amounts",
-        store=True,
-        digits=(10, 2),
-        help="The VAT already contained in the total - prices are entered "
-        "the way the customer sees them.",
-    )
-    amount_untaxed = fields.Float(
-        string="Net of VAT",
-        compute="_compute_amounts",
-        store=True,
-        digits=(10, 2),
-    )
-    box_vat_rate = fields.Float(
-        string="Box VAT rate (%)",
-        digits=(5, 2),
-        help="Written down when the order is created, so a later change to the "
-        "box does not alter an old order.",
-    )
-
     website_id = fields.Many2one(
         comodel_name="website",
         string="Website",
@@ -228,104 +180,46 @@ class GelatoDeliveryOrder(models.Model):
     # Computations
     # ------------------------------------------------------------------
     @api.depends(
-        "box_price",
-        "box_vat_rate",
-        "addon_line_ids.price_subtotal",
-        "addon_line_ids.vat_rate",
-        "discount_percent",
+        "item_ids.price_subtotal",
+        "amount_discount",
         "delivery_fee",
-        "delivery_vat_rate",
     )
     def _compute_amounts(self):
-        """Work out the totals and the VAT hidden inside them.
+        """Work out the totals.
 
-        Every price in this module is what the customer sees, VAT included -
-        that is how prices have to be shown to consumers here. So VAT is not
-        added on top, it is extracted from the total.
-
-        The rates differ per item (gelato and alcohol are not taxed the same),
-        so the extraction runs per line. A discount lowers every line by the
-        same share, which lowers each rate's share of the VAT with it.
+        There is one price per thing and that is the whole of it. VAT is
+        not split out anywhere - not on the products, not on the order, not
+        in the emails: the gelateria wants one figure the customer pays.
         """
         for order in self:
-            addons = sum(order.addon_line_ids.mapped("price_subtotal"))
-            subtotal = order.box_price + addons
-            discount = subtotal * (order.discount_percent or 0.0) / 100.0
-            delivery = order.delivery_fee or 0.0
-            total = subtotal - discount + delivery
-
-            # what is left of each line after the discount
-            remaining = 1.0 - (order.discount_percent or 0.0) / 100.0
-            taxed = [(order.box_price * remaining, order.box_vat_rate)]
-            for line in order.addon_line_ids:
-                taxed.append((line.price_subtotal * remaining, line.vat_rate))
-            taxed.append((delivery, order.delivery_vat_rate))
-
-            vat = 0.0
-            for gross, rate in taxed:
-                if rate:
-                    vat += gross * rate / (100.0 + rate)
-
-            order.amount_addons = addons
+            subtotal = sum(order.item_ids.mapped("price_subtotal"))
+            order.amount_items = subtotal
             order.amount_subtotal = subtotal
-            order.amount_discount = discount
-            order.amount_total = total
-            order.amount_vat = vat
-            order.amount_untaxed = total - vat
+            order.amount_total = (
+                subtotal - (order.amount_discount or 0.0) + (order.delivery_fee or 0.0)
+            )
 
-    def vat_breakdown(self):
-        """VAT split by rate, for the email and for the accountant.
-
-        Returns a list of {rate, base, vat, gross}, one row per rate used.
-        """
-        self.ensure_one()
-        remaining = 1.0 - (self.discount_percent or 0.0) / 100.0
-        rows = {}
-        items = [(self.box_price * remaining, self.box_vat_rate)]
-        for line in self.addon_line_ids:
-            items.append((line.price_subtotal * remaining, line.vat_rate))
-        items.append((self.delivery_fee or 0.0, self.delivery_vat_rate))
-
-        for gross, rate in items:
-            if not gross:
-                continue
-            key = round(rate or 0.0, 2)
-            rows.setdefault(key, 0.0)
-            rows[key] += gross
-
-        out = []
-        for rate in sorted(rows, reverse=True):
-            gross = rows[rate]
-            vat = gross * rate / (100.0 + rate) if rate else 0.0
-            out.append({
-                "rate": rate,
-                "gross": round(gross, 2),
-                "vat": round(vat, 2),
-                "base": round(gross - vat, 2),
-            })
-        return out
-
-    @api.onchange("box_id")
-    def _onchange_box_id(self):
-        if self.box_id:
-            self.box_price = self.box_id.price
-            self.box_vat_rate = self.box_id.vat_rate
-
-    @api.onchange("promo_code_id")
+    @api.onchange("promo_code_id", "item_ids", "delivery_fee")
     def _onchange_promo_code_id(self):
-        self.discount_percent = self.promo_code_id.discount_percent or 0.0
+        """Fill in the discount for an order typed in by hand.
 
-    # ------------------------------------------------------------------
-    # The board
-    # ------------------------------------------------------------------
-    @api.model
-    def _read_group_stage_ids(self, stages, domain):
-        """Show every column on the board, even the empty ones."""
-        return self.env["gelato.delivery.stage"].search([])
-
-    @api.model
-    def _default_stage(self):
-        return self.env["gelato.delivery.stage"].search([], limit=1)
+        The same sum the website does: only what the code covers, plus
+        the fee if the code is for the drive.
+        """
+        promo = self.promo_code_id
+        self.discount_percent = promo.discount_percent or 0.0
+        if not promo:
+            self.amount_discount = 0.0
+            return
+        lines = [
+            (line.box_id or line.addon_id, line.quantity, line.price_unit)
+            for line in self.item_ids
+            if line.box_id or line.addon_id
+        ]
+        self.amount_discount = (
+            promo.product_discount(lines)
+            + promo.delivery_discount(self.delivery_fee)
+        )
 
     # ------------------------------------------------------------------
     # Numbering
@@ -339,24 +233,16 @@ class GelatoDeliveryOrder(models.Model):
                 ) or _("New")
         orders = super().create(vals_list)
         orders._link_customer()
-        # A new order lands in the first column, which usually means the
-        # customer gets their confirmation without anybody doing anything.
-        orders._notify_stage()
         return orders
-
-    def write(self, vals):
-        res = super().write(vals)
-        if "stage_id" in vals:
-            self._notify_stage()
-        return res
 
     # ------------------------------------------------------------------
     # The on/off bar above the flavour board
     # ------------------------------------------------------------------
-    # The switch and the hours live on the website record, which only an
-    # administrator may write. These two run with sudo on purpose: the whole
-    # point is that whoever is in the shop can close the delivery without
-    # being let into Settings.
+    # The switch lives on the website record, which only an administrator
+    # may write. These two run with sudo on purpose: the whole point is
+    # that whoever is in the shop can close the delivery without being let
+    # into Settings.
+    #
     SWITCH_FIELDS = (
         "gelato_delivery_enabled",
         "gelato_order_from",
@@ -379,8 +265,8 @@ class GelatoDeliveryOrder(models.Model):
     @api.model
     def gelato_switch_write(self, values):
         site = self.env["website"].sudo().get_current_website()
-        # Only the three operational fields, never anything else that happens
-        # to sit on the website record.
+        # Only the three operational fields, never anything else that
+        # happens to sit on the website record.
         site.write({
             key: value
             for key, value in (values or {}).items()
@@ -388,96 +274,6 @@ class GelatoDeliveryOrder(models.Model):
         })
         return self.gelato_switch_state()
 
-    # ------------------------------------------------------------------
-    # Email attached to a column
-    # ------------------------------------------------------------------
-    def _notify_stage(self):
-        """Send what the column sends, at most once per column and order."""
-        for order in self:
-            stage = order.stage_id
-            if not stage:
-                continue
-
-            if (
-                stage.mail_enabled
-                and order.customer_email
-                and stage not in order.mailed_stage_ids
-                and order._send_stage_mail(stage)
-            ):
-                order.mailed_stage_ids = [(4, stage.id)]
-
-            if (
-                stage.sms_enabled
-                and order.customer_phone
-                and stage not in order.texted_stage_ids
-                and order._send_stage_sms(stage)
-            ):
-                order.texted_stage_ids = [(4, stage.id)]
-
-    def _send_stage_sms(self, stage):
-        self.ensure_one()
-        try:
-            body = self.env["mail.render.mixin"].sudo()._render_template(
-                stage.sms_body or "",
-                "gelato.delivery.order",
-                [self.id],
-                engine="inline_template",
-            )[self.id]
-            if not body.strip():
-                return False
-            self.env["sms.sms"].sudo().create({
-                "body": body,
-                "number": self.customer_phone,
-            }).send()
-            return True
-        except Exception as error:
-            # A text that will not go out must never block the board.
-            _logger.warning(
-                "Delivery board: the text message for column %s could not be "
-                "sent: %s",
-                stage.name,
-                error,
-            )
-            return False
-
-    def _send_stage_mail(self, stage):
-        self.ensure_one()
-        try:
-            render = self.env["mail.render.mixin"].sudo()
-            subject = render._render_template(
-                stage.mail_subject or "",
-                "gelato.delivery.order",
-                [self.id],
-                engine="inline_template",
-            )[self.id]
-            body = render._render_template(
-                stage.mail_body or "",
-                "gelato.delivery.order",
-                [self.id],
-                engine="inline_template",
-            )[self.id]
-            self.env["mail.mail"].sudo().create({
-                "subject": subject,
-                "body_html": body,
-                "email_from": (
-                    self.website_id.company_id.email_formatted
-                    or self.env.company.email_formatted
-                    or self.env.user.email_formatted
-                ),
-                "email_to": self.customer_email,
-                "model": "gelato.delivery.order",
-                "res_id": self.id,
-                "auto_delete": False,
-            }).send()
-            return True
-        except Exception as error:
-            # A broken email must never block an order from being taken.
-            _logger.warning(
-                "Delivery board: the email for column %s could not be sent: %s",
-                stage.name,
-                error,
-            )
-            return False
 
     # ------------------------------------------------------------------
     # Helpers
@@ -500,35 +296,30 @@ class GelatoDeliveryOrder(models.Model):
                 order.customer_phone,
             )
 
-    def flavor_names(self):
-        """Flavours separated by commas. Used by the email and overviews."""
-        self.ensure_one()
-        return ", ".join(self.flavor_ids.mapped("name"))
+    @api.depends("flavor_line_ids.flavor_id")
+    def _compute_flavor_ids(self):
+        for order in self:
+            order.flavor_ids = [(6, 0, order.flavor_line_ids.flavor_id.ids)]
 
-    @api.depends("box_id", "flavor_ids", "addon_line_ids.addon_id",
-                 "addon_line_ids.quantity")
+    def flavor_names(self):
+        """Every flavour in the order with its count, across all the boxes."""
+        self.ensure_one()
+        return ", ".join(
+            item.flavor_names() for item in self.item_ids if item.flavor_line_ids
+        )
+
+    @api.depends("item_ids.label", "item_ids.quantity")
     def _compute_order_summary(self):
         """What was ordered, on one line.
 
-        Stored so the board and the list can show it without opening every
-        order, and so it can be searched - "who ordered pistachio" is a
-        question the shop actually asks.
+        Stored so the list can show it without opening every order, and so
+        it can be searched - "who ordered pistachio" is a question the shop
+        actually asks.
         """
         for order in self:
-            parts = []
-            if order.box_id:
-                parts.append(order.box_id.name)
-            if order.flavor_ids:
-                parts.append(order.flavor_names())
-            for line in order.addon_line_ids:
-                parts.append("%d× %s" % (line.quantity, line.addon_id.name))
-            order.order_summary = " · ".join(parts)
-
-    def time_slot_label(self):
-        self.ensure_one()
-        return dict(
-            self._fields["delivery_time"]._description_selection(self.env)
-        ).get(self.delivery_time, "")
+            order.order_summary = " · ".join(
+                item.label for item in order.item_ids if item.label
+            )
 
     def tracking_payload(self):
         """Data for GTM and the Meta Pixel, shaped like a purchase event.
@@ -538,21 +329,19 @@ class GelatoDeliveryOrder(models.Model):
         product line into a separate row per language of the visitor.
         """
         self.ensure_one()
-        items = [
-            {
-                "item_id": f"box-{self.box_id.id}",
-                "item_name": self.box_id.name,
-                "item_category": "Thermal box",
-                "price": round(self.box_price, 2),
-                "quantity": 1,
-            }
-        ]
-        for line in self.addon_line_ids:
+        items = []
+        for line in self.item_ids:
+            if line.box_id:
+                ref, name, category = (
+                    f"box-{line.box_id.id}", line.box_id.name, "Thermal box")
+            else:
+                category = "Bundle" if line.addon_id.is_bundle else "Extra"
+                ref, name = f"addon-{line.addon_id.id}", line.addon_id.name
             items.append(
                 {
-                    "item_id": f"addon-{line.addon_id.id}",
-                    "item_name": line.addon_id.name,
-                    "item_category": "Extra",
+                    "item_id": ref,
+                    "item_name": name,
+                    "item_category": category,
                     "price": round(line.price_unit, 2),
                     "quantity": line.quantity,
                 }
@@ -568,20 +357,48 @@ class GelatoDeliveryOrder(models.Model):
         }
 
     def _send_confirmation_email(self):
-        """Send the email to the shop. Stays quiet if the template is missing."""
-        template = self.env.ref(
-            "gelato_delivery.mail_template_delivery_order", raise_if_not_found=False
+        """Email the shop and the customer. Two different letters.
+
+        The shop gets the whole order to make and drive; the customer gets a
+        short confirmation that it arrived. Sent straight from here, not out
+        of any workflow - an order has no states to walk through.
+
+        A missing template or a bad address must never block an order, so
+        each is attempted on its own and failures are only logged.
+        """
+        shop = self.env.ref(
+            "gelato_delivery.mail_template_delivery_order",
+            raise_if_not_found=False,
         )
-        if not template:
-            return False
+        customer = self.env.ref(
+            "gelato_delivery.mail_template_order_confirmation",
+            raise_if_not_found=False,
+        )
         for order in self:
-            template.sudo().send_mail(order.id, force_send=False)
+            for template, needs_address in ((shop, False), (customer, True)):
+                if not template or (needs_address and not order.customer_email):
+                    continue
+                try:
+                    template.sudo().send_mail(order.id, force_send=False)
+                except Exception as error:
+                    _logger.warning(
+                        "Order %s: could not queue %s: %s",
+                        order.name, template.name, error,
+                    )
         return True
 
 
-class GelatoDeliveryOrderAddon(models.Model):
-    _name = "gelato.delivery.order.addon"
-    _description = "Extra on a Delivery Order"
+class GelatoDeliveryOrderItem(models.Model):
+    """One thing in the basket: a thermal box, a bundle or an extra.
+
+    A box and a bundle are filled with flavours, an extra is not. They are
+    one model rather than three because the basket, the price, the email
+    and the list all treat them the same - it is a line with a name, a
+    count and a price.
+    """
+
+    _name = "gelato.delivery.order.item"
+    _description = "Item on a Delivery Order"
     _order = "id"
 
     order_id = fields.Many2one(
@@ -590,34 +407,150 @@ class GelatoDeliveryOrderAddon(models.Model):
         required=True,
         ondelete="cascade",
     )
+    box_id = fields.Many2one(
+        comodel_name="gelato.delivery.box",
+        string="Thermal box",
+        ondelete="restrict",
+    )
     addon_id = fields.Many2one(
         comodel_name="gelato.delivery.addon",
-        string="Extra",
-        required=True,
+        string="Bundle or extra",
         ondelete="restrict",
     )
     quantity = fields.Integer(string="Quantity", default=1, required=True)
     price_unit = fields.Float(string="Unit price", digits=(10, 2))
-    vat_rate = fields.Float(
-        string="VAT rate (%)",
-        digits=(5, 2),
-        help="Copied from the extra when the order is created, so a later "
-        "change to the rate does not alter an old order.",
-    )
     price_subtotal = fields.Float(
         string="Total",
         compute="_compute_price_subtotal",
         store=True,
         digits=(10, 2),
     )
+    flavor_line_ids = fields.One2many(
+        comodel_name="gelato.delivery.order.flavor",
+        inverse_name="item_id",
+        string="Flavours",
+    )
+    label = fields.Char(
+        string="Item",
+        compute="_compute_label",
+        store=True,
+        help="The name with its flavours, for the list and the email.",
+    )
+
+    _sql_constraints = [
+        (
+            "box_or_addon",
+            "CHECK((box_id IS NULL) != (addon_id IS NULL))",
+            "An item is either a thermal box or a bundle/extra, not both "
+            "and not neither.",
+        ),
+        (
+            "quantity_positive",
+            "CHECK(quantity > 0)",
+            "An item with no quantity does not belong on the order.",
+        ),
+    ]
 
     @api.depends("quantity", "price_unit")
     def _compute_price_subtotal(self):
         for line in self:
             line.price_subtotal = line.quantity * line.price_unit
 
-    @api.onchange("addon_id")
-    def _onchange_addon_id(self):
-        if self.addon_id:
-            self.price_unit = self.addon_id.price
-            self.vat_rate = self.addon_id.vat_rate
+    @api.depends("box_id", "addon_id", "quantity",
+                 "flavor_line_ids.flavor_id", "flavor_line_ids.quantity")
+    def _compute_label(self):
+        for line in self:
+            name = line.box_id.name or line.addon_id.name or ""
+            if line.quantity > 1:
+                name = "%d× %s" % (line.quantity, name)
+            flavors = line.flavor_names()
+            line.label = "%s (%s)" % (name, flavors) if flavors else name
+
+    def flavor_names(self):
+        """Flavours with their counts.
+
+        A count of one is written plain - "Pistachio, Vanilla" reads better
+        than "1x Pistachio, 1x Vanilla" and means the same thing.
+        """
+        self.ensure_one()
+        parts = []
+        for line in self.flavor_line_ids:
+            if line.quantity > 1:
+                parts.append("%d× %s" % (line.quantity, line.flavor_id.name))
+            else:
+                parts.append(line.flavor_id.name)
+        return ", ".join(parts)
+
+    def flavor_capacity(self):
+        """How many parts this item is handed out in. Zero means no flavours."""
+        self.ensure_one()
+        if self.box_id:
+            return self.box_id.max_flavors
+        if self.addon_id.bundle_box_id:
+            return self.addon_id.bundle_box_id.max_flavors
+        return 0
+
+    @api.onchange("box_id", "addon_id")
+    def _onchange_product(self):
+        if self.box_id:
+            self.price_unit = self.box_id.price
+        elif self.addon_id:
+            # display_price, not price: a bundle's own price field is the
+            # surcharge over its box, and as one basket line it is sold
+            # for the whole figure on the leaflet.
+            self.price_unit = self.addon_id.display_price()
+
+
+
+class GelatoDeliveryOrderFlavor(models.Model):
+    """One flavour in one box, and how much of that box it takes.
+
+    The box is handed out in parts; this says how many of them go to this
+    flavour. Two parts pistachio and one vanilla in a box split into three
+    means two thirds of it is pistachio. It hangs off the item, not the
+    order, because each box in a basket is filled on its own.
+    """
+
+    _name = "gelato.delivery.order.flavor"
+    _description = "Flavour on a Delivery Order"
+    _order = "id"
+
+    item_id = fields.Many2one(
+        comodel_name="gelato.delivery.order.item",
+        string="Item",
+        required=True,
+        ondelete="cascade",
+    )
+    order_id = fields.Many2one(
+        comodel_name="gelato.delivery.order",
+        string="Order",
+        related="item_id.order_id",
+        store=True,
+        index=True,
+    )
+    flavor_id = fields.Many2one(
+        comodel_name="gelato.flavor",
+        string="Flavour",
+        required=True,
+        ondelete="restrict",
+    )
+    quantity = fields.Integer(
+        string="Parts",
+        default=1,
+        required=True,
+        help="How many parts of the box this flavour takes.",
+    )
+
+    _sql_constraints = [
+        (
+            "flavor_once_per_item",
+            "unique(item_id, flavor_id)",
+            "A flavour can only be in one box once - raise its count "
+            "instead of adding it twice.",
+        ),
+        (
+            "quantity_positive",
+            "CHECK(quantity > 0)",
+            "A flavour with zero parts does not belong on the order.",
+        ),
+    ]

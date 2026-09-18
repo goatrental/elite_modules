@@ -5,12 +5,15 @@
         <field name="name">gelato.delivery.box.list</field>
         <field name="model">gelato.delivery.box</field>
         <field name="arch" type="xml">
-            <list string="Thermal boxes" editable="bottom">
+            <!-- Not an editable list on purpose: clicking a row used to
+                 edit it in place, so the form with the photo never opened
+                 and a thermal box could not be given a picture. A click
+                 opens the box, the same as a bundle or an extra. -->
+            <list string="Thermal boxes">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="subtitle"/>
                 <field name="price"/>
-                <field name="vat_rate" string="VAT %"/>
                 <field name="max_flavors"/>
                 <field name="highlight" widget="boolean_toggle"/>
             </list>
@@ -24,6 +27,10 @@
             <form string="Thermal box">
                 <sheet>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <!-- The photo sits where it does on an extra: top right,
+                         click the frame and pick a file. Tucked into a group
+                         further down it was a field nobody found. -->
+                    <field name="image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
                         <label for="name"/>
                         <h1>
@@ -32,22 +39,25 @@
                         <field name="subtitle" placeholder="about 8 servings"/>
                     </div>
                     <group>
+                        <!-- Only what the delivery page actually shows. The
+                             volume, the servings count and the bullet points
+                             are still on the record but off the form: nobody
+                             fills them in and nothing reads them. -->
                         <group string="Price and contents">
                             <field name="price"/>
-                            <field name="vat_rate"/>
-                            <field name="volume_l"/>
-                            <field name="portions"/>
                             <field name="max_flavors"/>
+                            <field name="flavor_note"/>
                         </group>
-                        <group string="How it looks on the website">
+                        <group string="On the website">
+                            <field name="image_fit" invisible="not image"/>
+                            <field name="image_focus"
+                                   invisible="not image or image_fit != 'cover'"/>
                             <field name="sequence"/>
-                            <field name="highlight"/>
-                            <field name="highlight_label" invisible="not highlight"/>
+                            <field name="highlight" widget="boolean_toggle"/>
+                            <field name="highlight_label" invisible="not highlight"
+                                   placeholder="Most popular"/>
                             <field name="active" invisible="1"/>
                         </group>
-                    </group>
-                    <group string="Bullet points on the card">
-                        <field name="features" nolabel="1" placeholder="One bullet per line..."/>
                     </group>
                 </sheet>
             </form>

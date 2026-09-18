@@ -19,16 +19,49 @@ class GelatoController(http.Controller):
             '|', ('website_id', '=', False), ('website_id', '=', website.id),
         ]
         all_slides = request.env['gelato.hero.slide'].sudo().search(domain, order='sequence, id')
+
+        def _tidy(url):
+            """Compare addresses the way a person means them.
+
+            A trailing slash, capitals or stray spaces are the same page to
+            everybody except a string comparison.
+            """
+            url = (url or '').strip().lower()
+            if len(url) > 1:
+                url = url.rstrip('/')
+            return url or '/'
+
         if page_url:
-            page = request.env['website.page'].sudo().search([('url', '=', page_url)], limit=1)
-            def _matches(s):
-                if s.page_ids:
-                    return page and page in s.page_ids
+            here = _tidy(page_url)
+            # The page record is looked up within this website. The same URL
+            # can exist twice in one database, and picking the wrong record
+            # made a slide vanish from the very page it was aimed at.
+            page = request.env['website.page'].sudo().search([
+                ('url', '=', page_url),
+                '|', ('website_id', '=', False), ('website_id', '=', website.id),
+            ], limit=1)
+
+            def _aimed_here(s):
+                # Either way of naming the page counts, so a slide can be
+                # aimed at /rozvoz too - that is a route and has no page
+                # record to pick from the list.
+                if s.page_ids and page and page in s.page_ids:
+                    return True
                 if s.page_url:
-                    urls = [u.strip() for u in s.page_url.split(',')]
-                    return page_url in urls
-                return True
-            slides = all_slides.filtered(_matches)
+                    wanted = [_tidy(u) for u in s.page_url.split(',')]
+                    if here in wanted:
+                        return True
+                return False
+
+            # A slide picked for this very page wins. Only when nobody has
+            # written anything for it do the general slides step in - that
+            # is what "put this one on the delivery page" is meant to do,
+            # and seeing the front page's wording next to it looked like
+            # the setting had been ignored.
+            slides = all_slides.filtered(_aimed_here)
+            if not slides:
+                slides = all_slides.filtered(
+                    lambda s: not s.page_ids and not s.page_url)
         else:
             slides = all_slides.filtered(lambda s: not s.page_ids and not s.page_url)
         return [{

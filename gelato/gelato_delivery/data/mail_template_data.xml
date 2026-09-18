@@ -10,120 +10,121 @@
         <field name="reply_to">{{ object.customer_email or '' }}</field>
         <field name="auto_delete" eval="False"/>
         <field name="body_html" type="html">
-            <div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;">
-                <h2 style="margin: 0 0 16px; font-size: 20px;">
-                    New delivery order
-                    <span t-out="object.name">ROZ/2026/0001</span>
+            <div style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #1a1a1a;">
+                <h2 style="margin: 0 0 4px; font-size: 20px;">
+                    New order <span t-out="object.name">ROZ/2026/0001</span>
                 </h2>
 
-                <h3 style="margin: 20px 0 6px; font-size: 15px;">When and where</h3>
-                <table cellpadding="4" style="border-collapse: collapse;">
-                    <tr>
-                        <td style="color: #666;">Date</td>
-                        <td><strong t-out="object.delivery_date">1/1/2026</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="color: #666;">Time</td>
-                        <td><strong t-out="object.time_slot_label()">As soon as possible</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="color: #666;">Address</td>
-                        <td><strong t-out="object.delivery_address">Street 1</strong></td>
-                    </tr>
-                </table>
-
-                <h3 style="margin: 20px 0 6px; font-size: 15px;">Order</h3>
-                <table cellpadding="4" style="border-collapse: collapse;">
-                    <tr>
-                        <td style="color: #666;">Thermal box</td>
-                        <td><strong t-out="object.box_id.name">1 l</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="color: #666;">Flavours</td>
-                        <td><strong t-out="object.flavor_names()">Vanilla</strong></td>
-                    </tr>
-                    <tr t-if="object.addon_line_ids">
-                        <td style="color: #666;">Extras</td>
-                        <td>
-                            <t t-foreach="object.addon_line_ids" t-as="line">
-                                <div>
-                                    <span t-out="line.quantity">1</span>×
-                                    <span t-out="line.addon_id.name">Prosecco</span>
-                                </div>
-                            </t>
+                <table cellpadding="6" style="border-collapse: collapse; margin-top: 16px; width: 100%; max-width: 480px;">
+                    <tr t-foreach="object.item_ids" t-as="line">
+                        <td style="border-bottom: 1px solid #ddd;">
+                            <span t-if="line.quantity &gt; 1"><t t-out="line.quantity">2</t>× </span>
+                            <strong t-out="line.box_id.name or line.addon_id.name">1 l</strong>
+                            <br t-if="line.flavor_line_ids"/>
+                            <span t-if="line.flavor_line_ids" style="color: #666;"
+                                  t-out="line.flavor_names()">Pistachio</span>
                         </td>
-                    </tr>
-                    <tr t-if="object.note">
-                        <td style="color: #666;">Note</td>
-                        <td t-out="object.note">No nuts</td>
-                    </tr>
-                </table>
-
-                <h3 style="margin: 20px 0 6px; font-size: 15px;">Price</h3>
-                <table cellpadding="4" style="border-collapse: collapse;">
-                    <tr>
-                        <td style="color: #666;">Subtotal</td>
-                        <td><t t-out="object.amount_subtotal">450</t> CZK</td>
+                        <td style="border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;">
+                            <strong><t t-out="int(line.price_subtotal)">450</t> Kč</strong>
+                        </td>
                     </tr>
                     <tr t-if="object.amount_discount">
-                        <td style="color: #666;">
-                            Discount
-                            <t t-if="object.promo_code_id">
-                                (<t t-out="object.promo_code_id.code">ZIMA10</t>)
-                            </t>
+                        <td style="border-bottom: 1px solid #ddd;">Discount</td>
+                        <td style="border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;">
+                            −<t t-out="int(object.amount_discount)">0</t> Kč
                         </td>
-                        <td>-<t t-out="object.amount_discount">45</t> CZK</td>
-                    </tr>
-                    <tr t-if="object.delivery_fee">
-                        <td style="color: #666;">Delivery</td>
-                        <td><t t-out="object.delivery_fee">0</t> CZK</td>
                     </tr>
                     <tr>
-                        <td style="color: #666;"><strong>Total</strong></td>
-                        <td><strong><t t-out="object.amount_total">405</t> CZK</strong></td>
+                        <td style="border-bottom: 1px solid #ddd;">Delivery</td>
+                        <td style="border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;">
+                            <t t-out="int(object.delivery_fee)">79</t> Kč
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 17px; padding-top: 10px;"><strong>Total</strong></td>
+                        <td style="font-size: 17px; padding-top: 10px; text-align: right; white-space: nowrap;">
+                            <strong><t t-out="int(object.amount_total)">529</t> Kč</strong>
+                        </td>
                     </tr>
                 </table>
 
-                <t t-set="vat_rows" t-value="object.vat_breakdown()"/>
-                <t t-if="object.amount_vat">
-                    <h3 style="margin: 20px 0 6px; font-size: 15px;">VAT (included in the total)</h3>
-                    <table cellpadding="4" style="border-collapse: collapse;">
-                        <tr style="color: #666;">
-                            <td>Rate</td>
-                            <td>Net</td>
-                            <td>VAT</td>
-                            <td>Gross</td>
-                        </tr>
-                        <t t-foreach="vat_rows" t-as="row">
-                            <tr>
-                                <td><t t-out="row['rate']">21</t> %</td>
-                                <td><t t-out="row['base']">100</t></td>
-                                <td><t t-out="row['vat']">21</t></td>
-                                <td><t t-out="row['gross']">121</t></td>
-                            </tr>
-                        </t>
-                        <tr>
-                            <td style="color: #666;"><strong>Net of VAT</strong></td>
-                            <td colspan="3"><strong><t t-out="object.amount_untaxed">334</t> CZK</strong></td>
-                        </tr>
-                    </table>
-                </t>
-
-                <h3 style="margin: 20px 0 6px; font-size: 15px;">Customer</h3>
+                <h3 style="margin: 24px 0 6px; font-size: 16px;">Where and to whom</h3>
                 <table cellpadding="4" style="border-collapse: collapse;">
                     <tr>
+                        <td style="color: #666;">Address</td>
+                        <td><strong t-out="object.delivery_address">Sokolovská 101</strong></td>
+                    </tr>
+                    <tr t-if="object.delivery_postcode">
+                        <td style="color: #666;">Postcode</td>
+                        <td t-out="object.delivery_postcode">360 05</td>
+                    </tr>
+                    <tr>
                         <td style="color: #666;">Name</td>
-                        <td><strong t-out="object.customer_name">Jan Novak</strong></td>
+                        <td><strong t-out="object.customer_name">Jan Novák</strong></td>
                     </tr>
                     <tr>
                         <td style="color: #666;">Phone</td>
                         <td><strong t-out="object.customer_phone">+420 000 000 000</strong></td>
                     </tr>
-                    <tr t-if="object.customer_email">
+                    <tr>
                         <td style="color: #666;">Email</td>
                         <td t-out="object.customer_email">jan@email.cz</td>
                     </tr>
                 </table>
+
+                <p t-if="object.note" style="margin-top: 18px; padding: 10px; background: #fdf4e3;">
+                    <strong>Note from the customer:</strong>
+                    <span t-out="object.note">Ring the bell marked Novák</span>
+                </p>
+            </div>
+        </field>
+        <field name="lang">{{ object.website_id.default_lang_id.code }}</field>
+    </record>
+
+    <record id="mail_template_order_confirmation" model="mail.template">
+        <field name="name">Delivery: confirmation to the customer</field>
+        <field name="model_id" ref="model_gelato_delivery_order"/>
+        <field name="subject">We have your order {{ object.name }}</field>
+        <field name="email_from">{{ (object.website_id.company_id.email or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.customer_email }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;">
+                <p>Hello <t t-out="object.customer_name">Jan Novak</t>,</p>
+                <p>thank you for your order. We are getting it ready and driving out.</p>
+                <table cellpadding="4" style="border-collapse: collapse;">
+                    <tr>
+                        <td style="color: #666;">Order number</td>
+                        <td><strong t-out="object.name">ROZ/2026/0001</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #666;">Ordered</td>
+                        <td>
+                            <t t-foreach="object.item_ids" t-as="line">
+                                <div>
+                                    <span t-if="line.quantity &gt; 1"><t t-out="line.quantity">2</t>× </span>
+                                    <strong t-out="line.box_id.name or line.addon_id.name">1 l</strong>
+                                    <span t-if="line.flavor_line_ids" style="color: #666;">
+                                        – <t t-out="line.flavor_names()">Pistachio</t>
+                                    </span>
+                                </div>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color: #666;">Delivery to</td>
+                        <td t-out="object.delivery_address">Sokolovská 101</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #666;">Total</td>
+                        <td><strong><t t-out="int(object.amount_total)">529</t> Kč</strong></td>
+                    </tr>
+                </table>
+                <p>You pay in cash when we hand it over. Nothing up front.</p>
+                <p>
+                    Gelato! Karlovy Vary<br/>
+                    Sokolovská 101, Rybáře · +420 773 09 58 09
+                </p>
             </div>
         </field>
         <field name="lang">{{ object.website_id.default_lang_id.code }}</field>

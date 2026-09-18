@@ -47,5 +47,22 @@
         <field name="display_time">8.0</field>
     </record>
 
+
+    <!-- The delivery page gets its own slide: the front page's wording
+         ("come and visit us") makes no sense above an order form. The
+         gelateria can add more of its own next to it - a slide with
+         /rozvoz under "Only on these addresses" lands here. -->
+    <record id="hero_slide_rozvoz" model="gelato.hero.slide">
+        <field name="name">Rozvoz po Karlových Varech</field>
+        <field name="headline">Zmrzlinu</field>
+        <field name="headline_accent">až ke dveřím</field>
+        <field name="subtitle"> </field>
+        <field name="button_text">Objednat</field>
+        <field name="button_url">/rozvoz#objednavka</field>
+        <field name="page_url">/rozvoz</field>
+        <field name="image" type="base64" file="theme_gelato/static/src/img/hero-slide-distribuce.webp"/>
+        <field name="sequence">1</field>
+        <field name="display_time">10.0</field>
+    </record>
 </data>
 </odoo>

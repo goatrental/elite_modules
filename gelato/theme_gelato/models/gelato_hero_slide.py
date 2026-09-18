@@ -32,11 +32,15 @@ class GelatoHeroSlide(models.Model):
     display_time = fields.Float(string='Display time (s)', default=8.0,
                                 help='How long this slide stays visible before switching to the next one')
     page_ids = fields.Many2many('website.page', string='Pages',
-                                help='Show this slide only on selected pages. '
-                                     'Leave empty to show on all pages.')
-    page_url = fields.Char(string='Page URL filter',
-                           help='Comma-separated page URLs (e.g. /,/v2). '
-                                'Used as fallback when Pages field is empty.')
+                                help='Show this slide only on the pages picked '
+                                     'here. Leave this and the addresses below '
+                                     'both empty and the slide shows on every '
+                                     'page.')
+    page_url = fields.Char(string='Only on these addresses',
+                           help='Addresses separated by commas, for example '
+                                '/rozvoz, /v2. Use this for anything missing '
+                                'from the list above - the delivery page is '
+                                'one of them, it has no page record to pick.')
     sequence = fields.Integer(string='Sequence', default=10)
     active = fields.Boolean(default=True)
     website_id = fields.Many2one('website', string='Website', ondelete='cascade')

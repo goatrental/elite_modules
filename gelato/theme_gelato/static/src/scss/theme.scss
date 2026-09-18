@@ -298,7 +298,13 @@ body.editor_enable .gl-hero-slide-nav {
 // ============================================================================
 
 body.theme_gelato_body {
-    overflow-x: hidden;
+    // clip, not hidden. overflow-x:hidden turns the body into a scroll
+    // container of its own, so the page ends up with two of them - the
+    // wheel hands over from one to the other and the scroll stutters on
+    // the way down from the hero. clip cuts the sideways overhang just
+    // the same without making a second scroller, and sticky elements go
+    // on working.
+    overflow-x: clip;
 }
 
 .gl-hero:not(.gl-loaded) {

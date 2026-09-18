@@ -24,15 +24,18 @@ class ResConfigSettings(models.TransientModel):
         related="website_id.gelato_delivery_fee_base",
         readonly=False,
     )
-    gelato_delivery_fee_vat_rate = fields.Float(
-        related="website_id.gelato_delivery_fee_vat_rate",
-        readonly=False,
-    )
-    gelato_delivery_min_days = fields.Integer(
-        related="website_id.gelato_delivery_min_days",
-        readonly=False,
-    )
     gelato_delivery_promo_note = fields.Char(
         related="website_id.gelato_delivery_promo_note",
+        readonly=False,
+    )
+    # These two are also on the switch above the flavour board, which is
+    # where the shop actually moves them - here for whoever is in Settings
+    # anyway.
+    gelato_order_from = fields.Float(
+        related="website_id.gelato_order_from",
+        readonly=False,
+    )
+    gelato_order_to = fields.Float(
+        related="website_id.gelato_order_to",
         readonly=False,
     )

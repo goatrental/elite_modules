@@ -1,6 +1,6 @@
 {
     "name": "Gelato - Delivery",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.2.0",
     "category": "Website",
     "summary": "The /rozvoz page, delivery orders, thermal boxes, extras and promo codes.",
     "description": """
@@ -38,9 +38,7 @@ translated in the usual Odoo translation mode.
         "data/gelato_delivery_box_data.xml",
         "data/gelato_delivery_addon_data.xml",
         "data/gelato_promo_code_data.xml",
-        "data/gelato_delivery_stage_data.xml",
         "views/gelato_flavor_board_inherit.xml",
-        "views/gelato_delivery_stage_views.xml",
         "data/gelato_delivery_zone_data.xml",
         "views/gelato_delivery_zone_views.xml",
         "views/gelato_delivery_box_views.xml",

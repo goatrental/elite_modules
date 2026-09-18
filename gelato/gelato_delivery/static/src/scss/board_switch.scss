@@ -128,3 +128,33 @@
     color: #888;
     font-size: .8rem;
 }
+
+// The two hours next to the switch.
+.o_gelato_switch_hours {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    font-size: .85rem;
+    white-space: nowrap;
+
+    label {
+        margin: 0;
+        color: #6c757d;
+    }
+}
+
+.o_gelato_switch_hour {
+    width: 62px;
+    padding: 2px 6px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .o_gelato_switch_hours {
+        margin-left: 0;
+        flex-basis: 100%;
+    }
+}

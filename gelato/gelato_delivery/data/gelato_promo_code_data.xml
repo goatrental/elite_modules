@@ -8,8 +8,11 @@
 
     <record id="promo_zima10" model="gelato.promo.code">
         <field name="code">ZIMA10</field>
-        <field name="description">Off-season 10% discount on deliveries.</field>
+        <field name="description">Off-season 10% off the whole order.</field>
         <field name="discount_percent">10</field>
+        <!-- Written out rather than left to the default: what a code comes
+             off is the one thing about it worth being sure of. -->
+        <field name="scope">all</field>
         <field name="usage_limit">0</field>
         <field name="active" eval="False"/>
     </record>

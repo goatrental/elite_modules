@@ -1,5 +1,4 @@
 import re
-from datetime import timedelta
 
 import werkzeug.exceptions
 
@@ -49,11 +48,6 @@ class GelatoRozvoz(http.Controller):
 
         orders_open, hours_note = website.gelato_orders_open()
 
-        min_days = website.gelato_delivery_min_days or 0
-        min_date = fields.Date.context_today(env["gelato.flavor"].sudo())
-        if min_days:
-            min_date += timedelta(days=min_days)
-
         return {
             "flavors": flavors,
             "flavors_by_category": self._group_by_category(flavors),
@@ -61,12 +55,10 @@ class GelatoRozvoz(http.Controller):
             "addons": addons,
             "website": website,
             "delivery_enabled": website.gelato_delivery_enabled,
-            "min_date": min_date.isoformat(),
             "promo_note": website.gelato_delivery_promo_note or "",
             "zones": env["gelato.delivery.zone"].sudo().search([]),
             "orders_open": orders_open,
             "hours_note": hours_note,
-            "hours_label": website.gelato_order_hours_label(),
         }
 
     def _group_by_category(self, flavors):
@@ -133,8 +125,13 @@ class GelatoRozvoz(http.Controller):
             "valid": True,
             "code": promo.code,
             "discount_percent": promo.discount_percent,
-            "message": _("The code is valid, a %g%% discount is applied.")
-            % promo.discount_percent,
+            # What the code covers, so the page can show the same figure
+            # the server will charge instead of taking the percentage off
+            # everything.
+            "scope": promo.scope,
+            "box_ids": promo.box_ids.ids,
+            "addon_ids": promo.addon_ids.ids,
+            "message": _("The code is valid: %s.") % promo.scope_label,
         }
 
     # ------------------------------------------------------------------
@@ -186,12 +183,30 @@ class GelatoRozvoz(http.Controller):
                 ),
             }
 
+        # Say the threshold out loud where there is one. Promising "delivery
+        # 79 CZK" and then charging nothing reads like a mistake, and the
+        # page cannot work it out on its own - the fee is decided here.
+        if zone.free_from:
+            message = _(
+                "We deliver to %(zone)s, delivery %(fee)s CZK - free from "
+                "%(free_from)s CZK."
+            ) % {
+                "zone": zone.name,
+                "fee": int(zone.delivery_fee),
+                "free_from": int(zone.free_from),
+            }
+        else:
+            message = _("We deliver to %(zone)s, delivery %(fee)s CZK.") % {
+                "zone": zone.name,
+                "fee": int(zone.delivery_fee),
+            }
+
         return {
             "valid": True,
             "fee": zone.delivery_fee,
+            "free_from": zone.free_from,
             "zone": zone.name,
-            "message": _("We deliver to %(zone)s, delivery %(fee)s CZK.")
-            % {"zone": zone.name, "fee": int(zone.delivery_fee)},
+            "message": message,
         }
 
     def _locate_address(self, address, postcode):
@@ -267,34 +282,12 @@ class GelatoRozvoz(http.Controller):
         if not delivery_address:
             errors.append(_("Please fill in the delivery address."))
 
-        # ---------- slot ----------
-        delivery_time = payload.get("delivery_time") or "asap"
-        valid_slots = dict(
-            env["gelato.delivery.order"]._fields["delivery_time"].selection
-        )
-        if delivery_time not in valid_slots:
-            delivery_time = "asap"
+        # An order is for now. Nobody picks a day or a slot, so the date is
+        # simply the day it came in.
+        delivery_date = fields.Date.context_today(env["gelato.flavor"].sudo())
 
-        today = fields.Date.context_today(env["gelato.flavor"].sudo())
-        if delivery_time == "asap":
-            # "As soon as possible" is today by definition. Whatever date the
-            # browser sent is ignored, so an ASAP order can never end up
-            # scheduled for next week.
-            delivery_date = today
-        else:
-            delivery_date = self._parse_date(payload.get("delivery_date"))
-            if not delivery_date:
-                errors.append(_("Please pick a delivery date."))
-            else:
-                min_date = today
-                if website.gelato_delivery_min_days:
-                    min_date += timedelta(days=website.gelato_delivery_min_days)
-                if delivery_date < min_date:
-                    errors.append(_("That date is no longer available."))
-
-        # Outside the ordering hours nothing goes through, however the form
-        # got submitted. The page hides the form, but a stale tab could still
-        # post - the hours have to hold here as well.
+        # The page hides the form when the delivery is switched off, but a
+        # stale tab could still post - so the switch holds here as well.
         orders_open, hours_note = website.gelato_orders_open()
         if not orders_open:
             errors.append(
@@ -333,48 +326,21 @@ class GelatoRozvoz(http.Controller):
                 )
             )
 
-        # ---------- thermal box ----------
-        box = env["gelato.delivery.box"].sudo().browse(
-            self._to_int(payload.get("box_id"))
-        ).exists()
-        if not box or not box.active:
-            errors.append(_("Please choose a thermal box."))
-
-        # ---------- flavours ----------
-        flavor_ids = [
-            self._to_int(value) for value in (payload.get("flavor_ids") or [])
-        ]
-        flavor_ids = [value for value in flavor_ids if value]
-        flavors = env["gelato.flavor"].sudo().browse(flavor_ids).exists()
-
-        # Never let through a flavour the staff has just switched off.
-        unavailable = flavors.filtered(lambda f: not f.available)
-        if unavailable:
-            errors.append(
-                _("We have run out of these today: %s. Please pick others.")
-                % ", ".join(unavailable.mapped("name"))
-            )
-        if not flavors:
-            errors.append(_("Please pick at least one flavour."))
-        if box and box.max_flavors and len(flavors) > box.max_flavors:
-            errors.append(
-                _("You can pick at most %d flavours for this box.")
-                % box.max_flavors
-            )
-
-        # ---------- extras ----------
-        addon_commands, addon_total = self._build_addon_lines(
-            payload.get("addons") or [], box, errors
+        # ---------- the basket ----------
+        item_commands, items_total, lines = self._build_items(
+            payload.get("items") or [], errors
         )
 
         if errors:
             return {"success": False, "error": " ".join(errors)}
 
         # ---------- amounts (always server side) ----------
-        subtotal = box.price + addon_total
+        subtotal = items_total
         promo = env["gelato.promo.code"].sudo().find_valid(payload.get("promo_code"))
         discount_percent = promo.discount_percent if promo else 0.0
-        discount = subtotal * discount_percent / 100.0
+        # A code only takes money off what it was written for: the whole
+        # order, one product, or the drive.
+        discount = promo.product_discount(lines) if promo else 0.0
         # The zone's own price wins; the flat fee from the settings is what
         # applies before any zone is drawn, or when the address is a mystery.
         if zone:
@@ -384,6 +350,10 @@ class GelatoRozvoz(http.Controller):
             delivery_fee = zone.fee_for(base)
         else:
             delivery_fee = website.gelato_delivery_fee_for(subtotal, discount)
+
+        # The fee has to be worked out before anything can come off it.
+        if promo:
+            discount += promo.delivery_discount(delivery_fee)
 
         if zone and zone.min_order and subtotal < zone.min_order:
             return {
@@ -401,22 +371,21 @@ class GelatoRozvoz(http.Controller):
                 "customer_email": customer_email,
                 "delivery_address": delivery_address,
                 "delivery_postcode": postcode,
+                "delivery_city": (payload.get("delivery_city") or "Karlovy Vary").strip(),
                 "zone_id": zone.id if zone else False,
                 "latitude": located["lat"],
                 "longitude": located["lng"],
                 "address_located": located["located"],
                 "delivery_date": delivery_date,
-                "delivery_time": delivery_time,
                 "note": (payload.get("note") or "").strip(),
-                "box_id": box.id,
-                "box_price": box.price,
-                "box_vat_rate": box.vat_rate,
-                "flavor_ids": [(6, 0, flavors.ids)],
-                "addon_line_ids": addon_commands,
+                "item_ids": item_commands,
                 "promo_code_id": promo.id if promo else False,
                 "discount_percent": discount_percent,
+                # The figure, not the rule: what the code covered is
+                # settled here and now, so editing the code next month
+                # does not reprice an order that has already been driven.
+                "amount_discount": discount,
                 "delivery_fee": delivery_fee,
-                "delivery_vat_rate": website.gelato_delivery_fee_vat_rate,
                 "website_id": website.id,
                 "source": "website",
             }
@@ -439,66 +408,136 @@ class GelatoRozvoz(http.Controller):
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
-    def _build_addon_lines(self, raw_addons, box, errors):
-        """Build the extra lines. Prices come from Odoo, never from the browser."""
+    def _build_items(self, raw_items, errors):
+        """Turn the basket the browser sent into order items.
+
+        Every line names either a thermal box or a bundle/extra, and the
+        ones that hold gelato carry their own flavours - two boxes in one
+        basket are filled separately. Prices are read from Odoo here and
+        never taken from the browser, so the page cannot make an order
+        cheaper than it is.
+
+        Returns the commands, the total, and the plain list of
+        (record, quantity, unit price) - a promo code needs the records
+        themselves to tell whether it covers them.
+        """
+        env = request.env
         commands = []
         total = 0.0
-        env = request.env
-        bundles = env["gelato.delivery.addon"].sudo().browse()
+        lines = []
 
-        for raw in raw_addons:
-            addon_id = self._to_int(
+        for raw in raw_items:
+            if not isinstance(raw, dict):
+                continue
+            quantity = self._to_int(raw.get("quantity")) or 1
+            if quantity <= 0:
+                continue
+
+            kind = raw.get("kind")
+            record_id = self._to_int(raw.get("id"))
+            if not record_id:
+                continue
+
+            if kind == "box":
+                product = env["gelato.delivery.box"].sudo().browse(record_id).exists()
+                if not product or not product.active:
+                    errors.append(_("One of the thermal boxes is no longer available."))
+                    continue
+                parts = product.max_flavors
+                price = product.price
+                values = {"box_id": product.id}
+            else:
+                product = env["gelato.delivery.addon"].sudo().browse(record_id).exists()
+                if not product or not product.active:
+                    errors.append(_("One of the extras is no longer available."))
+                    continue
+                if product.max_quantity and quantity > product.max_quantity:
+                    quantity = product.max_quantity
+                # A bundle brings its own thermal box, so it is filled with
+                # flavours just like a box is.
+                parts = product.bundle_box_id.max_flavors if product.bundle_box_id else 0
+                # And it is charged as the whole thing. A bundle's `price`
+                # is only the surcharge over its box, which made sense when
+                # the box was a second line on the order; as one basket
+                # line it has to carry the price on the leaflet.
+                price = product.display_price()
+                values = {"addon_id": product.id}
+
+            flavor_commands = self._build_flavor_lines(
+                raw.get("flavors") or [], parts, product.name, errors
+            )
+            values.update(
+                {
+                    "quantity": quantity,
+                    "price_unit": price,
+                    "flavor_line_ids": flavor_commands,
+                }
+            )
+            commands.append((0, 0, values))
+            lines.append((product, quantity, price))
+            total += price * quantity
+
+        if not commands:
+            errors.append(_("Your order is empty. Please pick something first."))
+
+        return commands, total, lines
+
+    def _build_flavor_lines(self, raw_flavors, parts, product_name, errors):
+        """Flavour lines for one box, with how much of it each one takes.
+
+        The box is handed out in parts and the counts have to add up to
+        exactly that many - anything else is an order nobody can fill. A
+        product with no parts (a bottle of prosecco) takes no flavours.
+        """
+        env = request.env
+        commands = []
+        total_parts = 0
+        seen = set()
+
+        for raw in raw_flavors:
+            flavor_id = self._to_int(
                 raw.get("id") if isinstance(raw, dict) else raw
             )
             quantity = self._to_int(
                 raw.get("quantity") if isinstance(raw, dict) else 1
             ) or 1
-            if not addon_id or quantity <= 0:
+            if not flavor_id or quantity <= 0 or flavor_id in seen:
                 continue
-            addon = env["gelato.delivery.addon"].sudo().browse(addon_id).exists()
-            if not addon or not addon.active:
-                errors.append(_("One of the extras is no longer available."))
+            seen.add(flavor_id)
+
+            flavor = env["gelato.flavor"].sudo().browse(flavor_id).exists()
+            if not flavor:
                 continue
-
-            # A bundle is a discounted price for a box and an extra together.
-            # It only makes sense with the box it was priced for - otherwise
-            # the customer would get the discount on different goods.
-            if addon.is_bundle:
-                bundles |= addon
-                if box and addon.bundle_box_id != box:
-                    errors.append(
-                        _("Bundle “%(bundle)s” only goes with the %(box)s box.")
-                        % {
-                            "bundle": addon.name,
-                            "box": addon.bundle_box_id.name,
-                        }
-                    )
-                    continue
-
-            if addon.max_quantity and quantity > addon.max_quantity:
-                quantity = addon.max_quantity
-            commands.append(
-                (
-                    0,
-                    0,
-                    {
-                        "addon_id": addon.id,
-                        "quantity": quantity,
-                        "price_unit": addon.price,
-                        "vat_rate": addon.vat_rate,
-                    },
+            # Never let through a flavour the staff has just switched off.
+            if not flavor.available:
+                errors.append(
+                    _("We have run out of %s today. Please pick another one.")
+                    % flavor.name
                 )
-            )
-            total += addon.price * quantity
+                continue
 
-        # Two bundles would mean two thermal boxes, but an order has only one.
-        if len(bundles) > 1:
+            total_parts += quantity
+            commands.append(
+                (0, 0, {"flavor_id": flavor.id, "quantity": quantity})
+            )
+
+        if not parts:
+            # Nothing to fill: an extra that is not a box takes no flavours.
+            return []
+
+        if not commands:
             errors.append(
-                _("An order can contain only one bundle. You picked: %s.")
-                % ", ".join(bundles.mapped("name"))
+                _("Please pick the flavours for %s.") % product_name
             )
+            return commands
 
-        return commands, total
+        if total_parts != parts:
+            errors.append(
+                _("%(product)s is split into %(parts)s, you have handed out "
+                  "%(given)s. Please use them all.")
+                % {"product": product_name, "parts": parts, "given": total_parts}
+            )
+        return commands
 
     @staticmethod
     def _to_int(value):

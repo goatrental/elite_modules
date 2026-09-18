@@ -15,6 +15,7 @@ class GelatoDeliveryAddon(models.Model):
     """
 
     _name = "gelato.delivery.addon"
+    _inherit = ["gelato.image.frame"]
     _description = "Delivery Extra"
     _order = "sequence, price"
 
@@ -78,14 +79,6 @@ class GelatoDeliveryAddon(models.Model):
         "derived from the total price and never typed in by hand.",
     )
 
-    vat_rate = fields.Float(
-        string="VAT rate (%)",
-        default=21.0,
-        digits=(5, 2),
-        help="The rate contained in the price above. Prices are entered the way "
-        "the customer sees them, VAT included. Alcohol is 21% in the Czech "
-        "Republic, food 12%. Enter 0 if you are not registered for VAT.",
-    )
     max_quantity = fields.Integer(
         string="Max. quantity",
         default=10,

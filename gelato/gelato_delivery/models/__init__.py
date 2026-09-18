@@ -1,4 +1,4 @@
-from . import gelato_delivery_stage
+from . import gelato_image_frame
 from . import gelato_delivery_box
 from . import gelato_customer
 from . import gelato_delivery_zone

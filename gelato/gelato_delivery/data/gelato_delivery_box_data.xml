@@ -10,7 +10,6 @@
         <field name="name">0.5 l</field>
         <field name="subtitle">about 4 servings</field>
         <field name="price">250</field>
-        <field name="vat_rate">12</field>
         <field name="volume_l">0.5</field>
         <field name="portions">4</field>
         <field name="max_flavors">2</field>
@@ -24,7 +23,6 @@ The box stays cold for about 2 hours</field>
         <field name="name">1 l</field>
         <field name="subtitle">about 8 servings</field>
         <field name="price">450</field>
-        <field name="vat_rate">12</field>
         <field name="volume_l">1.0</field>
         <field name="portions">8</field>
         <field name="max_flavors">4</field>
@@ -40,7 +38,6 @@ The box stays cold for about 2 hours</field>
         <field name="name">1.5 l</field>
         <field name="subtitle">about 12 servings</field>
         <field name="price">580</field>
-        <field name="vat_rate">12</field>
         <field name="volume_l">1.5</field>
         <field name="portions">12</field>
         <field name="max_flavors">5</field>

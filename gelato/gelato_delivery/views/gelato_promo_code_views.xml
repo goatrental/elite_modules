@@ -5,10 +5,13 @@
         <field name="name">gelato.promo.code.list</field>
         <field name="model">gelato.promo.code</field>
         <field name="arch" type="xml">
-            <list string="Promo codes" editable="bottom">
+            <!-- Not editable in place: the discount now has a scope and
+                 a product list behind it, and those belong on the form. -->
+            <list string="Promo codes">
                 <field name="active" widget="boolean_toggle" string="Valid"/>
                 <field name="code"/>
                 <field name="discount_percent"/>
+                <field name="scope_label" string="What it does"/>
                 <field name="date_from"/>
                 <field name="date_to"/>
                 <field name="usage_count" string="Used"/>
@@ -38,6 +41,14 @@
                     <group>
                         <group string="Discount">
                             <field name="discount_percent"/>
+                            <field name="scope" widget="radio"/>
+                            <field name="box_ids" widget="many2many_tags"
+                                   invisible="scope != 'products'"
+                                   options="{'no_create': True}"/>
+                            <field name="addon_ids" widget="many2many_tags"
+                                   invisible="scope != 'products'"
+                                   options="{'no_create': True}"/>
+                            <field name="scope_label" readonly="1"/>
                         </group>
                         <group string="Validity">
                             <field name="date_from"/>
@@ -58,7 +69,6 @@
                                     <field name="customer_name"/>
                                     <field name="amount_discount" string="Discount"/>
                                     <field name="amount_total" string="Total"/>
-                                    <field name="stage_id"/>
                                 </list>
                             </field>
                         </page>

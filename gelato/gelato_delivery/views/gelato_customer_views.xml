@@ -73,7 +73,6 @@
                                     <field name="delivery_address"/>
                                     <field name="order_summary" string="What was ordered"/>
                                     <field name="amount_total" sum="Total"/>
-                                    <field name="stage_id" widget="badge"/>
                                 </list>
                             </field>
                         </page>

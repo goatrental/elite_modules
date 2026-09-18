@@ -24,17 +24,6 @@ class Website(models.Model):
         "One database can host several websites and the gelateria's delivery "
         "has no business appearing on somebody else's site.",
     )
-    gelato_order_from = fields.Float(
-        string="Orders from",
-        default=11.0,
-        help="Before this hour the website does not take orders. "
-        "Set both hours to 0 to accept orders around the clock.",
-    )
-    gelato_order_to = fields.Float(
-        string="Orders until",
-        default=19.0,
-        help="After this hour the website does not take orders.",
-    )
     gelato_delivery_email = fields.Char(
         string="Email for orders",
         default="gelatokv@seznam.cz",
@@ -64,18 +53,6 @@ class Website(models.Model):
         "delivery threshold. “Before the discount” is the friendlier option: "
         "someone who orders above the threshold keeps free delivery even "
         "after applying a code.",
-    )
-    gelato_delivery_fee_vat_rate = fields.Float(
-        string="Delivery VAT rate (%)",
-        digits=(5, 2),
-        default=21.0,
-        help="The rate contained in the delivery fee. Enter 0 if you are not "
-        "registered for VAT.",
-    )
-    gelato_delivery_min_days = fields.Integer(
-        string="Earliest slot (days ahead)",
-        default=0,
-        help="0 means customers can order for today.",
     )
     gelato_delivery_promo_note = fields.Char(
         string="Note above the promo code field",
@@ -107,73 +84,89 @@ class Website(models.Model):
         return self.gelato_delivery_fee
 
     # ------------------------------------------------------------------
-    # Ordering hours
+    # When is the delivery taking orders?
+    #
+    # Nobody books a slot - the customer orders and the gelateria drives
+    # out. But the gelateria does not drive at four in the morning, so the
+    # page only takes orders between these two hours. Both left at zero
+    # means round the clock.
     # ------------------------------------------------------------------
+    gelato_order_from = fields.Float(
+        string="Orders from",
+        default=11.0,
+        help="From what time the website takes orders. 11.5 means half "
+        "past eleven. Leave both at 0 for round the clock.",
+    )
+    gelato_order_to = fields.Float(
+        string="Orders until",
+        default=20.0,
+        help="Until what time the website takes orders. Somebody still has "
+        "to make it and drive out, so this is usually earlier than closing "
+        "time.",
+    )
+
+    def _gelato_hours_set(self):
+        """Are the hours actually set, or is it round the clock?"""
+        self.ensure_one()
+        return bool(self.gelato_order_from or self.gelato_order_to)
+
+    @staticmethod
+    def _gelato_format_hour(value):
+        """11.5 reads as 11:30 - nobody writes opening hours in decimals."""
+        hours = int(value) % 24
+        minutes = int(round((value - int(value)) * 60))
+        if minutes >= 60:
+            hours, minutes = (hours + 1) % 24, 0
+        return "%d:%02d" % (hours, minutes)
+
+    def _gelato_local_now(self):
+        """The time in the shop, not on the server."""
+        self.ensure_one()
+        return fields.Datetime.context_timestamp(
+            self.with_context(tz=self.env.user.tz or "Europe/Prague"),
+            fields.Datetime.now(),
+        )
+
     def gelato_order_hours_label(self):
-        """The hours as "11:00 - 19:00", or empty when they are switched off."""
+        """The hours on one line, for the website and for the switch."""
         self.ensure_one()
         if not self._gelato_hours_set():
             return ""
-        return "%s - %s" % (
+        return "%s – %s" % (
             self._gelato_format_hour(self.gelato_order_from),
             self._gelato_format_hour(self.gelato_order_to),
         )
 
     def gelato_orders_open(self):
-        """Is the website taking orders at this moment?
+        """Is the website taking orders right now?
 
-        Two things can close it: the switch in the settings, and the clock.
-        Returns (open, reason) where the reason is already a sentence for the
-        customer - empty when we are open.
+        The switch comes first: it is for a holiday or a broken freezer and
+        it beats the clock. Then the hours, so somebody at two in the
+        morning is told when to come back instead of sending an order that
+        nobody reads until lunchtime.
+
+        Returns (open, reason). The reason is filled in only when the clock
+        closed the page - a delivery switched off has its own wording.
         """
         self.ensure_one()
         if not self.gelato_delivery_enabled:
             return False, ""
-
         if not self._gelato_hours_set():
             return True, ""
 
         now = self._gelato_local_now()
-        current = now.hour + now.minute / 60.0
-        start = self.gelato_order_from
-        end = self.gelato_order_to
+        minutes = now.hour * 60 + now.minute
+        start = int(round(self.gelato_order_from * 60))
+        end = int(round(self.gelato_order_to * 60))
 
-        # An end before the start means the window runs over midnight,
-        # for example 18:00-02:00.
+        # An evening that runs past midnight is a window that wraps round.
         if start <= end:
-            is_open = start <= current < end
+            inside = start <= minutes < end
         else:
-            is_open = current >= start or current < end
+            inside = minutes >= start or minutes < end
 
-        if is_open:
+        if inside:
             return True, ""
         return False, _(
-            "We take orders between %(from)s and %(to)s.",
-            **{
-                "from": self._gelato_format_hour(start),
-                "to": self._gelato_format_hour(end),
-            },
-        )
-
-    def _gelato_hours_set(self):
-        """Both hours at zero means the check is off."""
-        self.ensure_one()
-        return bool(self.gelato_order_from or self.gelato_order_to)
-
-    def _gelato_local_now(self):
-        """Now, in the shop's own timezone.
-
-        The public visitor has no timezone of their own, so the company's is
-        what decides whether the gelateria is open.
-        """
-        self.ensure_one()
-        tz = self.company_id.partner_id.tz or "Europe/Prague"
-        return fields.Datetime.context_timestamp(
-            self.with_context(tz=tz), fields.Datetime.now()
-        )
-
-    @staticmethod
-    def _gelato_format_hour(value):
-        hours = int(value)
-        minutes = int(round((value - hours) * 60))
-        return "%d:%02d" % (hours, minutes)
+            "We take orders %(hours)s. Come back then, or give us a ring."
+        ) % {"hours": self.gelato_order_hours_label()}

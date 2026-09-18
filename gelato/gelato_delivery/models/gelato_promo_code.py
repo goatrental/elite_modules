@@ -24,6 +24,42 @@ class GelatoPromoCode(models.Model):
         default=10.0,
         digits=(5, 2),
     )
+    # ------------------------------------------------------------------
+    # What the discount comes off
+    #
+    # A code on a leaflet is not always money off everything. "Free
+    # delivery", "10% off the prosecco" and "20% off the Dolce Vita
+    # bundle" are three different promises, and the shop writes down
+    # which one it made instead of finding out afterwards that a code
+    # also took a fifth off the gelato.
+    # ------------------------------------------------------------------
+    scope = fields.Selection(
+        selection=[
+            ("all", "The whole order"),
+            ("delivery", "The delivery fee"),
+            ("products", "Only the products picked below"),
+        ],
+        string="Applies to",
+        default="all",
+        required=True,
+    )
+    box_ids = fields.Many2many(
+        comodel_name="gelato.delivery.box",
+        string="Thermal boxes",
+        help="Which thermal boxes the discount comes off.",
+    )
+    addon_ids = fields.Many2many(
+        comodel_name="gelato.delivery.addon",
+        string="Bundles and extras",
+        help="Which bundles and extras the discount comes off.",
+    )
+    scope_label = fields.Char(
+        string="In words",
+        compute="_compute_scope_label",
+        help="What this code does, said the way you would say it on the "
+        "phone.",
+    )
+
     date_from = fields.Date(
         string="Valid from",
         help="Leave empty for no limit.",
@@ -71,6 +107,79 @@ class GelatoPromoCode(models.Model):
                 record.usage_left = max(record.usage_limit - record.usage_count, 0)
             else:
                 record.usage_left = 0
+
+    @api.depends("scope", "discount_percent", "box_ids", "addon_ids")
+    def _compute_scope_label(self):
+        for record in self:
+            percent = ("%g" % (record.discount_percent or 0)) + "%"
+            if record.scope == "delivery":
+                record.scope_label = _("%s off the delivery fee") % percent
+            elif record.scope == "products":
+                names = (record.box_ids.mapped("name")
+                         + record.addon_ids.mapped("name"))
+                record.scope_label = (
+                    _("%(percent)s off %(products)s")
+                    % {"percent": percent, "products": ", ".join(names)}
+                    if names
+                    else _("%s off nothing yet - pick the products below.")
+                    % percent
+                )
+            else:
+                record.scope_label = _("%s off the whole order") % percent
+
+    # ------------------------------------------------------------------
+    # Working out the money
+    # ------------------------------------------------------------------
+    def covers_box(self, box):
+        """Does the discount come off this thermal box?"""
+        self.ensure_one()
+        if self.scope == "all":
+            return True
+        if self.scope == "products":
+            return box in self.box_ids
+        return False
+
+    def covers_addon(self, addon):
+        """Does the discount come off this bundle or extra?"""
+        self.ensure_one()
+        if self.scope == "all":
+            return True
+        if self.scope == "products":
+            return addon in self.addon_ids
+        return False
+
+    def product_discount(self, lines):
+        """Money off the goods.
+
+        ``lines`` is what the basket holds: (record, quantity, unit price)
+        for every thermal box, bundle and extra in it. A code aimed at the
+        delivery fee takes nothing off here.
+        """
+        self.ensure_one()
+        if not self or self.scope == "delivery":
+            return 0.0
+        base = 0.0
+        for product, quantity, price in lines:
+            covered = (
+                self.covers_box(product)
+                if product._name == "gelato.delivery.box"
+                else self.covers_addon(product)
+            )
+            if covered:
+                base += price * quantity
+        return base * self.discount_percent / 100.0
+
+    def delivery_discount(self, delivery_fee):
+        """Money off the drive. Only a code aimed at it takes anything."""
+        self.ensure_one()
+        if not self or self.scope not in ("all", "delivery"):
+            return 0.0
+        # A code for the whole order already took its share off the goods;
+        # the fee is the shop's cost, so only a code aimed at the delivery
+        # touches it. "Free delivery" is that code at 100%.
+        if self.scope != "delivery":
+            return 0.0
+        return (delivery_fee or 0.0) * self.discount_percent / 100.0
 
     @api.constrains("discount_percent")
     def _check_discount_percent(self):

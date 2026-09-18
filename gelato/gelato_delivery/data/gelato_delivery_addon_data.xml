@@ -16,7 +16,6 @@
         <field name="name">Prosecco Le Colture Fagher</field>
         <field name="description">Valdobbiadene Prosecco Superiore DOCG, 0.75 l.</field>
         <field name="price_extra">429</field>
-        <field name="vat_rate">21</field>
         <field name="kind">drink</field>
         <field name="max_quantity">6</field>
         <field name="sequence">10</field>
@@ -28,7 +27,6 @@
         <field name="kind">bundle</field>
         <field name="bundle_box_id" ref="box_1"/>
         <field name="bundle_total">799</field>
-        <field name="vat_rate">21</field>
         <field name="max_quantity">4</field>
         <field name="sequence">20</field>
     </record>
@@ -39,7 +37,6 @@
         <field name="kind">bundle</field>
         <field name="bundle_box_id" ref="box_15"/>
         <field name="bundle_total">1299</field>
-        <field name="vat_rate">21</field>
         <field name="max_quantity">3</field>
         <field name="sequence">30</field>
     </record>

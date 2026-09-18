@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 10:38+0000\n"
-"PO-Revision-Date: 2026-09-17 10:38+0000\n"
+"POT-Creation-Date: 2026-09-18 07:42+0000\n"
+"PO-Revision-Date: 2026-09-18 07:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,40 +18,20 @@ msgstr ""
 #. module: gelato_delivery
 #. odoo-javascript
 #: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "%(checked)s of %(max)s flavours picked."
-msgstr "Vybráno %(checked)s z %(max)s příchutí."
+msgid "%(left)s of %(parts)s still to hand out."
+msgstr "Zbývá rozdělit %(left)s ze %(parts)s."
 
 #. module: gelato_delivery
 #. odoo-javascript
 #: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "%s flavours picked."
-msgstr "Vybráno %s příchutí."
+msgid "%s comes with its own box, so we switched the box for you."
+msgstr "%s má svůj vlastní box, tak jsme ho za vás přepnuli."
 
 #. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/models/gelato_delivery_addon.py:0
 msgid "%s thermal box included"
 msgstr "včetně termoboxu %s"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-".\n"
-"                                    Somewhere else? Give us a ring and we will see what we can do."
-msgstr ". Jste odjinud? Zavolejte nám a domluvíme se."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-".\n"
-"                                    We update that list straight from the gelateria."
-msgstr ". Ten seznam aktualizujeme přímo z gelaterie."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_min_days
-#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_min_days
-msgid "0 means customers can order for today."
-msgstr "0 znamená, že se dá objednat i na dnešek."
 
 #. module: gelato_delivery
 #: model:gelato.delivery.box,name:gelato_delivery.box_05
@@ -72,8 +52,8 @@ msgstr ""
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "1 – Pick your flavours"
-msgstr "1 – Vyberte příchutě"
+msgid "1 – Choose a thermal box"
+msgstr "1 – Vyberte termobox"
 
 #. module: gelato_delivery
 #: model:gelato.delivery.box,name:gelato_delivery.box_15
@@ -81,167 +61,144 @@ msgid "1.5 l"
 msgstr "1,5 l"
 
 #. module: gelato_delivery
-#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__delivery_time__11_13
-msgid "11:00 to 13:00"
-msgstr "11:00 až 13:00"
-
-#. module: gelato_delivery
-#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__delivery_time__13_15
-msgid "13:00 to 15:00"
-msgstr "13:00 až 15:00"
-
-#. module: gelato_delivery
-#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__delivery_time__15_17
-msgid "15:00 to 17:00"
-msgstr "15:00 až 17:00"
-
-#. module: gelato_delivery
-#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__delivery_time__17_19
-msgid "17:00 to 19:00"
-msgstr "17:00 až 19:00"
-
-#. module: gelato_delivery
-#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__delivery_time__19_20
-msgid "19:00 to 20:00"
-msgstr "19:00 až 20:00"
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "2 – Hand out the box among today's flavours"
+msgstr "2 – Rozdělte box mezi dnešní příchutě"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "2 – Size and extras"
-msgstr "2 – Velikost a doplňky"
+msgid "3 – Add something to it"
+msgstr "3 – Přidejte si k tomu"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "3 – Where and when to bring it"
-msgstr "3 – Kam a kdy to přivezeme"
+msgid "4 – Where to bring it"
+msgstr "4 – Kam to přivezeme"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "4 – Contact"
-msgstr "4 – Kontakt"
+msgid "5 – Who to call"
+msgstr "5 – Komu zavolat"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "5 – Promo code"
-msgstr "5 – Slevový kód"
-
-#. module: gelato_delivery
-#: model:mail.template,body_html:gelato_delivery.mail_template_delivery_order
+#: model:mail.template,body_html:gelato_delivery.mail_template_order_confirmation
 msgid ""
 "<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <h2 style=\"margin: 0 0 16px; font-size: 20px;\">\n"
-"                    New delivery order\n"
-"                    <span t-out=\"object.name\">ROZ/2026/0001</span>\n"
-"                </h2>\n"
-"\n"
-"                <h3 style=\"margin: 20px 0 6px; font-size: 15px;\">When and where</h3>\n"
+"                <p>Hello <t t-out=\"object.customer_name\">Jan Novak</t>,</p>\n"
+"                <p>thank you for your order. We are getting it ready and driving out.</p>\n"
 "                <table cellpadding=\"4\" style=\"border-collapse: collapse;\">\n"
 "                    <tr>\n"
-"                        <td style=\"color: #666;\">Date</td>\n"
-"                        <td><strong t-out=\"object.delivery_date\">1/1/2026</strong></td>\n"
+"                        <td style=\"color: #666;\">Order number</td>\n"
+"                        <td><strong t-out=\"object.name\">ROZ/2026/0001</strong></td>\n"
 "                    </tr>\n"
-"                    <tr>\n"
-"                        <td style=\"color: #666;\">Time</td>\n"
-"                        <td><strong t-out=\"object.time_slot_label()\">As soon as possible</strong></td>\n"
-"                    </tr>\n"
-"                    <tr>\n"
-"                        <td style=\"color: #666;\">Address</td>\n"
-"                        <td><strong t-out=\"object.delivery_address\">Street 1</strong></td>\n"
-"                    </tr>\n"
-"                </table>\n"
-"\n"
-"                <h3 style=\"margin: 20px 0 6px; font-size: 15px;\">Order</h3>\n"
-"                <table cellpadding=\"4\" style=\"border-collapse: collapse;\">\n"
 "                    <tr>\n"
 "                        <td style=\"color: #666;\">Thermal box</td>\n"
 "                        <td><strong t-out=\"object.box_id.name\">1 l</strong></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td style=\"color: #666;\">Flavours</td>\n"
-"                        <td><strong t-out=\"object.flavor_names()\">Vanilla</strong></td>\n"
+"                        <td><strong t-out=\"object.flavor_names()\">Pistachio</strong></td>\n"
 "                    </tr>\n"
 "                    <tr t-if=\"object.addon_line_ids\">\n"
 "                        <td style=\"color: #666;\">Extras</td>\n"
 "                        <td>\n"
 "                            <t t-foreach=\"object.addon_line_ids\" t-as=\"line\">\n"
-"                                <div>\n"
-"                                    <span t-out=\"line.quantity\">1</span>×\n"
-"                                    <span t-out=\"line.addon_id.name\">Prosecco</span>\n"
-"                                </div>\n"
+"                                <div><span t-out=\"line.quantity\">1</span>× <span t-out=\"line.addon_id.name\">Prosecco</span></div>\n"
 "                            </t>\n"
 "                        </td>\n"
 "                    </tr>\n"
-"                    <tr t-if=\"object.note\">\n"
-"                        <td style=\"color: #666;\">Note</td>\n"
-"                        <td t-out=\"object.note\">No nuts</td>\n"
+"                    <tr>\n"
+"                        <td style=\"color: #666;\">Delivery to</td>\n"
+"                        <td t-out=\"object.delivery_address\">Sokolovská 101</td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
+"                        <td style=\"color: #666;\">Total</td>\n"
+"                        <td><strong><t t-out=\"int(object.amount_total)\">529</t> Kč</strong></td>\n"
 "                    </tr>\n"
 "                </table>\n"
+"                <p>You pay in cash when we hand it over. Nothing up front.</p>\n"
+"                <p>\n"
+"                    Gelato! Karlovy Vary<br/>\n"
+"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
+"                </p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: gelato_delivery
+#: model:mail.template,body_html:gelato_delivery.mail_template_delivery_order
+msgid ""
+"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #1a1a1a;\">\n"
+"                <h2 style=\"margin: 0 0 4px; font-size: 20px;\">\n"
+"                    New order <span t-out=\"object.name\">ROZ/2026/0001</span>\n"
+"                </h2>\n"
 "\n"
-"                <h3 style=\"margin: 20px 0 6px; font-size: 15px;\">Price</h3>\n"
-"                <table cellpadding=\"4\" style=\"border-collapse: collapse;\">\n"
+"                <table cellpadding=\"6\" style=\"border-collapse: collapse; margin-top: 16px; width: 100%; max-width: 480px;\">\n"
 "                    <tr>\n"
-"                        <td style=\"color: #666;\">Subtotal</td>\n"
-"                        <td><t t-out=\"object.amount_subtotal\">450</t> CZK</td>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd;\">\n"
+"                            <strong t-out=\"object.box_id.name\">1 l</strong><br/>\n"
+"                            <span style=\"color: #666;\" t-out=\"object.flavor_names()\">Pistachio</span>\n"
+"                        </td>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;\">\n"
+"                            <strong><t t-out=\"int(object.box_price)\">450</t> Kč</strong>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                    <tr t-foreach=\"object.addon_line_ids\" t-as=\"line\">\n"
+"                        <td style=\"border-bottom: 1px solid #ddd;\">\n"
+"                            <span t-out=\"line.quantity\">1</span>× <span t-out=\"line.addon_id.name\">Prosecco</span>\n"
+"                        </td>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;\">\n"
+"                            <strong><t t-out=\"int(line.price_subtotal)\">429</t> Kč</strong>\n"
+"                        </td>\n"
 "                    </tr>\n"
 "                    <tr t-if=\"object.amount_discount\">\n"
-"                        <td style=\"color: #666;\">\n"
-"                            Discount\n"
-"                            <t t-if=\"object.promo_code_id\">\n"
-"                                (<t t-out=\"object.promo_code_id.code\">ZIMA10</t>)\n"
-"                            </t>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd;\">Discount</td>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;\">\n"
+"                            −<t t-out=\"int(object.amount_discount)\">0</t> Kč\n"
 "                        </td>\n"
-"                        <td>-<t t-out=\"object.amount_discount\">45</t> CZK</td>\n"
-"                    </tr>\n"
-"                    <tr t-if=\"object.delivery_fee\">\n"
-"                        <td style=\"color: #666;\">Delivery</td>\n"
-"                        <td><t t-out=\"object.delivery_fee\">0</t> CZK</td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
-"                        <td style=\"color: #666;\"><strong>Total</strong></td>\n"
-"                        <td><strong><t t-out=\"object.amount_total\">405</t> CZK</strong></td>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd;\">Delivery</td>\n"
+"                        <td style=\"border-bottom: 1px solid #ddd; text-align: right; white-space: nowrap;\">\n"
+"                            <t t-out=\"int(object.delivery_fee)\">79</t> Kč\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
+"                        <td style=\"font-size: 17px; padding-top: 10px;\"><strong>Total</strong></td>\n"
+"                        <td style=\"font-size: 17px; padding-top: 10px; text-align: right; white-space: nowrap;\">\n"
+"                            <strong><t t-out=\"int(object.amount_total)\">529</t> Kč</strong>\n"
+"                        </td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "\n"
-"                <t t-set=\"vat_rows\" t-value=\"object.vat_breakdown()\"/>\n"
-"                <t t-if=\"object.amount_vat\">\n"
-"                    <h3 style=\"margin: 20px 0 6px; font-size: 15px;\">VAT (included in the total)</h3>\n"
-"                    <table cellpadding=\"4\" style=\"border-collapse: collapse;\">\n"
-"                        <tr style=\"color: #666;\">\n"
-"                            <td>Rate</td>\n"
-"                            <td>Net</td>\n"
-"                            <td>VAT</td>\n"
-"                            <td>Gross</td>\n"
-"                        </tr>\n"
-"                        <t t-foreach=\"vat_rows\" t-as=\"row\">\n"
-"                            <tr>\n"
-"                                <td><t t-out=\"row['rate']\">21</t> %</td>\n"
-"                                <td><t t-out=\"row['base']\">100</t></td>\n"
-"                                <td><t t-out=\"row['vat']\">21</t></td>\n"
-"                                <td><t t-out=\"row['gross']\">121</t></td>\n"
-"                            </tr>\n"
-"                        </t>\n"
-"                        <tr>\n"
-"                            <td style=\"color: #666;\"><strong>Net of VAT</strong></td>\n"
-"                            <td colspan=\"3\"><strong><t t-out=\"object.amount_untaxed\">334</t> CZK</strong></td>\n"
-"                        </tr>\n"
-"                    </table>\n"
-"                </t>\n"
-"\n"
-"                <h3 style=\"margin: 20px 0 6px; font-size: 15px;\">Customer</h3>\n"
+"                <h3 style=\"margin: 24px 0 6px; font-size: 16px;\">Where and to whom</h3>\n"
 "                <table cellpadding=\"4\" style=\"border-collapse: collapse;\">\n"
 "                    <tr>\n"
+"                        <td style=\"color: #666;\">Address</td>\n"
+"                        <td><strong t-out=\"object.delivery_address\">Sokolovská 101</strong></td>\n"
+"                    </tr>\n"
+"                    <tr t-if=\"object.delivery_postcode\">\n"
+"                        <td style=\"color: #666;\">Postcode</td>\n"
+"                        <td t-out=\"object.delivery_postcode\">360 05</td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
 "                        <td style=\"color: #666;\">Name</td>\n"
-"                        <td><strong t-out=\"object.customer_name\">Jan Novak</strong></td>\n"
+"                        <td><strong t-out=\"object.customer_name\">Jan Novák</strong></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td style=\"color: #666;\">Phone</td>\n"
 "                        <td><strong t-out=\"object.customer_phone\">+420 000 000 000</strong></td>\n"
 "                    </tr>\n"
-"                    <tr t-if=\"object.customer_email\">\n"
+"                    <tr>\n"
 "                        <td style=\"color: #666;\">Email</td>\n"
 "                        <td t-out=\"object.customer_email\">jan@email.cz</td>\n"
 "                    </tr>\n"
 "                </table>\n"
+"\n"
+"                <p t-if=\"object.note\" style=\"margin-top: 18px; padding: 10px; background: #fdf4e3;\">\n"
+"                    <strong>Note from the customer:</strong>\n"
+"                    <span t-out=\"object.note\">Ring the bell marked Novák</span>\n"
+"                </p>\n"
 "            </div>\n"
 "        "
 msgstr ""
@@ -255,10 +212,7 @@ msgstr ""
 "style=\"color: #666;\">Datum</td>                        <td><strong "
 "t-out=\"object.delivery_date\">1. 1. 2026</strong></td>                    "
 "</tr>                    <tr>                        <td style=\"color: "
-"#666;\">Čas</td>                        <td><strong "
-"t-out=\"object.time_slot_label()\">Co nejdříve</strong></td>"
-"                    </tr>                    <tr>                        <td"
-" style=\"color: #666;\">Adresa</td>                        <td><strong "
+"#666;\">Adresa</td>                        <td><strong "
 "t-out=\"object.delivery_address\">Ulice 1</strong></td>                    "
 "</tr>                </table>                <h3 style=\"margin: 20px 0 6px;"
 " font-size: 15px;\">Objednávka</h3>                <table cellpadding=\"4\" "
@@ -334,201 +288,45 @@ msgstr ""
 "                </table>            </div>"
 
 #. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_body:gelato_delivery.stage_delivered
-msgid ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <p>Hello {{ object.customer_name }},</p>\n"
-"                <p>\n"
-"                    thank you, and we hope it tasted the way it should. If\n"
-"                    anything was not right, call us and we will sort it out.\n"
-"                </p>\n"
-"                <p>\n"
-"                    Gelato! Karlovy Vary<br>\n"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
-"                </p>\n"
-"            </div>\n"
-"        "
-msgstr ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <p>Dobrý den {{ object.customer_name }},</p>\n"
-"                <p>\n"
-"                    děkujeme a doufáme, že chutnalo tak, jak má. Kdyby něco\n"
-"                    nebylo v pořádku, zavolejte nám a domluvíme se.\n"
-"                </p>\n"
-"                <p>\n"
-"                    Gelato! Karlovy Vary<br>\n"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
-"                </p>\n"
-"            </div>"
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_body:gelato_delivery.stage_on_the_way
-msgid ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <p>Hello {{ object.customer_name }},</p>\n"
-"                <p>\n"
-"                    the gelato is in the box and the driver has left. We are on\n"
-"                    our way to {{ object.delivery_address }}.\n"
-"                </p>\n"
-"                <p>Keep your phone close - we ring when we are outside.</p>\n"
-"                <p>\n"
-"                    Gelato! Karlovy Vary<br>\n"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
-"                </p>\n"
-"            </div>\n"
-"        "
-msgstr ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <p>Dobrý den {{ object.customer_name }},</p>\n"
-"                <p>\n"
-"                    gelato je v termoboxu a řidič vyrazil. Jedeme na\n"
-"                    adresu {{ object.delivery_address }}.\n"
-"                </p>\n"
-"                <p>Mějte telefon po ruce – zavoláme, až budeme před domem.</p>\n"
-"                <p>\n"
-"                    Gelato! Karlovy Vary<br>\n"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
-"                </p>\n"
-"            </div>"
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_body:gelato_delivery.stage_confirmed
-msgid ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <p>Hello {{ object.customer_name }},</p>\n"
-"                <p>your order is confirmed and we are getting it ready.</p>\n"
-"                <p>\n"
-"                    Order number: <strong>{{ object.name }}</strong><br>\n"
-"                    Delivery to: {{ object.delivery_address }}<br>\n"
-"                    Total: <strong>{{ object.amount_total }} CZK</strong>\n"
-"                </p>\n"
-"                <p>\n"
-"                    Gelato! Karlovy Vary<br>\n"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
-"                </p>\n"
-"            </div>\n"
-"        "
-msgstr ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #1a1a1a;\">\n"
-"                <p>Dobrý den {{ object.customer_name }},</p>\n"
-"                <p>objednávku máme potvrzenou a chystáme ji.</p>\n"
-"                <p>\n"
-"                    Číslo objednávky: <strong>{{ object.name }}</strong><br>\n"
-"                    Doručíme na: {{ object.delivery_address }}<br>\n"
-"                    Celkem: <strong>{{ object.amount_total }} Kč</strong>\n"
-"                </p>\n"
-"                <p>\n"
-"                    Gelato! Karlovy Vary<br>\n"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09\n"
-"                </p>\n"
-"            </div>"
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_body:gelato_delivery.stage_received
-msgid ""
-"<div style=\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; "
-"color: #1a1a1a;\">                <p>Dobrý den {{ object.customer_name "
-"}},</p>                <p>                    děkujeme za objednávku. Máme "
-"ji a co nevidět se vám ozveme, abychom potvrdili termín a cenu."
-"                </p>                <p>                    Číslo objednávky:"
-" <strong>{{ object.name }}</strong><br/>                    Doručení na: {{ "
-"object.delivery_address }}<br/>                    Celkem: <strong>{{ "
-"object.amount_total }} Kč</strong>                </p>                "
-"<p>Platíte až při předání, hotově nebo kartou. Nic dopředu.</p>"
-"                <p>                    Gelato! Karlovy Vary<br/>"
-"                    Sokolovská 101, Rybáře · +420 773 09 58 09"
-"                </p>            </div>"
-msgstr ""
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_kanban
-msgid ""
-"<i class=\"fa fa-envelope-o\" role=\"img\"/>\n"
-"                                    E-mail"
-msgstr ""
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_kanban
-msgid ""
-"<i class=\"fa fa-sticky-note-o me-1\" role=\"img\" title=\"Note from the "
-"customer\"/>"
-msgstr ""
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"<select id=\"gelatoTime\" name=\"delivery_time\" required=\"required\">\n"
-"                                            <option value=\"asap\">As soon as possible</option>\n"
-"                                            <option value=\"11_13\">11:00 to 13:00</option>\n"
-"                                            <option value=\"13_15\">13:00 to 15:00</option>\n"
-"                                            <option value=\"15_17\">15:00 to 17:00</option>\n"
-"                                            <option value=\"17_19\">17:00 to 19:00</option>\n"
-"                                            <option value=\"19_20\">19:00 to 20:00</option>\n"
-"                                        </select>"
-msgstr ""
-"<select id=\"gelatoTime\" name=\"delivery_time\" required=\"required\">"
-"                                            <option value=\"asap\">Co "
-"nejdříve</option>                                            <option "
-"value=\"11_13\">11:00 až 13:00</option>"
-"                                            <option value=\"13_15\">13:00 až"
-" 15:00</option>                                            <option "
-"value=\"15_17\">15:00 až 17:00</option>"
-"                                            <option value=\"17_19\">17:00 až"
-" 19:00</option>                                            <option "
-"value=\"19_20\">19:00 až 20:00</option>"
-"                                        </select>"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "<span class=\"gl-rz-step-num\">01</span>"
-msgstr ""
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "<span class=\"gl-rz-step-num\">02</span>"
-msgstr ""
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "<span class=\"gl-rz-step-num\">03</span>"
+msgid "<span class=\"gl-qty-value\">0</span>"
 msgstr ""
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
 "<span>Delivery</span>\n"
-"                                        <strong><span id=\"gelatoShipping\">0</span> CZK</strong>"
+"                                        <span><span id=\"gelatoShipping\">0</span> Kč</span>"
 msgstr ""
-"<span>Doprava</span>                                        <strong><span "
-"id=\"gelatoShipping\">0</span> Kč</strong>"
+"<span>Doprava</span>\n"
+"                                        <span><span id=\"gelatoShipping\">0</span> Kč</span>"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
-"<span>Discount <span id=\"gelatoDiscountLabel\"/></span>\n"
-"                                        <strong>-<span id=\"gelatoDiscount\">0</span> CZK</strong>"
+"<span>Discount</span>\n"
+"                                        <span>−<span id=\"gelatoDiscount\">0</span> Kč</span>"
 msgstr ""
-"<span>Sleva <span id=\"gelatoDiscountLabel\"/></span>"
-"                                        <strong>-<span "
-"id=\"gelatoDiscount\">0</span> Kč</strong>"
+"<span>Sleva</span>\n"
+"                                        <span>−<span id=\"gelatoDiscount\">0</span> Kč</span>"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
 "<span>Subtotal</span>\n"
-"                                        <strong><span id=\"gelatoSubtotal\">0</span> CZK</strong>"
+"                                        <span><span id=\"gelatoSubtotal\">0</span> Kč</span>"
 msgstr ""
-"<span>Mezisoučet</span>                                        <strong><span"
-" id=\"gelatoSubtotal\">0</span> Kč</strong>"
+"<span>Mezisoučet</span>\n"
+"                                        <span><span id=\"gelatoSubtotal\">0</span> Kč</span>"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
 "<span>Total</span>\n"
-"                                        <strong><span id=\"gelatoTotal\">0</span> CZK</strong>"
+"                                        <strong><span id=\"gelatoTotal\">0</span> Kč</strong>"
 msgstr ""
-"<span>Celkem</span>                                        <strong><span "
-"id=\"gelatoTotal\">0</span> Kč</strong>"
+"<span>Celkem</span>\n"
+"                                        <strong><span id=\"gelatoTotal\">0</span> Kč</strong>"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
@@ -561,6 +359,16 @@ msgid "A customer with this phone number already exists."
 msgstr "Zákazník s tímhle telefonem už existuje."
 
 #. module: gelato_delivery
+#: model:ir.model.constraint,message:gelato_delivery.constraint_gelato_delivery_order_flavor_flavor_once_per_order
+msgid "A flavour can only be on an order once - raise its count instead of adding it twice."
+msgstr "Příchuť může být v objednávce jen jednou – místo přidání dvakrát jí zvyšte počet."
+
+#. module: gelato_delivery
+#: model:ir.model.constraint,message:gelato_delivery.constraint_gelato_delivery_order_flavor_quantity_positive
+msgid "A flavour with zero parts does not belong on the order."
+msgstr "Příchuť s nulou dílů do objednávky nepatří."
+
+#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_promo_code__description
 msgid "A note for you. It is not shown on the website."
 msgstr "Jen poznámka pro vás, na webu se neukazuje."
@@ -572,29 +380,10 @@ msgid ""
 msgstr "Krátký text nad polem pro slevový kód. Prázdné pole hlášku schová."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid ""
-"A text over <b>160 characters</b> is charged as two messages.\n"
-"                        Texts only go out once your SMS provider is connected in\n"
-"                        Odoo - until then nothing is sent and nothing is charged."
-msgstr ""
-"SMS nad <b>160 znaků</b> se účtuje jako dvě zprávy.\n"
-"                        SMS začnou odcházet, až v Odoo připojíte operátora –\n"
-"                        do té doby se nic neposílá a nic se neplatí."
-
-#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/models/gelato_delivery_zone.py:0
 msgid "A zone needs at least three points on the map."
 msgstr "Zóna potřebuje aspoň tři body na mapě."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Across Karlovy Vary, from Rybáře through the centre to Růžový vrch and "
-"Doubí."
-msgstr ""
-"Po celých Karlových Varech, od Rybář přes centrum až na Růžový vrch a Doubí."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__message_needaction
@@ -630,11 +419,6 @@ msgid "Activity Type Icon"
 msgstr "Ikona typu aktivity"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Add <span>something</span> to it."
-msgstr "Přidejte si <span>k tomu</span>."
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__query
 msgid "Address asked for"
 msgstr "Hledaná adresa"
@@ -650,39 +434,14 @@ msgid "Address not on the map"
 msgstr "Adresa mimo mapu"
 
 #. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_order_to
-msgid "After this hour the website does not take orders."
-msgstr "Po téhle hodině už web objednávky nepřijímá."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"All of Karlovy Vary. Outside the city we are happy to arrange something, "
-"just call."
-msgstr ""
-"Celé Karlovy Vary. Mimo město rádi domluvíme individuálně, stačí zavolat."
-
-#. module: gelato_delivery
-#: model:ir.actions.act_window,name:gelato_delivery.gelato_delivery_order_list_action
-#: model:ir.ui.menu,name:gelato_delivery.menu_gelato_orders_list
-msgid "All orders"
-msgstr "Všechny objednávky"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"All over Karlovy Vary: Rybáře, Tuhnice, the centre, the spa\n"
-"                                    district, Drahovice, Růžový vrch, Doubí and Bohatice. Outside\n"
-"                                    the city we can arrange something, just call us on"
-msgstr ""
-"Rozvážíme po celých Karlových Varech: Rybáře, Tuhnice, centrum, lázeňská "
-"část, Drahovice, Růžový vrch, Doubí i Bohatice. Mimo město se domluvíme "
-"individuálně, zavolejte nám na"
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Allergens:"
 msgstr "Alergeny:"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Allergies, which bell to ring, anything else..."
+msgstr "Alergie, na který zvonek zvonit, cokoliv dalšího…"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_addon__active
@@ -698,6 +457,11 @@ msgstr ""
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
 msgid "An order can contain only one bundle. You picked: %s."
 msgstr "V jedné objednávce může být jen jeden balíček. Vybrané: %s."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Anything we should know?"
+msgstr "Máme něco vědět?"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_form
@@ -732,11 +496,6 @@ msgid "Around the town"
 msgstr "Okolí města"
 
 #. module: gelato_delivery
-#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__delivery_time__asap
-msgid "As soon as possible"
-msgstr "Co nejdříve"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__message_attachment_count
 msgid "Attachment Count"
 msgstr "Počet příloh"
@@ -758,42 +517,6 @@ msgid "Badge text"
 msgstr "Text štítku"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Because we churn every batch fresh and in small amounts.\n"
-"                                    Whatever is ready right now is listed above under"
-msgstr ""
-"Protože každou šarži mícháme čerstvě a v malém množství. Co je zrovna "
-"hotové, najdete nahoře v sekci"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_order_from
-msgid ""
-"Before this hour the website does not take orders. Set both hours to 0 to "
-"accept orders around the clock."
-msgstr ""
-"Před touhle hodinou web objednávky nepřijímá. Když dáte obě hodiny na 0, "
-"bere objednávky nonstop."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid "Board column"
-msgstr "Sloupec boardu"
-
-#. module: gelato_delivery
-#: model:ir.actions.act_window,name:gelato_delivery.gelato_delivery_stage_action
-#: model:ir.ui.menu,name:gelato_delivery.menu_gelato_stages
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Board columns"
-msgstr "Sloupce boardu"
-
-#. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
-msgid "Both 0:00 means around the clock."
-msgstr "Obě 0:00 = objednává se nonstop."
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
 msgid "Box VAT %"
 msgstr "DPH boxu %"
@@ -813,11 +536,6 @@ msgstr "Cena boxu"
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__order_summary
 msgid "Box, flavours and extras on one line."
 msgstr "Termobox, příchutě a doplňky na jednom řádku."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Bullet"
-msgstr "Odrážka"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__features
@@ -857,114 +575,14 @@ msgstr ""
 "%(box_price)s Kč. Balíček nemůže být levnější než box, který obsahuje."
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid ""
-"Bundle “%s” only goes with a different thermal box, so we removed it from "
-"your order."
-msgstr ""
-"Balíček „%s“ platí jen s jiným termoboxem, tak jsme ho z objednávky "
-"odebrali."
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_search
 msgid "Bundles"
 msgstr "Balíčky"
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
-msgid "CLOSED NOW - orders open at %s"
-msgstr "TEĎ ZAVŘENO – objednávky se otevřou v %s"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_kanban
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "CZK"
-msgstr "Kč"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"CZK\n"
-"                                                            for the bundle with"
-msgstr ""
-"Kč                                                            za balíček"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"CZK\n"
-"                                        are delivered free. Below that we charge"
-msgstr ""
-"Kč                                        vozíme zdarma. Pod tuhle částku "
-"účtujeme"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"CZK\n"
-"                                    for delivery across Karlovy Vary."
-msgstr "Kč                                    za dovoz po Karlových Varech."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"CZK for\n"
-"                                        delivery across Karlovy Vary."
-msgstr ""
-"Kč za                                        dovoz po Karlových Varech."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "CZK)"
-msgstr "Kč)"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "CZK."
-msgstr "Kč."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"CZK.\n"
-"                                    Below that we charge"
-msgstr "Kč.                                    Pod tuhle částku účtujeme"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Can I pick the box up myself?"
-msgstr "Můžu si termobox vyzvednout osobně?"
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,name:gelato_delivery.stage_cancelled
-msgid "Cancelled"
-msgstr "Zrušená"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Cash or card on handover. You pay nothing up front and the\n"
-"                                    order is only binding once we have confirmed it by phone."
-msgstr ""
-"Hotově nebo kartou při předání. Nic neplatíte dopředu a objednávka je "
-"závazná až po našem telefonickém potvrzení."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Cash or card on handover. You pay nothing up front."
-msgstr "Hotově nebo kartou při předání. Nic neplatíte dopředu."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Centre"
-msgstr "Centrum"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Choose a <span>thermal box</span>."
-msgstr "Vyberte si <span>termobox</span>."
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_list
+msgid "Came in"
+msgstr "Přišlo"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__flavor_ids
@@ -998,43 +616,9 @@ msgid "Colour on the map"
 msgstr "Barva na mapě"
 
 #. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__name
-msgid "Column name"
-msgstr "Název sloupce"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__mailed_stage_ids
-msgid "Columns already emailed"
-msgstr "Sloupce s odeslaným e-mailem"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__texted_stage_ids
-msgid "Columns already texted"
-msgstr "Sloupce, ze kterých už SMS odešla"
-
-#. module: gelato_delivery
-#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_stage_action
-msgid ""
-"Columns are the steps an order goes through on the board. Any of them can "
-"email or text the customer the moment an order is dragged in."
-msgstr ""
-"Sloupce jsou kroky, kterými objednávka projde. Kterýkoliv z nich může "
-"zákazníkovi poslat e-mail ve chvíli, kdy do něj objednávka přijde."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Completed"
-msgstr "Hotovo"
-
-#. module: gelato_delivery
 #: model:ir.model,name:gelato_delivery.model_res_config_settings
 msgid "Config Settings"
 msgstr "Konfigurační nastavení"
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,name:gelato_delivery.stage_confirmed
-msgid "Confirmed"
-msgstr "Potvrzená"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_form
@@ -1062,16 +646,6 @@ msgid "Corners: %s"
 msgstr "Rohů: %s"
 
 #. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__is_done
-msgid "Counts as completed"
-msgstr "Počítá se jako hotové"
-
-#. module: gelato_delivery
-#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_stage_action
-msgid "Create your first column."
-msgstr "Založte první sloupec."
-
-#. module: gelato_delivery
 #: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_addon_action
 msgid "Create your first extra."
 msgstr "Založte první doplněk."
@@ -1092,7 +666,7 @@ msgstr "Založte první termobox."
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__create_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__create_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__create_uid
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__create_uid
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__create_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__create_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__create_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__create_uid
@@ -1105,7 +679,7 @@ msgstr "Vytvořil"
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__create_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__create_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__create_date
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__create_date
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__create_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__create_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__create_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__create_date
@@ -1143,6 +717,11 @@ msgid "Customers"
 msgstr "Zákazníci"
 
 #. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
+msgid "Day"
+msgstr "Den"
+
+#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_fee_base
 #: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_fee_base
 msgid ""
@@ -1153,11 +732,6 @@ msgstr ""
 "Rozhoduje, jestli slevový kód může shodit objednávku pod hranici dopravy "
 "zdarma. „Před slevou“ je vstřícnější: kdo nakoupí nad hranici, má dopravu "
 "zdarma i po uplatnění kódu."
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,name:gelato_delivery.stage_delivered
-msgid "Delivered"
-msgstr "Doručená"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__delivery_fee
@@ -1200,11 +774,6 @@ msgid "Delivery Zone"
 msgstr "Zóna rozvozu"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Delivery across Karlovy Vary is free."
-msgstr "Dovoz po Karlových Varech máte zdarma."
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__delivery_address
 msgid "Delivery address"
 msgstr "Adresa doručení"
@@ -1215,27 +784,10 @@ msgid "Delivery address *"
 msgstr "Adresa doručení *"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Delivery area"
-msgstr "Oblast rozvozu"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__delivery_date
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
-msgid "Delivery date"
-msgstr "Datum doručení"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Delivery date *"
-msgstr "Datum doručení *"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__delivery_fee
 #: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_delivery_fee
 #: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_delivery_fee
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_zone_view_list
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Delivery fee"
 msgstr "Cena dopravy"
 
@@ -1279,11 +831,6 @@ msgid "Delivery settings"
 msgstr "Rozvoz"
 
 #. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__delivery_time
-msgid "Delivery time"
-msgstr "Čas doručení"
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_zone_view_form
 msgid "Delivery zone"
 msgstr "Zóna rozvozu"
@@ -1294,6 +841,11 @@ msgstr "Zóna rozvozu"
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_zone_view_list
 msgid "Delivery zones"
 msgstr "Zóny rozvozu"
+
+#. module: gelato_delivery
+#: model:mail.template,name:gelato_delivery.mail_template_order_confirmation
+msgid "Delivery: confirmation to the customer"
+msgstr "Rozvoz: potvrzení zákazníkovi"
 
 #. module: gelato_delivery
 #: model:mail.template,name:gelato_delivery.mail_template_delivery_order
@@ -1324,7 +876,7 @@ msgstr "Sleva (%)"
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__display_name
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__display_name
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__display_name
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__display_name
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__display_name
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__display_name
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__display_name
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__display_name
@@ -1367,27 +919,6 @@ msgid "Drink"
 msgstr "Nápoj"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"During opening hours, Mon to Sun from 11:00 to 20:00,\n"
-"                                    usually within 90 minutes of confirming your order. Please\n"
-"                                    order at least an hour ahead."
-msgstr ""
-"V otevírací době, tedy Po až Ne od 11:00 do 20:00, obvykle do 90 minut od "
-"potvrzení objednávky. Objednávku prosím pošlete alespoň hodinu předem."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
-msgid "Earliest possible slot"
-msgstr "Nejbližší možný termín"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_delivery_min_days
-#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_delivery_min_days
-msgid "Earliest slot (days ahead)"
-msgstr "Nejbližší termín (dní předem)"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__email
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__customer_email
 msgid "Email"
@@ -1399,36 +930,11 @@ msgid "Email *"
 msgstr "E-mail *"
 
 #. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__mail_body
-msgid "Email body"
-msgstr "Text e-mailu"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_delivery_email
 #: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_delivery_email
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
 msgid "Email for orders"
 msgstr "E-mail pro objednávky"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__mail_subject
-msgid "Email subject"
-msgstr "Předmět e-mailu"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__mail_enabled
-msgid "Email the customer"
-msgstr "Poslat e-mail zákazníkovi"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid "Email to the customer"
-msgstr "E-mail zákazníkovi"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Emails the customer"
-msgstr "Posílá e-mail"
 
 #. module: gelato_delivery
 #: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_order__source__manual
@@ -1446,19 +952,8 @@ msgstr ""
 
 #. module: gelato_delivery
 #: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_order_list_action
-msgid ""
-"Every order that ever came in, with what was in it. Search by customer, "
-"address or flavour."
-msgstr ""
-"Všechny objednávky, co kdy přišly, i s obsahem. Hledejte podle zákazníka, "
-"adresy nebo příchutě."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Exact split between flavours, allergies, gift wrapping, anything else..."
-msgstr ""
-"Přesné rozdělení příchutí, alergie, dárkové balení, cokoliv dalšího..."
+msgid "Every order from the delivery page lands here, with what was in it. Search by customer, address or flavour."
+msgstr "Každá objednávka ze stránky rozvozu spadne sem i s obsahem. Hledejte podle zákazníka, adresy nebo příchutě."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__addon_id
@@ -1518,24 +1013,21 @@ msgid "First order"
 msgstr "První objednávka"
 
 #. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__flavor_id
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
 msgid "Flavour"
 msgstr "Příchuť"
 
 #. module: gelato_delivery
+#: model:ir.model,name:gelato_delivery.model_gelato_delivery_order_flavor
+msgid "Flavour on a Delivery Order"
+msgstr "Příchuť v objednávce rozvozu"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__flavor_line_ids
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
 msgid "Flavours"
 msgstr "Příchutě"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Folded"
-msgstr "Sbaleno"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__fold
-msgid "Folded on the board"
-msgstr "Sbaleno v boardu"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__message_follower_ids
@@ -1595,11 +1087,6 @@ msgid "For example Eggnog"
 msgstr "Např. Vaječňák"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid "For example On the way"
-msgstr "Např. Na cestě"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_promo_note
 #: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_promo_note
 msgid ""
@@ -1637,19 +1124,9 @@ msgid "Free from (CZK)"
 msgstr "Zdarma od (Kč)"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Free on orders over"
-msgstr "Zdarma při objednávce nad"
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
 msgid "From the customer"
 msgstr "Od zákazníka"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
-msgid "From today on"
-msgstr "Od dneška dál"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
@@ -1657,30 +1134,19 @@ msgid "Gelato and prosecco delivery in Karlovy Vary"
 msgstr "Rozvoz zmrzliny a prosecca po Karlových Varech"
 
 #. module: gelato_delivery
-#: model:gelato.delivery.stage,sms_body:gelato_delivery.stage_on_the_way
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid ""
-"Gelato! We are on our way with order {{ object.name }}. We will ring when we"
-" are outside."
-msgstr ""
-"Gelato! Vyrazili jsme s objednávkou {{ object.name }}. Zavoláme, až budeme "
-"před domem."
-
-#. module: gelato_delivery
 #: model:ir.model,name:gelato_delivery.model_gelato_geocode
 msgid "Geocoded Address"
 msgstr "Adresa na mapě"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Got a code from Instagram? Enter it here."
-msgstr "Máte kód z Instagramu? Zadejte ho tady."
+msgid "Got a code from Instagram?"
+msgstr "Máte kód z Instagramu?"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Got it!"
-msgstr "Máme to!"
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "Got a code from Instagram? Enter it here."
+msgstr "Máte kód z Instagramu? Zadejte ho tady."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_search
@@ -1715,41 +1181,22 @@ msgid "History"
 msgstr "Historie"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "How delivery <span>works</span>."
-msgstr "Jak rozvoz <span>funguje</span>."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "How do I pay?"
-msgstr "Jak se platí?"
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_box_view_form
 msgid "How it looks on the website"
 msgstr "Jak vypadá na webu"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "How long does gelato keep in the thermal box?"
-msgstr "Jak dlouho gelato v termoboxu vydrží?"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
-msgid ""
-"How many days ahead customers must order. 0 means they can order for today."
-msgstr ""
-"Kolik dní dopředu se musí objednat. 0 znamená, že jde objednat i na dnešek."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "How many flavours fit in one box?"
-msgstr "Kolik příchutí se vejde do jednoho boxu?"
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order_flavor__quantity
+msgid "How many parts of the box this flavour takes."
+msgstr "Kolik dílů boxu tahle příchuť zabere."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__max_flavors
 msgid ""
-"How many flavours the customer may pick for this box. 0 means no limit."
+"How many parts this box is divided into. The customer hands out these parts "
+"among the flavours, so a 1 l box split into 4 can be two parts pistachio and"
+" two parts vanilla - or all four the same. 0 means no splitting and no "
+"limit."
 msgstr "Kolik příchutí si zákazník může k boxu vybrat. 0 znamená bez omezení."
 
 #. module: gelato_delivery
@@ -1775,27 +1222,12 @@ msgid ""
 msgstr "Kolik se přičte k ceně termoboxu. Používá se u všeho kromě balíčků."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "How much is delivery?"
-msgstr "Kolik stojí doprava?"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "How quickly will you get here?"
-msgstr "Jak rychle přijedete?"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "I want this box"
-msgstr "Chci tenhle box"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_addon__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__id
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__id
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__id
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__id
@@ -1849,20 +1281,6 @@ msgid "Is a bundle"
 msgstr "Je balíček"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Is this soft serve?"
-msgstr "Je to točená zmrzlina?"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"It is written on each box card above. You can specify the\n"
-"                                    split in the note on your order."
-msgstr ""
-"U každého boxu je to napsané na kartě výš. Poměr si můžete určit v poznámce "
-"v objednávce."
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_form
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Jan Novák"
@@ -1885,15 +1303,9 @@ msgid "Karlovy Vary - town"
 msgstr "Karlovy Vary – město"
 
 #. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__sms_body
-msgid ""
-"Keep it under 160 characters, otherwise the provider charges for two "
-"messages. Placeholders: {{ object.customer_name }} the customer's name, {{ "
-"object.name }} the order number, {{ object.delivery_address }} the address."
-msgstr ""
-"Vejděte se do 160 znaků, jinak operátor účtuje dvě zprávy. Zástupné: {{ "
-"object.customer_name }} jméno zákazníka, {{ object.name }} číslo objednávky,"
-" {{ object.delivery_address }} adresa."
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Kč"
+msgstr "Kč"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__write_uid
@@ -1901,7 +1313,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__write_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__write_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__write_uid
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__write_uid
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__write_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__write_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__write_uid
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__write_uid
@@ -1914,7 +1326,7 @@ msgstr "Naposledy upravil"
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__write_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__write_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__write_date
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__write_date
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__write_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__write_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__write_date
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__write_date
@@ -1932,6 +1344,11 @@ msgstr "Poslední adresa"
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_search
 msgid "Last order"
 msgstr "Poslední objednávka"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
+msgid "Last seven days"
+msgstr "Posledních sedm dní"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_geocode__last_used
@@ -1955,6 +1372,11 @@ msgid "Leave empty for no limit. The last valid day is included."
 msgstr "Prázdné znamená bez omezení. Poslední platný den je včetně."
 
 #. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Less"
+msgstr "Méně"
+
+#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_promo_code_view_list
 msgid "Limit"
 msgstr ""
@@ -1975,11 +1397,6 @@ msgstr "Hledám adresu na mapě…"
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_zone_view_form
 msgid "Map"
 msgstr "Mapa"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__max_flavors
-msgid "Max. flavours"
-msgstr "Max. počet příchutí"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_addon__max_quantity
@@ -2011,8 +1428,8 @@ msgstr "Minimální objednávka"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Mon to Sun, 11:00 to 20:00. Please order at least an hour ahead."
-msgstr "Po až Ne, 11:00 až 20:00. Objednávku pošlete alespoň hodinu předem."
+msgid "More"
+msgstr "Více"
 
 #. module: gelato_delivery
 #: model:gelato.delivery.box,highlight_label:gelato_delivery.box_05
@@ -2071,7 +1488,6 @@ msgid "No customers yet."
 msgstr "Zatím žádní zákazníci."
 
 #. module: gelato_delivery
-#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_order_action
 #: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_order_list_action
 msgid "No orders have come in yet."
 msgstr "Zatím nepřišla žádná objednávka."
@@ -2091,24 +1507,8 @@ msgid "No zones drawn yet."
 msgstr "Zatím není nakreslená žádná zóna."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"No. We make Italian gelato, which is churned as it is made\n"
-"                                    and served with a spatula. That gives it a denser, creamier\n"
-"                                    texture than soft serve and much less air."
-msgstr ""
-"Není. Děláme italské gelato, které se míchá až při přípravě a nabírá se "
-"špachtlí. Má proto hustší a krémovější strukturu než točená a míň vzduchu."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
-msgid "Not finished yet"
-msgstr "Nedokončené"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__note
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_form
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Note"
 msgstr "Poznámka"
 
@@ -2164,11 +1564,6 @@ msgid "On the price before the discount"
 msgstr "Z ceny před slevou"
 
 #. module: gelato_delivery
-#: model:gelato.delivery.stage,name:gelato_delivery.stage_on_the_way
-msgid "On the way"
-msgstr "Na cestě"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__features
 msgid "One bullet per line. Shown on the box card on the website."
 msgstr "Jedna odrážka na řádek. Ukáže se na kartě boxu na webu."
@@ -2180,8 +1575,11 @@ msgstr "Jedna odrážka na řádek..."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
-msgid "One database can host several websites. Only the one ticked here answers on /rozvoz."
-msgstr "V jedné databázi může běžet víc webů. Na /rozvoz odpoví jen ten zaškrtnutý."
+msgid ""
+"One database can host several websites. Only the one ticked here answers on "
+"/rozvoz."
+msgstr ""
+"V jedné databázi může běžet víc webů. Na /rozvoz odpoví jen ten zaškrtnutý."
 
 #. module: gelato_delivery
 #. odoo-python
@@ -2200,6 +1598,12 @@ msgid "One sentence under the name on the website."
 msgstr "Jedna věta pod názvem na webu."
 
 #. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
+msgid "Only one bundle fits in an order. Please leave just one."
+msgstr "Do objednávky se vejde jen jeden balíček. Nechte prosím jenom jeden."
+
+#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_zone__color
 msgid "Only so you can tell the zones apart while drawing."
 msgstr "Jen abyste od sebe zóny při kreslení rozeznali."
@@ -2207,8 +1611,13 @@ msgstr "Jen abyste od sebe zóny při kreslení rozeznali."
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_site
 #: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_site
-msgid "Only the website with this ticked serves the /rozvoz page. One database can host several websites and the gelateria's delivery has no business appearing on somebody else's site."
-msgstr "Stránku /rozvoz obslouží jen web, který tohle má zaškrtnuté. V jedné databázi může běžet víc webů a rozvoz gelaterie nemá co dělat na cizím webu."
+msgid ""
+"Only the website with this ticked serves the /rozvoz page. One database can "
+"host several websites and the gelateria's delivery has no business appearing"
+" on somebody else's site."
+msgstr ""
+"Stránku /rozvoz obslouží jen web, který tohle má zaškrtnuté. V jedné "
+"databázi může běžet víc webů a rozvoz gelaterie nemá co dělat na cizím webu."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__delivery_postcode
@@ -2219,29 +1628,14 @@ msgstr "Ověřuje se proti seznamu oblastí, kam rozvážíte."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__order_id
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__order_id
 msgid "Order"
 msgstr "Objednávka"
-
-#. module: gelato_delivery
-#: model:ir.model,name:gelato_delivery.model_gelato_delivery_stage
-msgid "Order Stage"
-msgstr "Sloupec objednávky"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Order a <span>delivery</span>."
-msgstr "Objednejte si <span>rozvoz</span>."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Order a delivery"
 msgstr "Objednat rozvoz"
-
-#. module: gelato_delivery
-#: model:ir.actions.act_window,name:gelato_delivery.gelato_delivery_order_action
-#: model:ir.ui.menu,name:gelato_delivery.menu_gelato_orders
-msgid "Order board"
-msgstr "Board objednávek"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__name
@@ -2250,8 +1644,8 @@ msgstr "Číslo objednávky"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Order number: <strong id=\"gelatoSuccessRef\"/>"
-msgstr "Číslo objednávky: <strong id=\"gelatoSuccessRef\"/>"
+msgid "Order number: <strong id=\"gelatoOrderRef\"/>"
+msgstr "Číslo objednávky: <strong id=\"gelatoOrderRef\"/>"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_search
@@ -2259,14 +1653,21 @@ msgid "Ordered more than once"
 msgstr "Objednal víc než jednou"
 
 #. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__delivery_date
+msgid "Ordered on"
+msgstr "Datum doručení"
+
+#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/models/gelato_customer.py:0
+#: model:ir.actions.act_window,name:gelato_delivery.gelato_delivery_order_list_action
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__order_count
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__order_ids
+#: model:ir.ui.menu,name:gelato_delivery.menu_gelato_orders_list
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_form
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_list
 msgid "Orders"
-msgstr "Objednávky"
+msgstr "Všechny objednávky"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_free_from
@@ -2288,42 +1689,6 @@ msgstr ""
 "dopravné počítá vždycky."
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
-#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_order_from
-msgid "Orders from"
-msgstr "Objednávky od"
-
-#. module: gelato_delivery
-#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_order_action
-msgid ""
-"Orders from the delivery page land in the first column. Drag a card to move "
-"it on - a column can email the customer the moment the order arrives in it."
-msgstr ""
-"Objednávky ze stránky rozvozu padají do prvního sloupce. Přetažením karty ji"
-" posunete dál – sloupec umí zákazníkovi poslat e-mail ve chvíli, kdy do něj "
-"objednávka přijde."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__is_done
-msgid ""
-"Orders in this column are treated as finished. Use it for the last column, "
-"typically Delivered."
-msgstr ""
-"Objednávky v tomhle sloupci se berou jako dokončené. Použijte to u "
-"posledního sloupce, typicky Doručeno."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Orders over"
-msgstr "Objednávky nad"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_order_to
-msgid "Orders until"
-msgstr "Objednávky do"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__order_ids
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_promo_code_view_form
 msgid "Orders using this code"
@@ -2343,9 +1708,10 @@ msgid "Other"
 msgstr "Ostatní"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Payment"
-msgstr "Platba"
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_flavor__quantity
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
+msgid "Parts"
+msgstr "Dílů"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__phone
@@ -2365,6 +1731,7 @@ msgstr "Číslice telefonu"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_addon__image
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__image
 msgid "Photo"
 msgstr "Fotka"
 
@@ -2379,15 +1746,6 @@ msgstr "Vyberte aspoň jednu příchuť."
 #: code:addons/gelato_delivery/models/gelato_delivery_addon.py:0
 msgid "Pick the thermal box that bundle “%s” goes with."
 msgstr "U balíčku „%s“ vyberte, ke kterému termoboxu platí."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__mail_body
-msgid ""
-"Placeholders: {{ object.customer_name }} the customer's name, {{ object.name"
-" }} the order number, {{ object.delivery_address }} the address."
-msgstr ""
-"Zástupné texty: {{ object.customer_name }} jméno zákazníka, {{ object.name "
-"}} číslo objednávky, {{ object.delivery_address }} adresa."
 
 #. module: gelato_delivery
 #. odoo-python
@@ -2427,12 +1785,6 @@ msgstr "Vyplňte jméno."
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
 msgid "Please fill in your phone number."
 msgstr "Vyplňte telefon."
-
-#. module: gelato_delivery
-#. odoo-python
-#: code:addons/gelato_delivery/controllers/rozvoz.py:0
-msgid "Please pick a delivery date."
-msgstr "Vyberte datum doručení."
 
 #. module: gelato_delivery
 #. odoo-python
@@ -2489,13 +1841,8 @@ msgstr "Slevové kódy"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Proper Italian gelato from our gelateria in Rybáře. We churn it\n"
-"                                fresh, fill a thermal box and drive it to you anywhere in\n"
-"                                Karlovy Vary."
-msgstr ""
-"Poctivé italské gelato z gelaterie v Rybářích. Namícháme ho čerstvé, "
-"naplníme do termoboxu a přivezeme po Karlových Varech."
+msgid "Proper Italian gelato from our gelateria in Rybáře, in a thermal\n                                box at your door. Usually within 90 minutes. You pay in cash\n                                when we hand it over."
+msgstr "Poctivé italské gelato z gelaterie v Rybářích, v termoboxu až k vám\n                                domů. Obvykle do 90 minut. Platíte hotově při předání."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
@@ -2509,24 +1856,13 @@ msgstr ""
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Prosecco, bundles and seasonal treats. Whatever is available shows up here."
-msgstr "Prosecco, balíčky a sezónní kousky. Co je zrovna k mání, vidíte tady."
+msgid "Put together your <span>box</span>."
+msgstr "Poskládejte si <span>box</span>."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_addon__quantity
 msgid "Quantity"
 msgstr "Množství"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Questions about <span>delivery</span>."
-msgstr "Časté dotazy k <span>rozvozu</span>."
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,name:gelato_delivery.stage_received
-msgid "Received"
-msgstr "Přijatá"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__usage_left
@@ -2567,22 +1903,13 @@ msgid "SWITCHED OFF - the website takes no orders"
 msgstr "VYPNUTO – web nebere žádné objednávky"
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Send the order"
 msgstr "Odeslat objednávku"
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "Sending..."
-msgstr "Odesíláme..."
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_addon__sequence
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__sequence
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__sequence
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__sequence
 msgid "Sequence"
 msgstr "Pořadí"
@@ -2596,6 +1923,11 @@ msgstr "Počet porcí"
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__polygon
 msgid "Shape"
 msgstr "Tvar"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__image
+msgid "Shown on the box card on the website. Without it the card is just text, and nobody who does not already know you buys from text."
+msgstr "Ukáže se na kartě boxu na webu. Bez ní je karta jen text a od textu si nikdo, kdo vás nezná, nekoupí."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__name
@@ -2623,10 +1955,9 @@ msgid "Split between flavours, allergies, gift wrapping and so on."
 msgstr "Rozdělení příchutí, alergie, dárkové balení a podobně."
 
 #. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__stage_id
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_search
-msgid "Stage"
-msgstr "Sloupec"
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__max_flavors
+msgid "Splits into"
+msgstr "Max. počet příchutí"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__activity_state
@@ -2650,11 +1981,6 @@ msgstr "Ulice a číslo popisné, patro, zvonek"
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__delivery_address
 msgid "Street and number, floor, doorbell."
 msgstr "Ulice a číslo popisné, patro, zvonek."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Subject"
-msgstr "Předmět"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__subtitle
@@ -2701,40 +2027,8 @@ msgstr "Vypnutá zóna přestane brát objednávky a zmizí z webu."
 #. module: gelato_delivery
 #. odoo-javascript
 #: code:addons/gelato_delivery/static/src/js/board_switch.js:0
-msgid "Taking orders, until %s"
-msgstr "Bereme objednávky, do %s"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__sms_body
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Text message"
-msgstr "Text SMS"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid "Text message to the customer"
-msgstr "SMS zákazníkovi"
-
-#. module: gelato_delivery
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_stage__sms_enabled
-msgid "Text the customer"
-msgstr "Poslat SMS zákazníkovi"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_list
-msgid "Texts the customer"
-msgstr "Posílá SMS"
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_subject:gelato_delivery.stage_delivered
-msgid "Thank you for your order {{ object.name }}"
-msgstr "Děkujeme za objednávku {{ object.name }}"
-
-#. module: gelato_delivery
-#. odoo-python
-#: code:addons/gelato_delivery/controllers/rozvoz.py:0
-msgid "That date is no longer available."
-msgstr "Na tenhle termín už objednat nejde."
+msgid "Taking orders"
+msgstr "Bereme objednávky"
 
 #. module: gelato_delivery
 #. odoo-python
@@ -2761,42 +2055,15 @@ msgstr ""
 "celkové ceny, ručně se nezadává."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"The box holds its temperature for hours, so the gelato arrives in shape."
-msgstr ""
-"Box drží správnou teplotu několik hodin, takže gelato dorazí v kondici."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"The box holds the right texture for several hours. If you\n"
-"                                    are not eating it straight away, put it in the freezer once it\n"
-"                                    arrives. It is at its best on the first day, the way we make it."
-msgstr ""
-"Termobox drží správnou konzistenci několik hodin. Pokud gelato nebudete jíst"
-" hned, dejte ho po doručení do mrazáku. Nejlepší je ale první den, tak jak "
-"ho děláme."
-
-#. module: gelato_delivery
 #. odoo-javascript
 #: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "The box is full: %(checked)s of %(max)s flavours."
-msgstr "Box je plný: %(checked)s z %(max)s příchutí."
+msgid "The box is full."
+msgstr "Box je plný."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__highlight
 msgid "The card gets a coloured border and a badge."
 msgstr "Karta dostane barevný rámeček a štítek."
-
-#. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid ""
-"The chosen box holds %s flavours. Untick a few, or choose a bigger box."
-msgstr ""
-"Do vybraného boxu se vejde %s příchutí. Odeberte pár zaškrtnutých, nebo "
-"zvolte větší box."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_promo_code_view_form
@@ -2808,11 +2075,6 @@ msgstr "Kód právě platí"
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
 msgid "The code is valid, a %g%% discount is applied."
 msgstr "Kód platí, sleva %g %% je započítaná."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__fold
-msgid "The column shows collapsed. Handy for end states like Cancelled."
-msgstr "Sloupec se zobrazí sbalený. Hodí se pro koncové stavy jako Zrušeno."
 
 #. module: gelato_delivery
 #: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_promo_code_action
@@ -2867,15 +2129,6 @@ msgid "The discount must be greater than 0 and at most 100%."
 msgstr "Sleva musí být větší než 0 a nejvýš 100 %."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"The gelateria churns a different line-up every day, so this list\n"
-"                                changes. It is exactly what is in the counter right now."
-msgstr ""
-"Každý den míchá gelaterie jinou sestavu, takže tenhle seznam se mění. Je to "
-"přesně to, co je právě teď na pultě."
-
-#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__subtitle
 msgid "The line under the name, for example “about 8 servings”."
 msgstr "Řádek pod názvem, např. „cca 8 porcí“."
@@ -2923,10 +2176,8 @@ msgstr ""
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"The order is not binding. We will get back to you to confirm the time and "
-"the price."
-msgstr "Objednávka je nezávazná. Ozveme se vám a potvrdíme termín i cenu."
+msgid "The order is not binding. We will get back to you and confirm it."
+msgstr "Objednávka je nezávazná. Ozveme se vám a potvrdíme ji."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_zone__polygon
@@ -2986,14 +2237,6 @@ msgstr ""
 "%. Zadejte 0, pokud nejste plátci DPH."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"The things people ask us most often about gelato and prosecco delivery in "
-"Karlovy Vary."
-msgstr ""
-"Co se nás nejčastěji ptáte na rozvoz gelata a prosecca po Karlových Varech."
-
-#. module: gelato_delivery
 #: model:ir.model,name:gelato_delivery.model_gelato_delivery_box
 msgid "Thermal Box"
 msgstr "Termobox"
@@ -3006,14 +2249,10 @@ msgid "Thermal box"
 msgstr "Termobox"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Thermal box *"
-msgstr "Termobox *"
-
-#. module: gelato_delivery
 #: model:ir.actions.act_window,name:gelato_delivery.gelato_delivery_box_action
 #: model:ir.ui.menu,name:gelato_delivery.menu_gelato_boxes
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_box_view_list
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__box_ids
 msgid "Thermal boxes"
 msgstr "Termoboxy"
 
@@ -3032,27 +2271,10 @@ msgid "This address is already stored."
 msgstr "Tahle adresa už je uložená."
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid ""
-"This box holds %(max)s flavours, but you picked %(checked)s. Remove "
-"%(extra)s, or choose a bigger box."
-msgstr ""
-"Do tohohle boxu se vejde %(max)s příchutí, ale máte vybráno %(checked)s. "
-"Odeberte %(extra)s, nebo zvolte větší box."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid ""
-"This column is only your own step - the customer hears\n"
-"                        <b>nothing</b> when an order lands in it. Switch\n"
-"                        <b>Email the customer</b> or <b>Text the customer</b> on\n"
-"                        if you want something sent."
-msgstr ""
-"Tenhle sloupec je jen váš vlastní krok – zákazník se <b>nic</b>\n"
-"                         nedozví, když v něm objednávka přistane. Zapněte\n"
-"                         <b>Poslat e-mail zákazníkovi</b> nebo <b>Poslat SMS\n"
-"                         zákazníkovi</b>, pokud chcete něco poslat."
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid "This box is split into %(parts)s, you have handed out %(given)s. Please use them all."
+msgstr "Tenhle box se dělí na %(parts)s dílů a vy jste rozdali %(given)s. Rozdělte prosím všechny."
 
 #. module: gelato_delivery
 #: model:ir.model.constraint,message:gelato_delivery.constraint_gelato_promo_code_code_uniq
@@ -3077,21 +2299,6 @@ msgstr ""
 "                         Mít tu něčí adresu <b>není</b> totéž jako jeho souhlas\n"
 "                         s tím, že se mu ozvete. Zaškrtávejte\n"
 "                         <b>Můžeme oslovit</b> jen u těch, kdo ho dali."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Three steps. No app, no sign-up, no queueing."
-msgstr "Tři kroky. Bez aplikace, bez registrace, bez čekání ve frontě."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Tick the gelato you want in the form, choose the size of the\n"
-"                                    thermal box and add prosecco if you like. Mix them however\n"
-"                                    you want, up to the capacity of the box."
-msgstr ""
-"Ve formuláři zaškrtnete gelato, které chcete, zvolíte velikost termoboxu a "
-"případně přidáte prosecco. Kombinovat můžete libovolně podle velikosti boxu."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_customer__marketing_ok
@@ -3132,12 +2339,6 @@ msgstr "Druh"
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_form
 msgid "Type and price"
 msgstr "Druh a cena"
-
-#. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "Type in a promo code."
-msgstr "Napište slevový kód."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__activity_exception_decoration
@@ -3228,22 +2429,10 @@ msgid "Volume (l)"
 msgstr "Objem (l)"
 
 #. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "We are coming today."
-msgstr "Přivezeme dnes."
-
-#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "We are not taking orders right now."
 msgstr "Teď objednávky nebereme."
-
-#. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_subject:gelato_delivery.stage_on_the_way
-msgid "We are on our way with order {{ object.name }}"
-msgstr "Vyrazili jsme s objednávkou {{ object.name }}"
 
 #. module: gelato_delivery
 #. odoo-python
@@ -3256,32 +2445,10 @@ msgstr ""
 "dopravu domluvíme."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "We charge"
-msgstr "Účtujeme"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "We churn it and fill the box"
-msgstr "Namícháme a naplníme box"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"We churn our gelato as we make it, right here in the\n"
-"                                    gelateria in Rybáře. We scoop it into the thermal box with a\n"
-"                                    spatula just before we set off, so it arrives exactly as\n"
-"                                    dense and creamy as it should be."
-msgstr ""
-"Gelato mícháme až při přípravě, přímo v gelaterii v Rybářích. Do termoboxu "
-"ho nabíráme špachtlí těsně před výjezdem, takže dorazí přesně tak hutné a "
-"krémové, jak má být."
-
-#. module: gelato_delivery
 #. odoo-javascript
 #: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
-msgid "We could not check the code, please try again."
-msgstr "Kód se nepodařilo ověřit, zkuste to znovu."
+msgid "We could not check the code. Try again."
+msgstr "Kód se nepodařilo ověřit. Zkuste to znovu."
 
 #. module: gelato_delivery
 #. odoo-python
@@ -3295,16 +2462,6 @@ msgstr "Tuhle adresu jsme nenašli. Zkontrolujte prosím ulici a číslo popisn�
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_zone_view_list
 msgid "We deliver"
 msgstr "Rozvážíme"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"We deliver across Karlovy Vary, usually within 90 minutes of\n"
-"                                    confirming your order. You pay on handover, in cash or by\n"
-"                                    card."
-msgstr ""
-"Rozvážíme po celých Karlových Varech, obvykle do 90 minut od potvrzení "
-"objednávky. Platíte až při předání, hotově nebo kartou."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_zone__active
@@ -3349,8 +2506,8 @@ msgstr "Tenhle kód neznáme nebo už neplatí."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "We drive it to you"
-msgstr "Přivezeme k vám"
+msgid "We have it!"
+msgstr "Máme to!"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
@@ -3358,18 +2515,13 @@ msgid "We have not posted today's line-up yet. Call us on"
 msgstr "Dnešní nabídku ještě nemáme vyvěšenou. Zavolejte nám na"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "We have not posted today's line-up yet. Please call us on"
-msgstr "Dnešní nabídku zatím nemáme vyvěšenou. Zavolejte nám prosím na"
-
-#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/controllers/rozvoz.py:0
-msgid "We have run out of these today: %s. Please pick others."
-msgstr "Tyhle příchutě už dneska nemáme: %s. Vyberte prosím jiné."
+msgid "We have run out of %s today. Please pick another one."
+msgstr "%s nám dnes došla. Vyberte si prosím jinou."
 
 #. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_subject:gelato_delivery.stage_received
+#: model:mail.template,subject:gelato_delivery.mail_template_order_confirmation
 msgid "We have your order {{ object.name }}"
 msgstr "Máme vaši objednávku {{ object.name }}"
 
@@ -3385,17 +2537,6 @@ msgid "We send the order confirmation here."
 msgstr "Sem pošleme potvrzení objednávky."
 
 #. module: gelato_delivery
-#. odoo-python
-#: code:addons/gelato_delivery/models/website.py:0
-msgid "We take orders between %(from)s and %(to)s."
-msgstr "Objednávky bereme mezi %(from)s a %(to)s."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "We take orders between 11:00 and 19:00."
-msgstr "Objednávky bereme mezi 11:00 a 19:00."
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "We will bring <span>gelato</span> to your door."
 msgstr "Přivezeme vám <span>gelato</span> domů."
@@ -3403,8 +2544,8 @@ msgstr "Přivezeme vám <span>gelato</span> domů."
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
-"We will confirm the price with you over the phone. You pay on handover."
-msgstr "Cenu vám ještě potvrdíme telefonicky. Platíte až při předání."
+"We will confirm the price with you. You pay in cash when we hand it over."
+msgstr "Cenu vám ještě potvrdíme. Platíte hotově při předání."
 
 #. module: gelato_delivery
 #: model:ir.model,name:gelato_delivery.model_website
@@ -3461,48 +2602,9 @@ msgid "What was ordered"
 msgstr "Co si objednal"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "What we are <span>churning</span> today."
-msgstr "Co dnes <span>mícháme</span>."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "What we are churning today"
-msgstr "Co dnes mícháme"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "What we have today"
-msgstr "Co dnes máme"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_zone__name
 msgid "What you call it, for example “Centre” or “Zone 1”."
 msgstr "Jak tomu říkáte, třeba „Centrum“ nebo „Zóna 1“."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__mail_enabled
-msgid ""
-"When an order is dragged into this column, the customer gets the email "
-"below. Leave it off for columns that are only your own internal step."
-msgstr ""
-"Když do tohohle sloupce přetáhnete objednávku, zákazníkovi se pošle e-mail z"
-" políček níž. Nechte vypnuté u sloupců, které jsou jen váš interní krok."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__sms_enabled
-msgid ""
-"When an order is dragged into this column, the customer gets the text "
-"message below. Texts cost money with your SMS provider, so this is usually "
-"worth it only for “on the way”."
-msgstr ""
-"Když objednávku přetáhnete do tohohle sloupce, přijde zákazníkovi SMS níže. "
-"SMS u operátora něco stojí, takže se to obvykle vyplatí jen u „Na cestě“."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "When do you want it? *"
-msgstr "Kdy to chcete? *"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_enabled
@@ -3523,31 +2625,11 @@ msgstr ""
 "a dopravné je potřeba potvrdit telefonem."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "When we drive"
-msgstr "Kdy vozíme"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Where and when <span>we deliver</span>."
-msgstr "Kam a kdy <span>rozvážíme</span>."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Where do you deliver?"
-msgstr "Kam všude rozvážíte?"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_res_config_settings__gelato_delivery_email
 #: model:ir.model.fields,help:gelato_delivery.field_website__gelato_delivery_email
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
 msgid "Where new delivery orders are sent."
 msgstr "Kam chodí nové objednávky rozvozu."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__stage_id
-msgid "Which column of the order board the order sits in."
-msgstr "Ve kterém sloupci boardu objednávka je."
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__zone_id
@@ -3559,6 +2641,11 @@ msgstr ""
 "nepodařilo umístit na mapu."
 
 #. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__flavor_ids
+msgid "Which flavours are in the order, without the counts. Kept so the list can be searched and grouped by flavour."
+msgstr "Které příchutě v objednávce jsou, bez počtů. Slouží k hledání a seskupování podle příchutě."
+
+#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_addon__bundle_box_id
 msgid ""
 "Which thermal box the bundle is priced for. The customer cannot combine it "
@@ -3568,19 +2655,9 @@ msgstr ""
 "nemůže."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Why do the flavours change every day?"
-msgstr "Proč se nabídka příchutí každý den mění?"
-
-#. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_list
 msgid "With box"
 msgstr "K boxu"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_kanban
-msgid "Write an email to the customer"
-msgstr "Napsat zákazníkovi e-mail"
 
 #. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__box_vat_rate
@@ -3611,68 +2688,17 @@ msgstr ""
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"Yes. Put it in the note and we will have the box ready for\n"
-"                                    you at the gelateria at Sokolovská 101 in Rybáře."
-msgstr ""
-"Ano. Napište to do poznámky a box vám nachystáme v gelaterii na Sokolovské "
-"101 v Rybářích."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid ""
-"You can drop these into the subject and the text, they fill themselves in:\n"
-"                        <br/>\n"
-"                        <b>{{ object.name }}</b> the order number ·\n"
-"                        <b>{{ object.customer_name }}</b> the customer's name ·\n"
-"                        <b>{{ object.delivery_address }}</b> the address ·\n"
-"                        <b>{{ object.amount_total }}</b> the total.\n"
-"                        <br/>\n"
-"                        Each goes out once per column. Dragging a card out and back\n"
-"                        will not send it again."
-msgstr ""
-"Tohle můžete vložit do předmětu i do textu, vyplní se samy:"
-"                        <br/>                        <b>{{ object.name "
-"}}</b> číslo objednávky ·                        <b>{{ object.customer_name "
-"}}</b> jméno zákazníka ·                        <b>{{ "
-"object.delivery_address }}</b> adresa ·                        <b>{{ "
-"object.amount_total }}</b> celková částka.                        <br/>"
-"                        E-mail odejde jednou za sloupec. Když kartu "
-"přetáhnete pryč a zpátky, znovu se nepošle."
-
-#. module: gelato_delivery
-#. odoo-python
-#: code:addons/gelato_delivery/controllers/rozvoz.py:0
-msgid "You can pick at most %d flavours for this box."
-msgstr "K tomuhle boxu si můžete vybrat nejvýš %d příchutí."
-
-#. module: gelato_delivery
-#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_stage__mail_subject
-msgid "You can use {{ object.name }} for the order number."
-msgstr "Můžete použít {{ object.name }} pro číslo objednávky."
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "You pick your flavours"
-msgstr "Vyberete si příchutě"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Your name *"
 msgstr "Jméno *"
 
 #. module: gelato_delivery
-#: model:gelato.delivery.stage,mail_subject:gelato_delivery.stage_confirmed
-msgid "Your order {{ object.name }} is confirmed"
-msgstr "Objednávku {{ object.name }} máme potvrzenou"
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_stage_view_form
-msgid "Your order {{ object.name }} is on its way"
-msgstr "Objednávka {{ object.name }} je na cestě"
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Your order is in. We will get back to you and confirm it."
+msgstr "Objednávku máme. Ozveme se vám a potvrdíme ji."
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_promo_code_view_form
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "ZIMA10"
 msgstr ""
 
@@ -3720,7 +2746,7 @@ msgstr "cca 8 porcí"
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
 "and we will\n"
-"                                tell you what is ready."
+"                                        tell you what is ready."
 msgstr "a řekneme vám,                                co je zrovna hotové."
 
 #. module: gelato_delivery
@@ -3745,17 +2771,6 @@ msgid "milk"
 msgstr "mléko"
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "thermal box included"
-msgstr "včetně termoboxu"
-
-#. module: gelato_delivery
-#. odoo-javascript
-#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
-msgid "until"
-msgstr "do"
-
-#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/models/gelato_delivery_box.py:0
 msgid "up to %s different flavours"
@@ -3778,7 +2793,375 @@ msgid "vegan"
 msgstr ""
 
 #. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "with the 1 l box"
+msgstr "k boxu 1 l"
+
+#. module: gelato_delivery
 #. odoo-python
 #: code:addons/gelato_delivery/models/gelato_promo_code.py:0
 msgid "“Valid from” cannot be later than “Valid until”."
 msgstr "Datum „Platí od“ nemůže být později než „Platí do“."
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
+msgid "Remove"
+msgstr "Odebrat"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_delivery_box.py:0
+msgid "max 1 flavour"
+msgstr "max 1 příchuť"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_delivery_box.py:0
+msgid "max %s flavours"
+msgstr "max %s příchutě"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_delivery_box.py:0
+msgid "max %s flavours in total"
+msgstr "max %s příchutí"
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid "Your order is empty. Please pick something first."
+msgstr "Objednávka je prázdná. Nejdřív si něco vyberte."
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid "One of the thermal boxes is no longer available."
+msgstr "Jeden z termoboxů už není k dispozici."
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid "Please pick the flavours for %s."
+msgstr "Vyberte příchutě pro %s."
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid ""
+"%(product)s is split into %(parts)s, you have handed out %(given)s. Please "
+"use them all."
+msgstr ""
+"%(product)s se dělí na %(parts)s, rozdělili jste %(given)s. Rozdělte je "
+"všechny."
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
+msgid "1 item ·"
+msgstr "1 položka ·"
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
+msgid "%s items ·"
+msgstr "%s položky ·"
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/rozvoz_form.js:0
+msgid "%s items in total ·"
+msgstr "%s položek ·"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__max_flavors
+msgid "Flavours in the box"
+msgstr "Příchutí v boxu"
+
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_item__addon_id
+msgid "Bundle or extra"
+msgstr "Balíček nebo doplněk"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__delivery_city
+msgid "Town"
+msgstr "Město"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order_item__label
+msgid "Item"
+msgstr "Položka"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
+msgid "With"
+msgstr "Obsah"
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
+#: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_order_from
+#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_order_from
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "Orders from"
+msgstr "Objednávky od"
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
+#: model:ir.model.fields,field_description:gelato_delivery.field_res_config_settings__gelato_order_to
+#: model:ir.model.fields,field_description:gelato_delivery.field_website__gelato_order_to
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "Orders until"
+msgstr "Objednávky do"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid "Ordering hours"
+msgstr "Kdy se dá objednat"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.res_config_settings_view_form_gelato_delivery
+msgid ""
+"Between these two times the website takes orders. Outside them it says when "
+"to come back. Both at 0 means round the clock."
+msgstr ""
+"Mezi těmito časy web bere objednávky. Mimo ně napíše, kdy se má zákazník "
+"vrátit. Obojí na 0 znamená nonstop."
+
+#. module: gelato_delivery
+#. odoo-javascript
+#: code:addons/gelato_delivery/static/src/js/board_switch.js:0
+msgid "Closed now - orders open at %s"
+msgstr "Teď zavřeno – objednávky od %s"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/website.py:0
+msgid "We take orders %(hours)s. Come back then, or give us a ring."
+msgstr "Objednávky bereme %(hours)s. Stavte se pak, nebo nám zavolejte."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_order_from
+msgid ""
+"From what time the website takes orders. 11.5 means half past eleven. Leave "
+"both at 0 for round the clock."
+msgstr ""
+"Od kolika hodin web bere objednávky. 11.5 znamená půl dvanácté. Obojí na 0 "
+"znamená nonstop."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_website__gelato_order_to
+msgid ""
+"Until what time the website takes orders. Somebody still has to make it and "
+"drive out, so this is usually earlier than closing time."
+msgstr ""
+"Do kolika hodin web bere objednávky. Někdo to ještě musí připravit a odvézt, "
+"takže to bývá dřív než zavíračka."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Added"
+msgstr "Přidáno"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__scope
+msgid "Applies to"
+msgstr "Platí na"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_promo_code__scope__all
+msgid "The whole order"
+msgstr "Celou objednávku"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_promo_code__scope__delivery
+msgid "The delivery fee"
+msgstr "Jen dopravu"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_promo_code__scope__products
+msgid "Only the products picked below"
+msgstr "Jen vybrané produkty níže"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__addon_ids
+msgid "Bundles and extras"
+msgstr "Balíčky a doplňky"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__scope_label
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_promo_code_view_list
+msgid "In words"
+msgstr "Slovy"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_promo_code_view_list
+msgid "What it does"
+msgstr "Co dělá"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_promo_code.py:0
+msgid "%s off the delivery fee"
+msgstr "%s z dopravy"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_promo_code.py:0
+msgid "%(percent)s off %(products)s"
+msgstr "%(percent)s z: %(products)s"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_promo_code.py:0
+msgid "%s off nothing yet - pick the products below."
+msgstr "%s zatím z ničeho – vyberte produkty níže."
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/models/gelato_promo_code.py:0
+msgid "%s off the whole order"
+msgstr "%s z celé objednávky"
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid "The code is valid: %s."
+msgstr "Kód platí: %s."
+
+#. module: gelato_delivery
+#. odoo-python
+#: code:addons/gelato_delivery/controllers/rozvoz.py:0
+msgid "We deliver to %(zone)s, delivery %(fee)s CZK - free from %(free_from)s CZK."
+msgstr "Do oblasti %(zone)s rozvážíme, doprava %(fee)s Kč – od %(free_from)s Kč zdarma."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__highlight
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_box_view_list
+msgid "Badge on the card"
+msgstr "Štítek na kartě"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__highlight
+msgid ""
+"Puts the green badge in the corner of the card on the delivery page - the "
+"“Most popular” one. Switch it off and the badge is gone."
+msgstr ""
+"Zapne zelený štítek v rohu karty na stránce rozvozu – ten „Nejoblíbenější“. "
+"Vypnete a štítek zmizí."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__highlight_label
+msgid "What the badge says"
+msgstr "Co je na štítku"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__highlight_label
+msgid "Anything you like: Most popular, New, Best value."
+msgstr "Co chcete: Nejoblíbenější, Novinka, Nejvýhodnější."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__max_flavors
+msgid ""
+"How many flavours fit in this box - the website says \"max 4 flavours\". The"
+" customer hands them out, so a box of four can be two of pistachio and two "
+"of vanilla, or all four the same. 0 means no limit."
+msgstr ""
+"Kolik příchutí se do boxu vejde – na webu se ukáže „max 4 příchutě“. "
+"Zákazník si je rozděluje, takže box na čtyři může být dvě pistácie a dvě "
+"vanilky, nebo všechny čtyři stejné. 0 znamená bez omezení."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__flavor_note
+msgid "Flavours line on the card"
+msgstr "Řádek s příchutěmi na kartě"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__flavor_note
+msgid ""
+"Leave this empty and the line writes itself from the number above: “max 4 "
+"flavours”. Type something here and that is what the card says instead."
+msgstr ""
+"Nechte prázdné a řádek se napíše sám podle čísla výše: „max 4 příchutě“. "
+"Když sem něco napíšete, ukáže se na kartě to."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_addon__image_fit
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__image_fit
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_image_frame__image_fit
+msgid "Photo in the frame"
+msgstr "Fotka v rámečku"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_addon__image_fit__cover
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_box__image_fit__cover
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_image_frame__image_fit__cover
+msgid "Fill the frame (crops the edges)"
+msgstr "Vyplnit rámeček (okraje se oříznou)"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_addon__image_fit__contain
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_box__image_fit__contain
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_image_frame__image_fit__contain
+msgid "Whole photo (leaves space around it)"
+msgstr "Celá fotka (kolem zůstane místo)"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_addon__image_fit
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__image_fit
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_image_frame__image_fit
+msgid ""
+"Fill the frame looks best for a photo shot square. Choose the whole photo "
+"for a tall bottle or anything that must not be cut off."
+msgstr ""
+"Vyplnit rámeček se hodí na čtvercové fotky. U vysoké láhve nebo všude, kde "
+"se nesmí nic uříznout, zvolte celou fotku."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_addon__image_focus
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_box__image_focus
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_image_frame__image_focus
+msgid "Keep in view"
+msgstr "Co nechat vidět"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_addon__image_focus
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__image_focus
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_image_frame__image_focus
+msgid ""
+"Which part of the photo to keep when the frame crops it. Has no effect when "
+"the whole photo is shown."
+msgstr ""
+"Která část fotky zůstane, když ji rámeček ořízne. Při zobrazení celé fotky "
+"se neuplatní."
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_addon__image_focus__top
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_box__image_focus__top
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_image_frame__image_focus__top
+msgid "Top"
+msgstr "Horní část"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_addon__image_focus__center
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_box__image_focus__center
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_image_frame__image_focus__center
+msgid "Middle"
+msgstr "Střed"
+
+#. module: gelato_delivery
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_addon__image_focus__bottom
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_delivery_box__image_focus__bottom
+#: model:ir.model.fields.selection,name:gelato_delivery.selection__gelato_image_frame__image_focus__bottom
+msgid "Bottom"
+msgstr "Dolní část"
+
+#. module: gelato_delivery
+#: model:ir.model,name:gelato_delivery.model_gelato_image_frame
+msgid "Photo framing on the website"
+msgstr "Umístění fotky na webu"

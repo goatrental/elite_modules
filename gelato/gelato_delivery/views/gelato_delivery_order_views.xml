@@ -2,87 +2,29 @@
 <odoo>
 
     <!-- ============================================================
-         The board: one column per stage, drag a card to move it on.
-         Dragging writes the stage, which is what sends the column's email.
+         Orders are a plain list. There is no board and no stages: the
+         gelateria takes a handful of orders a day, rings everybody
+         anyway, and columns to drag cards through would be ceremony
+         around work that is already done on the phone.
          ============================================================ -->
-    <record id="gelato_delivery_order_view_kanban" model="ir.ui.view">
-        <field name="name">gelato.delivery.order.kanban</field>
-        <field name="model">gelato.delivery.order</field>
-        <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" records_draggable="true"
-                    class="o_kanban_small_column" create="0">
-                <field name="stage_id"/>
-                <field name="customer_email"/>
-                <field name="note"/>
-                <templates>
-                    <t t-name="card">
-                        <div class="o_gelato_order_card">
-                            <div class="o_gelato_order_top">
-                                <strong>
-                                    <field name="customer_name"/>
-                                </strong>
-                                <span class="o_gelato_order_total">
-                                    <field name="amount_total"/> CZK
-                                </span>
-                            </div>
-                            <div class="o_gelato_order_line">
-                                <field name="name"/> ·
-                                <field name="delivery_date"/> ·
-                                <field name="delivery_time"/>
-                            </div>
-                            <div class="o_gelato_order_line">
-                                <field name="delivery_address"/>
-                            </div>
-                            <div class="o_gelato_order_line o_gelato_order_what">
-                                <field name="order_summary"/>
-                            </div>
-                            <div class="o_gelato_order_line o_gelato_order_note"
-                                 t-if="record.note.raw_value">
-                                <i class="fa fa-sticky-note-o me-1" role="img"
-                                   title="Note from the customer"/>
-                                <field name="note"/>
-                            </div>
-                            <div class="o_gelato_order_phone">
-                                <field name="customer_phone" widget="phone"/>
-                                <a t-if="record.customer_email.raw_value"
-                                   t-att-href="'mailto:' + record.customer_email.raw_value"
-                                   class="o_gelato_order_mail"
-                                   title="Write an email to the customer">
-                                    <i class="fa fa-envelope-o" role="img"/>
-                                    E-mail
-                                </a>
-                            </div>
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
-        </field>
-    </record>
-
     <record id="gelato_delivery_order_view_list" model="ir.ui.view">
         <field name="name">gelato.delivery.order.list</field>
         <field name="model">gelato.delivery.order</field>
         <field name="arch" type="xml">
-            <!-- The long list the shop scrolls through: one row per order,
-                 with what was ordered right there so nothing has to be
-                 opened to see it. -->
             <list string="Delivery orders">
                 <field name="name"/>
-                <field name="delivery_date"/>
-                <field name="delivery_time"/>
+                <field name="create_date" string="Came in"/>
                 <field name="customer_name"/>
                 <field name="customer_phone" optional="show"/>
                 <field name="delivery_address" optional="show"/>
                 <field name="zone_id" optional="show"/>
                 <field name="order_summary" string="What was ordered" width="320"/>
                 <field name="note" optional="hide"/>
-                <field name="box_id" optional="hide"/>
                 <field name="delivery_fee" string="Delivery" optional="hide" sum="Delivery"/>
                 <field name="amount_total" string="Total" sum="Total"/>
-                <field name="amount_vat" string="VAT" sum="VAT" optional="hide"/>
-                <field name="stage_id" widget="badge"/>
                 <field name="customer_email" optional="hide"/>
                 <field name="address_located" optional="hide"/>
+                <field name="delivery_date" optional="hide"/>
                 <field name="source" optional="hide"/>
             </list>
         </field>
@@ -93,9 +35,6 @@
         <field name="model">gelato.delivery.order</field>
         <field name="arch" type="xml">
             <form string="Delivery order">
-                <header>
-                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
-                </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -107,13 +46,18 @@
                             <field name="customer_name"/>
                             <field name="customer_phone" widget="phone"/>
                             <field name="customer_email" widget="email"/>
+                            <!-- Every order is filed under one person in
+                                 Customers, matched on the phone and the
+                                 email. That contact list is the point, so
+                                 it is worth seeing from here. -->
+                            <field name="customer_id" readonly="1"/>
                         </group>
                         <group string="Delivery">
-                            <field name="delivery_date"/>
-                            <field name="delivery_time"/>
                             <field name="delivery_address"/>
                             <field name="delivery_postcode"/>
+                            <field name="delivery_city"/>
                             <field name="zone_id"/>
+                            <field name="delivery_date"/>
                             <field name="address_located" invisible="1"/>
                             <div colspan="2" class="alert alert-warning mb-0"
                                  role="status" invisible="address_located">
@@ -123,34 +67,42 @@
                             </div>
                         </group>
                     </group>
-                    <!-- What was ordered and what it costs, in one block and
-                         not behind a tab. This is the first thing anybody
-                         opening an order needs to see. -->
+
                     <div class="alert alert-warning" role="status" invisible="not note">
                         <strong>Note from the customer:</strong>
                         <field name="note" readonly="1" nolabel="1" class="d-inline"/>
                     </div>
 
                     <separator string="What was ordered"/>
-                    <group>
-                        <group>
-                            <field name="box_id"/>
-                            <field name="flavor_ids" widget="many2many_tags"
-                                   string="Flavours"/>
-                        </group>
-                        <group>
-                            <field name="box_price" string="Box price"/>
-                            <field name="box_vat_rate" string="Box VAT %"/>
-                        </group>
-                    </group>
-                    <field name="addon_line_ids" string="Extras">
+                    <!-- One line per thing in the basket. Open a line to see
+                         which flavours went into that particular box. -->
+                    <field name="item_ids">
                         <list editable="bottom">
+                            <field name="box_id"/>
                             <field name="addon_id"/>
                             <field name="quantity"/>
                             <field name="price_unit"/>
-                            <field name="vat_rate" string="VAT %"/>
                             <field name="price_subtotal" sum="Total"/>
+                            <field name="label" string="With" readonly="1"/>
                         </list>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="box_id"/>
+                                    <field name="addon_id"/>
+                                </group>
+                                <group>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                </group>
+                            </group>
+                            <field name="flavor_line_ids" string="Flavours">
+                                <list editable="bottom">
+                                    <field name="flavor_id"/>
+                                    <field name="quantity" string="Parts"/>
+                                </list>
+                            </field>
+                        </form>
                     </field>
 
                     <group class="oe_subtotal_footer">
@@ -160,9 +112,6 @@
                         <field name="amount_discount"/>
                         <field name="delivery_fee"/>
                         <field name="amount_total" class="oe_subtotal_footer_separator"/>
-                        <field name="amount_untaxed"/>
-                        <field name="amount_vat"/>
-                        <field name="delivery_vat_rate" groups="base.group_no_one"/>
                     </group>
 
                     <notebook>
@@ -176,7 +125,8 @@
                             <group>
                                 <field name="source"/>
                                 <field name="website_id"/>
-                                <field name="mailed_stage_ids" widget="many2many_tags"/>
+                                <field name="latitude"/>
+                                <field name="longitude"/>
                             </group>
                         </page>
                     </notebook>
@@ -198,45 +148,30 @@
                 <field name="order_summary" string="What was ordered"/>
                 <field name="flavor_ids" string="Flavour"/>
                 <field name="zone_id"/>
-                <field name="stage_id"/>
-                <filter name="filter_today" string="Today" domain="[('delivery_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                <filter name="filter_upcoming" string="From today on" domain="[('delivery_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
-                <separator/>
-                <filter name="filter_open" string="Not finished yet" domain="[('stage_id.is_done', '=', False)]"/>
+                <filter name="filter_today" string="Today"
+                        domain="[('delivery_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_week" string="Last seven days"
+                        domain="[('delivery_date', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
                 <separator/>
                 <filter name="filter_unlocated" string="Address not on the map"
                         domain="[('address_located', '=', False)]"/>
                 <group expand="0" string="Group By">
-                    <filter name="group_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
-                    <filter name="group_date" string="Delivery date" context="{'group_by': 'delivery_date'}"/>
+                    <filter name="group_date" string="Day" context="{'group_by': 'delivery_date'}"/>
                     <filter name="group_zone" string="Zone" context="{'group_by': 'zone_id'}"/>
-                    <filter name="group_box" string="Thermal box" context="{'group_by': 'box_id'}"/>
                     <filter name="group_customer" string="Customer" context="{'group_by': 'customer_name'}"/>
                 </group>
             </search>
         </field>
     </record>
 
-    <record id="gelato_delivery_order_action" model="ir.actions.act_window">
-        <field name="name">Order board</field>
-        <field name="res_model">gelato.delivery.order</field>
-        <field name="view_mode">kanban,list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiley_face">No orders have come in yet.</p>
-            <p>Orders from the delivery page land in the first column. Drag a card to move it on - a column can email the customer the moment the order arrives in it.</p>
-        </field>
-    </record>
-
-    <!-- The same orders as a plain list, newest first. The board is for
-         today's work; this is for looking something up. -->
     <record id="gelato_delivery_order_list_action" model="ir.actions.act_window">
-        <field name="name">All orders</field>
+        <field name="name">Orders</field>
         <field name="res_model">gelato.delivery.order</field>
-        <field name="view_mode">list,kanban,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'search_default_group_date': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiley_face">No orders have come in yet.</p>
-            <p>Every order that ever came in, with what was in it. Search by customer, address or flavour.</p>
+            <p>Every order from the delivery page lands here, with what was in it. Search by customer, address or flavour.</p>
         </field>
     </record>
 

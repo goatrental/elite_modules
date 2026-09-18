@@ -10,11 +10,10 @@
                 <field name="active" widget="boolean_toggle" string="Available"/>
                 <field name="name"/>
                 <field name="description" optional="show"/>
-                <field name="kind"/>
+                <field name="kind" optional="hide"/>
                 <field name="bundle_box_id" string="With box" optional="show"/>
                 <field name="bundle_total" string="Bundle price" optional="show"/>
                 <field name="price" string="Surcharge"/>
-                <field name="vat_rate" string="VAT %"/>
                 <field name="max_quantity" optional="hide"/>
             </list>
         </field>
@@ -40,17 +39,22 @@
                         <label for="active" string="Available on the website"/>
                     </div>
                     <group>
-                        <group string="Type and price">
-                            <field name="kind"/>
+                        <!-- Which list this lands in comes from the menu it
+                             was created under, so the type is not a question
+                             worth asking again on every record. -->
+                        <field name="kind" invisible="1"/>
+                        <group string="Price">
                             <field name="price_extra" invisible="kind == 'bundle'" required="kind != 'bundle'"/>
                             <field name="bundle_box_id" invisible="kind != 'bundle'" required="kind == 'bundle'"/>
                             <field name="bundle_total" invisible="kind != 'bundle'" required="kind == 'bundle'"/>
                             <field name="price" invisible="kind != 'bundle'"/>
-                            <field name="vat_rate"/>
                         </group>
-                        <group string="Other">
-                            <field name="max_quantity"/>
+                        <group string="On the website">
+                            <field name="image_fit" invisible="not image"/>
+                            <field name="image_focus"
+                                   invisible="not image or image_fit != 'cover'"/>
                             <field name="sequence"/>
+                            <field name="max_quantity"/>
                         </group>
                     </group>
                     <div class="alert alert-info" role="status" invisible="kind == 'bundle'">
@@ -64,7 +68,7 @@
                         recalculates it whenever you change the box price, so you never have to
                         think about it.
                         <br/>
-                        A bundle can only be ordered with the thermal box selected above.
+                        The customer fills a bundle with flavours the same way as the box above.
                     </div>
                 </sheet>
             </form>
@@ -92,10 +96,26 @@
         <field name="name">Extras</field>
         <field name="res_model">gelato.delivery.addon</field>
         <field name="view_mode">list,form</field>
-        <field name="context">{'active_test': False}</field>
+        <field name="domain">[('kind', '!=', 'bundle')]</field>
+        <field name="context">{'active_test': False, 'default_kind': 'drink'}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiley_face">Create your first extra.</p>
-            <p>Extras are prosecco, bundles or seasonal eggnog. The <b>Available</b> switch turns them on and off on the website.</p>
+            <p>An extra is a bottle of prosecco or anything else that goes into an order on its own, with no flavours to pick. It shows in the <b>Extras</b> row on the delivery page. The <b>Available</b> switch turns it on and off.</p>
+        </field>
+    </record>
+
+    <!-- The delivery page has three rows of products, so the back office
+         has the same three lists. One model behind two of them: a bundle
+         is an extra that brings a thermal box with it. -->
+    <record id="gelato_delivery_bundle_action" model="ir.actions.act_window">
+        <field name="name">Bundles</field>
+        <field name="res_model">gelato.delivery.addon</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kind', '=', 'bundle')]</field>
+        <field name="context">{'active_test': False, 'default_kind': 'bundle'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Create your first bundle.</p>
+            <p>A bundle is a thermal box and a bottle together for one better price. It shows in the <b>Bundles at a better price</b> row on the delivery page, and the customer fills it with flavours just like a box.</p>
         </field>
     </record>
 

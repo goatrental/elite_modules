@@ -186,3 +186,34 @@
         }
     }
 }
+
+// On a phone the board stops being columns.
+//
+// Grouped kanban gives every category its own column with its own inner
+// scrollbar. Side by side on a narrow screen that means three columns a
+// few centimetres wide, each cut off at the bottom - a flavour below the
+// fold looks like it is missing, and the page itself will not scroll to
+// it. Stacked into one list, the categories become headings and the whole
+// thing scrolls the way everything else does.
+@media (max-width: 768px) {
+    .o_gelato_board {
+        .o_kanban_renderer.o_kanban_grouped {
+            flex-direction: column;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        .o_kanban_group {
+            width: 100% !important;
+            max-width: none !important;
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+            flex: 0 0 auto;
+        }
+
+        .o_kanban_record {
+            min-width: 0;
+        }
+    }
+}

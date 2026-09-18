@@ -1,263 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- ============================================================
+         The delivery page.
+
+         Everything on offer is shown once and picked in the same place.
+         There used to be a showcase at the top and a second set of
+         checkboxes in the form below, which meant every flavour, box and
+         extra appeared on the page twice.
+
+         An order is for now. No date, no time slot: the customer orders,
+         the gelateria makes it and drives out.
+         ============================================================ -->
     <template id="rozvoz" name="Gelato: Delivery">
         <t t-call="website.layout">
             <t t-set="additional_title">Gelato and prosecco delivery in Karlovy Vary</t>
 
             <div id="wrap" class="oe_structure oe_empty gl-page">
 
-                <!-- ═══════════ INTRO ═══════════ -->
-                <section class="gl-rz-sec gl-rz-dark gl-rz-intro" id="rozvoz-uvod">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h1>We will bring <span>gelato</span> to your door.</h1>
-                            <p>
-                                Proper Italian gelato from our gelateria in Rybáře. We churn it
-                                fresh, fill a thermal box and drive it to you anywhere in
-                                Karlovy Vary.
-                            </p>
-                            <div class="gl-rz-intro-cta">
-                                <a href="#objednavka" class="gl-rz-btn gl-rz-btn-primary">Order a delivery</a>
-                                <a href="#dnesni-prichute" class="gl-rz-btn gl-rz-btn-ghost">What we have today</a>
-                            </div>
+                <!-- ═══════════ HERO ═══════════
+                     The same hero as the front page. The pictures and the
+                     wording come from the slides in the back office, so the
+                     gelateria changes them itself: add a slide and write
+                     /rozvoz under "Only on these addresses". Nothing else
+                     stands between it and the order. -->
+                <section class="s_gelato_hero gl-hero o_cc o_cc5 theme_gelato_page pt0 pb0 gl-hero-rozvoz"
+                         id="hero" data-gl-interval="6000">
+                    <div class="gl-hero-bg" contenteditable="false"></div>
+                    <div class="gl-hero-overlay"></div>
+                    <div class="gl-hero-grain"></div>
+
+                    <div class="gl-hero-inner">
+                        <div class="gl-hero-logos">
+                            <img src="/theme_gelato/static/src/img/fabrica-gelato-white.png"
+                                 alt="Fabrica Gelato" class="gl-hero-fabrica"/>
+                            <img src="/theme_gelato/static/src/img/gelato-logo-white.svg"
+                                 alt="Gelato!" class="gl-hero-logo" width="472" height="146"/>
                         </div>
+                        <div class="gl-hero-slides-wrap" contenteditable="false"></div>
                     </div>
+
+                    <div class="gl-hero-slide-nav" contenteditable="false" id="heroSlideNav"></div>
                 </section>
 
-                <!-- ═══════════ HOW IT WORKS ═══════════ -->
-                <section class="gl-rz-sec gl-rz-darker" id="jak-to-funguje">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h2>How delivery <span>works</span>.</h2>
-                            <p>Three steps. No app, no sign-up, no queueing.</p>
-                        </div>
-                        <div class="gl-rz-steps">
-                            <div class="gl-rz-step">
-                                <span class="gl-rz-step-num">01</span>
-                                <h3>You pick your flavours</h3>
-                                <p>
-                                    Tick the gelato you want in the form, choose the size of the
-                                    thermal box and add prosecco if you like. Mix them however
-                                    you want, up to the capacity of the box.
-                                </p>
-                            </div>
-                            <div class="gl-rz-step">
-                                <span class="gl-rz-step-num">02</span>
-                                <h3>We churn it and fill the box</h3>
-                                <p>
-                                    We churn our gelato as we make it, right here in the
-                                    gelateria in Rybáře. We scoop it into the thermal box with a
-                                    spatula just before we set off, so it arrives exactly as
-                                    dense and creamy as it should be.
-                                </p>
-                            </div>
-                            <div class="gl-rz-step">
-                                <span class="gl-rz-step-num">03</span>
-                                <h3>We drive it to you</h3>
-                                <p>
-                                    We deliver across Karlovy Vary, usually within 90 minutes of
-                                    confirming your order. You pay on handover, in cash or by
-                                    card.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ═══════════ TODAY'S FLAVOURS (from Odoo) ═══════════ -->
-                <section class="gl-rz-sec gl-rz-dark" id="dnesni-prichute">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h2>What we are <span>churning</span> today.</h2>
-                            <p>
-                                The gelateria churns a different line-up every day, so this list
-                                changes. It is exactly what is in the counter right now.
-                            </p>
-                        </div>
-
-                        <t t-if="flavors">
-                            <div class="gl-rz-flavor-groups">
-                                <t t-foreach="flavors_by_category" t-as="group">
-                                    <div class="gl-rz-flavor-group">
-                                        <h3 class="gl-rz-flavor-group-title" t-out="group['name']">Ice creams</h3>
-                                        <div class="gl-rz-flavor-grid">
-                                            <t t-foreach="group['flavors']" t-as="flavor">
-                                                <div class="gl-rz-flavor">
-                                                    <span class="gl-rz-flavor-dot" t-attf-style="background: #{flavor.display_color};"/>
-                                                    <div class="gl-rz-flavor-text">
-                                                        <span class="gl-rz-flavor-name" t-field="flavor.name">Vanilla</span>
-                                                        <span t-if="flavor.description" class="gl-rz-flavor-desc" t-field="flavor.description">Description</span>
-                                                        <span t-if="flavor.allergens" class="gl-rz-flavor-allergens">
-                                                            Allergens: <t t-out="flavor.allergens">milk</t>
-                                                        </span>
-                                                    </div>
-                                                    <div t-if="flavor.tag_ids" class="gl-rz-flavor-tags">
-                                                        <t t-foreach="flavor.tag_ids" t-as="tag">
-                                                            <span class="gl-rz-tag-mini"
-                                                                  t-attf-style="color: #{tag.color or '#84c5c3'}; border-color: #{tag.color or '#84c5c3'};"
-                                                                  t-field="tag.name">vegan</span>
-                                                        </t>
-                                                    </div>
-                                                </div>
-                                            </t>
-                                        </div>
-                                    </div>
-                                </t>
-                            </div>
-                        </t>
-                        <t t-else="">
-                            <p class="gl-rz-empty">
-                                We have not posted today's line-up yet. Call us on
-                                <a href="tel:+420773095809">+420 773 09 58 09</a> and we will
-                                tell you what is ready.
-                            </p>
-                        </t>
-                    </div>
-                </section>
-
-                <!-- ═══════════ THERMAL BOXES (from Odoo) ═══════════ -->
-                <section class="gl-rz-sec gl-rz-darker" id="termoboxy">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h2>Choose a <span>thermal box</span>.</h2>
-                            <p>The box holds its temperature for hours, so the gelato arrives in shape.</p>
-                        </div>
-                        <div class="gl-rz-boxes">
-                            <t t-foreach="boxes" t-as="box">
-                                <div class="gl-rz-box" t-att-class="'gl-rz-box gl-rz-box-top' if box.highlight else 'gl-rz-box'">
-                                    <span t-if="box.highlight" class="gl-rz-tag" t-field="box.highlight_label">Most popular</span>
-                                    <div class="gl-rz-box-vol" t-field="box.name">1 l</div>
-                                    <div class="gl-rz-box-portions" t-field="box.subtitle">about 8 servings</div>
-                                    <div class="gl-rz-box-price">
-                                        <t t-out="int(box.price)">450</t> CZK
-                                    </div>
-                                    <ul>
-                                        <t t-foreach="box.feature_list()" t-as="feature">
-                                            <li>
-                                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                                    <polyline points="20 6 9 17 4 12"/>
-                                                </svg>
-                                                <span t-out="feature">Bullet</span>
-                                            </li>
-                                        </t>
-                                    </ul>
-                                    <div class="gl-rz-boxbtn">
-                                        <a href="#objednavka" class="gl-rz-btn gl-rz-btn-primary gl-rz-pick-box" t-att-data-box-id="box.id">
-                                            I want this box
-                                        </a>
-                                    </div>
-                                </div>
-                            </t>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ═══════════ EXTRAS (from Odoo) ═══════════ -->
-                <section t-if="addons" class="gl-rz-sec gl-rz-dark" id="doplnky">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h2>Add <span>something</span> to it.</h2>
-                            <p>Prosecco, bundles and seasonal treats. Whatever is available shows up here.</p>
-                        </div>
-                        <div class="gl-rz-addons">
-                            <t t-foreach="addons" t-as="addon">
-                                <div class="gl-rz-addon">
-                                    <div class="gl-rz-addon-text">
-                                        <h3 t-field="addon.name">Prosecco</h3>
-                                        <p t-if="addon.description" t-field="addon.description">Description</p>
-                                    </div>
-                                    <div class="gl-rz-addon-price">
-                                        <t t-out="int(addon.display_price())">429</t> CZK
-                                        <span t-if="addon.display_note()" class="gl-rz-addon-note" t-out="addon.display_note()">
-                                            thermal box included
-                                        </span>
-                                    </div>
-                                </div>
-                            </t>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ═══════════ WHERE AND WHEN ═══════════ -->
-                <section class="gl-rz-sec gl-rz-darker" id="kam-rozvazime">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h2>Where and when <span>we deliver</span>.</h2>
-                            <p>Across Karlovy Vary, from Rybáře through the centre to Růžový vrch and Doubí.</p>
-                        </div>
-                        <div class="gl-rz-info-grid">
-                            <div class="gl-rz-info">
-                                <div class="gl-rz-info-icon">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                        <circle cx="12" cy="10" r="3"/>
-                                    </svg>
-                                </div>
-                                <h3>Delivery area</h3>
-                                <p t-if="zones">
-                                    <t t-foreach="zones" t-as="zone">
-                                        <t t-if="not zone_first">, </t><t t-out="zone.name">Centre</t>
-                                        (<t t-out="int(zone.delivery_fee)">79</t> CZK)</t>.
-                                    Somewhere else? Give us a ring and we will see what we can do.
-                                </p>
-                                <p t-else="">All of Karlovy Vary. Outside the city we are happy to arrange something, just call.</p>
-                            </div>
-                            <div class="gl-rz-info">
-                                <div class="gl-rz-info-icon">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <rect x="1" y="3" width="15" height="13" rx="2" ry="2"/>
-                                        <path d="M16 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1"/>
-                                    </svg>
-                                </div>
-                                <h3>Delivery fee</h3>
-                                <p t-if="website.gelato_delivery_fee and website.gelato_delivery_free_from">
-                                    Free on orders over <t t-out="int(website.gelato_delivery_free_from)">800</t> CZK.
-                                    Below that we charge <t t-out="int(website.gelato_delivery_fee)">79</t> CZK.
-                                </p>
-                                <p t-elif="website.gelato_delivery_fee">
-                                    We charge <t t-out="int(website.gelato_delivery_fee)">79</t> CZK
-                                    for delivery across Karlovy Vary.
-                                </p>
-                                <p t-else="">Delivery across Karlovy Vary is free.</p>
-                            </div>
-                            <div class="gl-rz-info">
-                                <div class="gl-rz-info-icon">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                </div>
-                                <h3>When we drive</h3>
-                                <p>Mon to Sun, 11:00 to 20:00. Please order at least an hour ahead.</p>
-                            </div>
-                            <div class="gl-rz-info">
-                                <div class="gl-rz-info-icon">
-                                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <rect x="2" y="5" width="20" height="14" rx="2"/>
-                                        <line x1="2" y1="10" x2="22" y2="10"/>
-                                    </svg>
-                                </div>
-                                <h3>Payment</h3>
-                                <p>Cash or card on handover. You pay nothing up front.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ═══════════ ORDER ═══════════ -->
+                <!-- ═══════════ ORDER: everything is picked here ═══════════ -->
                 <section class="gl-rz-sec gl-rz-dark gl-rz-order" id="objednavka">
                     <div class="container">
                         <div class="gl-rz-head">
-                            <h2>Order a <span>delivery</span>.</h2>
-                            <p>The order is not binding. We will get back to you to confirm the time and the price.</p>
+                            <h2>Put together your <span>box</span>.</h2>
+                            <p>The order is not binding. We will get back to you and confirm it.</p>
                         </div>
 
                         <t t-if="not orders_open">
                             <div class="gl-rz-closed">
-                                <h3 t-if="not delivery_enabled">Delivery is paused right now.</h3>
-                                <h3 t-else="">We are not taking orders right now.</h3>
-                                <p t-if="hours_note" t-out="hours_note">We take orders between 11:00 and 19:00.</p>
+                                <h3>Delivery is paused right now.</h3>
+                                <!-- When the clock closed the page rather than
+                                     the switch, say when to come back instead
+                                     of only that it is shut. -->
+                                <p t-if="hours_note" t-out="hours_note">
+                                    We take orders 11:00 – 20:00.
+                                </p>
                                 <p>
                                     Please drop by the gelateria at Sokolovská 101 in Rybáře,
                                     or call us on <a href="tel:+420773095809">+420 773 09 58 09</a>.
@@ -266,297 +68,379 @@
                         </t>
 
                         <t t-else="">
+                            <t t-set="bundles" t-value="addons.filtered('is_bundle')"/>
+                            <t t-set="extras" t-value="addons - bundles"/>
+
                             <form class="gl-rz-form" id="gelatoRozvozForm"
-                                  t-att-data-min-date="min_date"
                                   action="/rozvoz/objednat" method="post">
 
-                                <!-- 1 - flavours -->
-                                <div class="gl-rz-step-label">1 &#8211; Pick your flavours</div>
-                                <t t-if="flavors">
-                                    <div class="gl-rz-check-grid">
-                                        <t t-foreach="flavors" t-as="flavor">
-                                            <label class="gl-rz-check">
-                                                <input type="checkbox" name="flavor_ids" t-att-value="flavor.id"/>
-                                                <span class="gl-rz-check-dot" t-attf-style="background: #{flavor.display_color};"/>
-                                                <span class="gl-rz-check-name" t-field="flavor.name">Vanilla</span>
-                                            </label>
-                                        </t>
-                                    </div>
-                                    <p class="gl-rz-hint" id="gelatoFlavorHint"></p>
-                                </t>
-                                <t t-else="">
-                                    <p class="gl-rz-hint">
-                                        We have not posted today's line-up yet. Please call us on
-                                        <a href="tel:+420773095809">+420 773 09 58 09</a>.
-                                    </p>
-                                </t>
-
-                                <!-- 2 - box and extras -->
-                                <div class="gl-rz-step-label">2 &#8211; Size and extras</div>
-                                <div class="gl-rz-field">
-                                    <label for="gelatoBox">Thermal box *</label>
-                                    <select id="gelatoBox" name="box_id" required="required">
-                                        <t t-foreach="boxes" t-as="box">
-                                            <option t-att-value="box.id"
-                                                    t-att-data-price="box.price"
-                                                    t-att-data-max-flavors="box.max_flavors"
-                                                    t-att-selected="'selected' if box.highlight else None">
-                                                <t t-out="box.name">1 l</t>
-                                                <t t-if="box.subtitle"> &#8211; <t t-out="box.subtitle">about 8 servings</t></t>
-                                                &#8211; <t t-out="box.flavor_limit_label()">up to 4 flavours</t>
-                                                &#8211; <t t-out="int(box.price)">450</t> CZK
-                                            </option>
-                                        </t>
-                                    </select>
+                                <!-- ===== 1: thermal boxes =====
+                                     A row that swipes sideways rather than a
+                                     stack: on a phone three stacked cards
+                                     were a screen each. Tap one and it asks
+                                     which flavours go in. -->
+                                <div class="gl-rz-step-label" id="termoboxy">Thermal boxes</div>
+                                <div class="gl-slider">
+                                    <t t-foreach="boxes" t-as="box">
+                                        <button type="button" class="gl-card gl-card-box"
+                                                data-kind="box"
+                                                t-att-data-note="box.subtitle or ''"
+                                                t-att-data-id="box.id"
+                                                t-att-data-price="box.price"
+                                                t-att-data-parts="box.max_flavors"
+                                                t-att-data-name="box.name">
+                                            <span class="gl-card-photo">
+                                                <img t-if="box.image"
+                                                     t-att-src="image_data_uri(box.image)"
+                                                     t-att-style="box.image_style()"
+                                                     t-att-alt="box.name" loading="lazy"/>
+                                                <span t-else="" class="gl-card-photo-empty" aria-hidden="true">
+                                                    <svg viewBox="0 0 24 24" width="34" height="34">
+                                                        <path d="M4 8h16l-1.5 11a2 2 0 0 1-2 1.8H7.5a2 2 0 0 1-2-1.8L4 8Z"/>
+                                                        <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+                                                    </svg>
+                                                </span>
+                                                <span t-if="box.highlight" class="gl-card-tag"
+                                                      t-field="box.highlight_label">Most popular</span>
+                                            </span>
+                                            <span class="gl-card-name" t-field="box.name">1 l</span>
+                                            <span class="gl-card-sub">
+                                                <t t-if="box.subtitle"><t t-out="box.subtitle"/></t>
+                                                <t t-if="box.subtitle and box.max_flavors"> · </t>
+                                                <t t-if="box.max_flavors"><t t-out="box.flavor_limit_short()"/></t>
+                                            </span>
+                                            <span class="gl-card-foot">
+                                                <span class="gl-card-price"><t t-out="int(box.price)">450</t> Kč</span>
+                                                <span class="gl-card-cta">Choose</span>
+                                            </span>
+                                        </button>
+                                    </t>
                                 </div>
 
-                                <t t-if="addons">
-                                    <div class="gl-rz-addon-picker">
-                                        <t t-foreach="addons" t-as="addon">
-                                            <div class="gl-rz-addon-row">
-                                                <label t-att-for="'addonQty%s' % addon.id">
-                                                    <span t-field="addon.name">Prosecco</span>
-                                                    <span class="gl-rz-addon-row-price">
-                                                        <t t-if="addon.is_bundle">
-                                                            <t t-out="int(addon.display_price())">799</t> CZK
-                                                            for the bundle with <t t-out="addon.bundle_box_id.name">1 l</t>
-                                                        </t>
-                                                        <t t-else="">
-                                                            <t t-out="int(addon.price)">429</t> CZK
-                                                        </t>
+                                <!-- ===== 2: bundles ===== -->
+                                <t t-if="bundles">
+                                    <div class="gl-rz-step-label" id="balicky">Bundles at a better price</div>
+                                    <div class="gl-slider">
+                                        <t t-foreach="bundles" t-as="addon">
+                                            <button type="button" class="gl-card gl-card-bundle"
+                                                    data-kind="addon"
+                                                    t-att-data-note="addon.description or ''"
+                                                    t-att-data-id="addon.id"
+                                                    t-att-data-price="addon.display_price()"
+                                                    t-att-data-parts="addon.bundle_box_id.max_flavors"
+                                                    t-att-data-max="addon.max_quantity or 10"
+                                                    t-att-data-name="addon.name">
+                                                <span class="gl-card-photo">
+                                                    <img t-if="addon.image"
+                                                         t-att-src="image_data_uri(addon.image)"
+                                                         t-att-style="addon.image_style()"
+                                                         t-att-alt="addon.name" loading="lazy"/>
+                                                    <span t-else="" class="gl-card-photo-empty" aria-hidden="true">
+                                                        <svg viewBox="0 0 24 24" width="34" height="34">
+                                                            <path d="M8 2h8l-1 6a4 4 0 0 1-6 0L8 2Z"/>
+                                                            <path d="M12 12v9M9 21h6"/>
+                                                        </svg>
                                                     </span>
-                                                </label>
-                                                <input type="number"
-                                                       t-att-id="'addonQty%s' % addon.id"
-                                                       class="gl-rz-addon-qty"
-                                                       t-att-data-addon-id="addon.id"
-                                                       t-att-data-price="addon.price"
-                                                       t-att-data-bundle-box="addon.bundle_box_id.id if addon.is_bundle else ''"
-                                                       t-att-data-bundle-name="addon.name if addon.is_bundle else ''"
-                                                       value="0" min="0"
-                                                       t-att-max="addon.max_quantity or 10"/>
-                                            </div>
+                                                </span>
+                                                <span class="gl-card-name" t-field="addon.name">Dolce Vita</span>
+                                                <span class="gl-card-sub">
+                                                    <t t-if="addon.description"><t t-out="addon.description"/></t>
+                                                </span>
+                                                <span class="gl-card-foot">
+                                                    <span class="gl-card-price"><t t-out="int(addon.display_price())">799</t> Kč</span>
+                                                    <span class="gl-card-cta">Choose</span>
+                                                </span>
+                                            </button>
                                         </t>
                                     </div>
-                                    <p class="gl-rz-hint gl-rz-hint-warn" id="gelatoBundleNote" hidden="hidden"></p>
                                 </t>
 
-                                <!-- 3 - where and when -->
-                                <div class="gl-rz-step-label">3 &#8211; Where and when to bring it</div>
-                                <div class="gl-rz-row">
+                                <!-- ===== 3: extras =====
+                                     Nothing to fill here, so one tap puts a
+                                     bottle straight in the order. -->
+                                <t t-if="extras">
+                                    <div class="gl-rz-step-label" id="doplnky">Extras</div>
+                                    <div class="gl-slider">
+                                        <t t-foreach="extras" t-as="addon">
+                                            <button type="button" class="gl-card gl-card-extra"
+                                                    data-kind="addon"
+                                                    t-att-data-note="addon.description or ''"
+                                                    t-att-data-id="addon.id"
+                                                    t-att-data-price="addon.display_price()"
+                                                    data-parts="0"
+                                                    t-att-data-max="addon.max_quantity or 10"
+                                                    t-att-data-name="addon.name">
+                                                <span class="gl-card-photo">
+                                                    <img t-if="addon.image"
+                                                         t-att-src="image_data_uri(addon.image)"
+                                                         t-att-style="addon.image_style()"
+                                                         t-att-alt="addon.name" loading="lazy"/>
+                                                    <span t-else="" class="gl-card-photo-empty" aria-hidden="true">
+                                                        <svg viewBox="0 0 24 24" width="34" height="34">
+                                                            <path d="M8 2h8l-1 6a4 4 0 0 1-6 0L8 2Z"/>
+                                                            <path d="M12 12v9M9 21h6"/>
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                                <span class="gl-card-name" t-field="addon.name">Prosecco</span>
+                                                <span class="gl-card-sub">
+                                                    <t t-if="addon.description"><t t-out="addon.description"/></t>
+                                                </span>
+                                                <span class="gl-card-foot">
+                                                    <span class="gl-card-price"><t t-out="int(addon.display_price())">429</t> Kč</span>
+                                                    <span class="gl-card-cta">Add</span>
+                                                </span>
+                                            </button>
+                                        </t>
+                                    </div>
+                                </t>
+
+                                <!-- ===== filling a box =====
+                                     One panel serves every product; it opens
+                                     under whichever card was tapped. -->
+                                <div class="gl-panel" id="gelatoPanel" hidden="hidden">
+                                    <div class="gl-panel-backdrop" id="gelatoPanelBackdrop"></div>
+                                    <div class="gl-panel-card">
+                                        <button type="button" class="gl-panel-close" id="gelatoPanelClose"
+                                                aria-label="Close">&#215;</button>
+                                        <!-- The picture of whatever was tapped, copied
+                                             across from its card so the customer sees
+                                             what they are filling. -->
+                                        <div class="gl-panel-photo" id="gelatoPanelPhoto"></div>
+                                        <div class="gl-panel-body">
+                                    <div class="gl-panel-head">
+                                        <span class="gl-panel-name" id="gelatoPanelName">1 l</span>
+                                        <span class="gl-panel-price" id="gelatoPanelPrice">450 Kč</span>
+                                    </div>
+                                    <!-- What this one actually is. On the card
+                                         the line is clipped to keep the row
+                                         short; here there is room for it. -->
+                                    <p class="gl-panel-note" id="gelatoPanelNote" hidden="hidden"></p>
+                                    <p class="gl-rz-hint" id="gelatoPartsHint"></p>
+
+                                    <t t-if="flavors">
+                                        <div class="gl-chosen" id="gelatoChosen"></div>
+
+                                        <!-- The plus sign is drawn in CSS on purpose:
+                                             with a span inside, Odoo hands the
+                                             translator the whole markup instead of
+                                             the three words that need translating. -->
+                                        <button type="button" class="gl-add-btn" id="gelatoAddFlavor">Add a flavour</button>
+
+                                        <div class="gl-picker" id="gelatoPicker" hidden="hidden">
+                                            <t t-foreach="flavors_by_category" t-as="group">
+                                                <div class="gl-picker-group" t-out="group['name']">Ice creams</div>
+                                                <t t-foreach="group['flavors']" t-as="flavor">
+                                                    <button type="button" class="gl-opt"
+                                                            t-att-data-flavor-id="flavor.id"
+                                                            t-att-data-flavor-name="flavor.name">
+                                                        <span class="gl-opt-photo">
+                                                            <img t-if="flavor.image"
+                                                                 t-att-src="image_data_uri(flavor.image)"
+                                                                 t-att-alt="flavor.name" loading="lazy"/>
+                                                            <span t-else="" class="gl-opt-dot"
+                                                                  t-attf-style="background: #{flavor.display_color};"
+                                                                  aria-hidden="true"></span>
+                                                        </span>
+                                                        <!-- The tags sit under the name, not beside
+                                                             it: next to a long name they squeezed it
+                                                             into two lines and ran across it. -->
+                                                        <span class="gl-opt-text">
+                                                            <span class="gl-opt-name" t-field="flavor.name">Vanilla</span>
+                                                            <span class="gl-opt-sub">
+                                                                <t t-if="flavor.allergens">
+                                                                    Allergens: <t t-out="flavor.allergens">milk</t>
+                                                                </t>
+                                                                <t t-foreach="flavor.tag_ids" t-as="tag">
+                                                                    <span class="gl-rz-tag-mini"
+                                                                          t-attf-style="color: #{tag.color or '#84c5c3'}; border-color: #{tag.color or '#84c5c3'};"
+                                                                          t-field="tag.name">vegan</span>
+                                                                </t>
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                </t>
+                                            </t>
+                                        </div>
+
+                                        <button type="button" class="gl-rz-btn gl-rz-btn-primary gl-panel-add"
+                                                id="gelatoAddToCart">Put in the order</button>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="gl-rz-empty">
+                                            We have not posted today's line-up yet. Call us on
+                                            <a href="tel:+420773095809">+420 773 09 58 09</a> and we will
+                                            tell you what is ready.
+                                        </p>
+                                    </t>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Flashes up for a second whenever something
+                                     lands in the order. An extra goes in on one
+                                     tap with nothing else moving on the screen,
+                                     so without this there is no telling whether
+                                     the tap registered. -->
+                                <div class="gl-toast" id="gelatoToast" role="status"
+                                     aria-live="polite" hidden="hidden">Added</div>
+
+                                <!-- ===== on to the form =====
+                                     Only the running total here. The list of
+                                     what was picked is spelled out at the very
+                                     end, above the button that orders it, and
+                                     twice on one page is once too many. -->
+                                <p class="gl-rz-empty" id="gelatoCartEmpty">
+                                    Nothing in it yet. Pick a box above.
+                                </p>
+                                <div class="gl-cart-foot" id="gelatoCartFoot" hidden="hidden">
+                                    <span class="gl-cart-sum">
+                                        <span id="gelatoCartCount"></span>
+                                        <span id="gelatoCartTotal">0</span> Kč
+                                    </span>
+                                    <button type="button" class="gl-rz-btn gl-rz-btn-primary"
+                                            id="gelatoContinue">Continue</button>
+                                </div>
+
+                                <!-- ===== who and where =====
+                                     Held back until there is something in the
+                                     basket: an empty form above an empty order
+                                     is just a wall of boxes to fill in. -->
+                                <div class="gl-checkout" id="gelatoCheckout" hidden="hidden">
+                                    <div class="gl-rz-step-label">Who to call</div>
+                                    <div class="gl-rz-row">
+                                        <div class="gl-rz-field">
+                                            <label for="gelatoName">Your name *</label>
+                                            <input type="text" id="gelatoName" name="customer_name"
+                                                   placeholder="Jan Novák" required="required"/>
+                                        </div>
+                                        <div class="gl-rz-field">
+                                            <label for="gelatoPhone">Phone *</label>
+                                            <input type="tel" id="gelatoPhone" name="customer_phone"
+                                                   placeholder="+420 773 09 58 09" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="gl-rz-field">
+                                        <label for="gelatoEmail">Email *</label>
+                                        <input type="email" id="gelatoEmail" name="customer_email"
+                                               placeholder="jan@email.cz" required="required"/>
+                                        <p class="gl-rz-hint">We send the order confirmation here.</p>
+                                    </div>
+
+                                    <div class="gl-rz-step-label">Where to bring it</div>
                                     <div class="gl-rz-field">
                                         <label for="gelatoAddress">Delivery address *</label>
                                         <input type="text" id="gelatoAddress" name="delivery_address"
                                                placeholder="Street and number, floor, doorbell" required="required"/>
                                         <p class="gl-rz-hint" id="gelatoAddressHint"></p>
                                     </div>
-                                    <div class="gl-rz-field">
-                                        <label for="gelatoPostcode">Postcode</label>
-                                        <input type="text" id="gelatoPostcode" name="delivery_postcode"
-                                               placeholder="360 05"
-                                               inputmode="numeric" autocomplete="postal-code"/>
+                                    <div class="gl-rz-row">
+                                        <div class="gl-rz-field">
+                                            <label for="gelatoPostcode">Postcode</label>
+                                            <input type="text" id="gelatoPostcode" name="delivery_postcode"
+                                                   placeholder="360 05"
+                                                   inputmode="numeric" autocomplete="postal-code"/>
+                                        </div>
+                                        <!-- We only drive around Karlovy Vary, so the town is
+                                             not a question - it is here so the address on the
+                                             order reads in full. -->
+                                        <div class="gl-rz-field">
+                                            <label for="gelatoCity">Town</label>
+                                            <select id="gelatoCity" name="delivery_city">
+                                                <option value="Karlovy Vary">Karlovy Vary</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- The time slot comes first because it decides the date:
-                                     "as soon as possible" means today, so the date field is
-                                     filled in and greyed out rather than asked for twice. -->
-                                <div class="gl-rz-row">
+
                                     <div class="gl-rz-field">
-                                        <label for="gelatoTime">When do you want it? *</label>
-                                        <select id="gelatoTime" name="delivery_time" required="required">
-                                            <option value="asap">As soon as possible</option>
-                                            <option value="11_13">11:00 to 13:00</option>
-                                            <option value="13_15">13:00 to 15:00</option>
-                                            <option value="15_17">15:00 to 17:00</option>
-                                            <option value="17_19">17:00 to 19:00</option>
-                                            <option value="19_20">19:00 to 20:00</option>
-                                        </select>
+                                        <label for="gelatoNote">Anything we should know?</label>
+                                        <textarea id="gelatoNote" name="note" rows="3"
+                                                  placeholder="Allergies, which bell to ring, anything else..."></textarea>
                                     </div>
-                                    <div class="gl-rz-field" id="gelatoDateField">
-                                        <label for="gelatoDate">Delivery date *</label>
-                                        <input type="date" id="gelatoDate" name="delivery_date"
-                                               t-att-min="min_date" required="required"/>
-                                        <p class="gl-rz-hint" id="gelatoDateHint"></p>
+
+                                    <div class="gl-rz-field">
+                                        <label for="gelatoPromo">Promo code</label>
+                                        <p t-if="promo_note" class="gl-rz-hint" t-out="promo_note">Got a code from Instagram?</p>
+                                        <div class="gl-rz-promo">
+                                            <input type="text" id="gelatoPromo" name="promo_code" placeholder="Your code"/>
+                                            <button type="button" id="gelatoPromoBtn" class="gl-rz-btn gl-rz-btn-ghost">Apply</button>
+                                        </div>
+                                        <p class="gl-rz-hint" id="gelatoPromoHint"></p>
+                                    </div>
+
+                                    <!-- Every line spelled out on the same screen
+                                         as the button that orders it, and still
+                                         editable - this is the only place the
+                                         basket is listed. -->
+                                    <div class="gl-rz-step-label" id="kosik">Your order</div>
+                                    <div class="gl-cart" id="gelatoCart"></div>
+
+                                    <div class="gl-rz-summary">
+                                        <div class="gl-rz-summary-row">
+                                            <span>Subtotal</span>
+                                            <span><span id="gelatoSubtotal">0</span> Kč</span>
+                                        </div>
+                                        <div class="gl-rz-summary-row" id="gelatoDiscountRow" hidden="hidden">
+                                            <span>Discount</span>
+                                            <span>&#8722;<span id="gelatoDiscount">0</span> Kč</span>
+                                        </div>
+                                        <div class="gl-rz-summary-row">
+                                            <span>Delivery</span>
+                                            <span><span id="gelatoShipping">0</span> Kč</span>
+                                        </div>
+                                        <div class="gl-rz-summary-row gl-rz-summary-total">
+                                            <span>Total</span>
+                                            <strong><span id="gelatoTotal">0</span> Kč</strong>
+                                        </div>
+                                        <p class="gl-rz-hint">
+                                            We will confirm the price with you. You pay in cash when we hand it over.
+                                        </p>
+                                    </div>
+
+                                    <p class="gl-rz-error" id="gelatoFormError" hidden="hidden"></p>
+                                    <div class="gl-rz-submit">
+                                        <button type="submit" class="gl-rz-btn gl-rz-btn-primary" id="gelatoSubmit">
+                                            Send the order
+                                        </button>
                                     </div>
                                 </div>
 
-                                <!-- 4 - contact -->
-                                <div class="gl-rz-step-label">4 &#8211; Contact</div>
-                                <div class="gl-rz-row">
-                                    <div class="gl-rz-field">
-                                        <label for="gelatoName">Your name *</label>
-                                        <input type="text" id="gelatoName" name="customer_name"
-                                               placeholder="Jan Novák" required="required"/>
-                                    </div>
-                                    <div class="gl-rz-field">
-                                        <label for="gelatoPhone">Phone *</label>
-                                        <input type="tel" id="gelatoPhone" name="customer_phone"
-                                               placeholder="+420 123 456 789" required="required"/>
-                                    </div>
-                                </div>
-                                <div class="gl-rz-field">
-                                    <label for="gelatoEmail">Email *</label>
-                                    <input type="email" id="gelatoEmail" name="customer_email"
-                                           placeholder="jan@email.cz" required="required"/>
-                                    <p class="gl-rz-hint">We send the order confirmation here.</p>
-                                </div>
-                                <div class="gl-rz-field">
-                                    <label for="gelatoNote">Note</label>
-                                    <textarea id="gelatoNote" name="note" rows="3"
-                                              placeholder="Exact split between flavours, allergies, gift wrapping, anything else..."></textarea>
-                                </div>
-
-                                <!-- 5 - promo code -->
-                                <div class="gl-rz-step-label">5 &#8211; Promo code</div>
-                                <p t-if="promo_note" class="gl-rz-hint" t-out="promo_note">
-                                    Got a code from Instagram? Enter it here.
-                                </p>
-                                <div class="gl-rz-promo">
-                                    <input type="text" id="gelatoPromo" name="promo_code"
-                                           placeholder="Promo code" autocomplete="off"/>
-                                    <button type="button" id="gelatoPromoBtn" class="gl-rz-btn gl-rz-btn-ghost">
-                                        Apply
-                                    </button>
-                                </div>
-                                <p class="gl-rz-promo-msg" id="gelatoPromoMsg"></p>
-
-                                <!-- summary -->
-                                <div class="gl-rz-summary" id="gelatoSummary">
-                                    <div class="gl-rz-summary-row">
-                                        <span>Subtotal</span>
-                                        <strong><span id="gelatoSubtotal">0</span> CZK</strong>
-                                    </div>
-                                    <div class="gl-rz-summary-row" id="gelatoDiscountRow" hidden="hidden">
-                                        <span>Discount <span id="gelatoDiscountLabel"></span></span>
-                                        <strong>-<span id="gelatoDiscount">0</span> CZK</strong>
-                                    </div>
-                                    <div class="gl-rz-summary-row">
-                                        <span>Delivery</span>
-                                        <strong><span id="gelatoShipping">0</span> CZK</strong>
-                                    </div>
-                                    <div class="gl-rz-summary-row gl-rz-summary-total">
-                                        <span>Total</span>
-                                        <strong><span id="gelatoTotal">0</span> CZK</strong>
-                                    </div>
-                                    <p class="gl-rz-hint">
-                                        We will confirm the price with you over the phone. You pay on handover.
-                                    </p>
-                                </div>
-
-                                <div class="gl-rz-submit">
-                                    <button type="submit" class="gl-rz-btn gl-rz-btn-primary" id="gelatoSubmit">
-                                        Send the order
-                                    </button>
-                                </div>
-                                <p class="gl-rz-form-error" id="gelatoFormError" hidden="hidden"></p>
+                                <div class="gl-rz-config"
+                                     id="gelatoConfig"
+                                     t-att-data-fee="website.gelato_delivery_fee"
+                                     t-att-data-free-from="website.gelato_delivery_free_from"
+                                     t-att-data-fee-base="website.gelato_delivery_fee_base"
+                                     hidden="hidden"></div>
                             </form>
 
-                            <div class="gl-rz-success" id="gelatoSuccess" hidden="hidden">
-                                <h3>Got it!</h3>
-                                <p id="gelatoSuccessMsg"></p>
-                                <p class="gl-rz-success-ref">
-                                    Order number: <strong id="gelatoSuccessRef"></strong>
+                            <!-- The last thing the customer sees. It says the
+                                 order arrived, what its number is, and that
+                                 somebody will ring - nothing else is left to
+                                 do here. -->
+                            <div class="gl-rz-done" id="gelatoRozvozDone" hidden="hidden">
+                                <div class="gl-rz-done-tick" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="34" height="34">
+                                        <path d="M20 6 9 17l-5-5"/>
+                                    </svg>
+                                </div>
+                                <h3>Thank you, we have your order!</h3>
+                                <p class="gl-rz-done-ref">
+                                    Order number
+                                    <strong id="gelatoOrderRef">ROZ/2026/0001</strong>
+                                </p>
+                                <p>
+                                    We will ring you shortly to confirm it. You pay in
+                                    cash when we hand it over.
+                                </p>
+                                <p class="gl-rz-done-call">
+                                    Anything to change? Call us on
+                                    <a href="tel:+420773095809">+420 773 09 58 09</a>.
                                 </p>
                             </div>
-
-                            <!-- Hidden data for the price preview in the browser.
-                                 The server works everything out again anyway. -->
-                            <div class="gl-rz-config"
-                                 id="gelatoConfig"
-                                 t-att-data-fee="website.gelato_delivery_fee"
-                                 t-att-data-free-from="website.gelato_delivery_free_from"
-                                 t-att-data-fee-base="website.gelato_delivery_fee_base"
-                                 hidden="hidden"/>
                         </t>
                     </div>
                 </section>
 
-                <!-- ═══════════ FAQ ═══════════ -->
-                <section class="gl-rz-sec gl-rz-darker" id="faq-rozvoz">
-                    <div class="container">
-                        <div class="gl-rz-head">
-                            <h2>Questions about <span>delivery</span>.</h2>
-                            <p>The things people ask us most often about gelato and prosecco delivery in Karlovy Vary.</p>
-                        </div>
-                        <div class="gl-rz-faq">
-                            <details class="gl-rz-faq-item">
-                                <summary>Where do you deliver?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>All over Karlovy Vary: Rybáře, Tuhnice, the centre, the spa
-                                    district, Drahovice, Růžový vrch, Doubí and Bohatice. Outside
-                                    the city we can arrange something, just call us on
-                                    <a href="tel:+420773095809">+420 773 09 58 09</a>.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>Is this soft serve?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>No. We make Italian gelato, which is churned as it is made
-                                    and served with a spatula. That gives it a denser, creamier
-                                    texture than soft serve and much less air.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>Why do the flavours change every day?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>Because we churn every batch fresh and in small amounts.
-                                    Whatever is ready right now is listed above under
-                                    <a href="#dnesni-prichute">What we are churning today</a>.
-                                    We update that list straight from the gelateria.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>How long does gelato keep in the thermal box?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>The box holds the right texture for several hours. If you
-                                    are not eating it straight away, put it in the freezer once it
-                                    arrives. It is at its best on the first day, the way we make it.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>How many flavours fit in one box?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>It is written on each box card above. You can specify the
-                                    split in the note on your order.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>How much is delivery?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p t-if="website.gelato_delivery_fee and website.gelato_delivery_free_from">
-                                        Orders over <t t-out="int(website.gelato_delivery_free_from)">800</t> CZK
-                                        are delivered free. Below that we charge
-                                        <t t-out="int(website.gelato_delivery_fee)">79</t> CZK for
-                                        delivery across Karlovy Vary.
-                                    </p>
-                                    <p t-else="">Delivery across Karlovy Vary is free.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>How quickly will you get here?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>During opening hours, Mon to Sun from 11:00 to 20:00,
-                                    usually within 90 minutes of confirming your order. Please
-                                    order at least an hour ahead.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>How do I pay?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>Cash or card on handover. You pay nothing up front and the
-                                    order is only binding once we have confirmed it by phone.</p>
-                                </div>
-                            </details>
-                            <details class="gl-rz-faq-item">
-                                <summary>Can I pick the box up myself?</summary>
-                                <div class="gl-rz-faq-answer">
-                                    <p>Yes. Put it in the note and we will have the box ready for
-                                    you at the gelateria at Sokolovská 101 in Rybáře.</p>
-                                </div>
-                            </details>
-                        </div>
-                    </div>
-                </section>
 
             </div>
         </t>
