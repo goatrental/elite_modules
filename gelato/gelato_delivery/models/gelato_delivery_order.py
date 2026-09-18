@@ -44,8 +44,8 @@ class GelatoDeliveryOrder(models.Model):
     delivery_city = fields.Char(
         string="Town",
         default="Karlovy Vary",
-        help="We only drive around Karlovy Vary, so the website does not "
-        "ask - it is here so the address on the order reads in full.",
+        help="The town the customer wrote on the delivery page. The field "
+        "starts on Karlovy Vary, but they can put anything in it.",
     )
     zone_id = fields.Many2one(
         comodel_name="gelato.delivery.zone",

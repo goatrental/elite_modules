@@ -1361,92 +1361,13 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 // ---------------------------------------------------------------------
 .gl-page {
 
-    .gl-chosen {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-bottom: 14px;
-
-        &:empty {
-            display: none;
-        }
-    }
-
-    .gl-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 12px;
-        border: 1px solid $gl-border;
-        border-radius: 12px;
-        background: $gl-card;
-    }
-
-    .gl-row-name {
-        flex: 1 1 auto;
-        min-width: 0;
-        color: $gl-text;
-        font-weight: 600;
-    }
-
-    .gl-row-drop {
-        flex: 0 0 auto;
-        width: 28px;
-        height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 0;
-        border-radius: 50%;
-        background: transparent;
-        color: $gl-faint;
-        font-size: 1.2rem;
-        line-height: 1;
-        cursor: pointer;
-
-        &:hover {
-            color: $gl-text;
-            background: rgba(255, 255, 255, .1);
-        }
-    }
-
-    .gl-add-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
-        padding: 12px 16px;
-        border: 1px dashed rgba(255, 255, 255, .25);
-        border-radius: 12px;
-        background: transparent;
-        color: $gl-text;
-        font-family: $gl-sans;
-        font-size: .95rem;
-        font-weight: 600;
-        cursor: pointer;
-
-        &:hover:not(:disabled) {
-            border-color: $gl-accent;
-            color: $gl-accent;
-        }
-
-        &:disabled {
-            opacity: .35;
-            cursor: default;
-        }
-    }
-
-    .gl-add-btn::before {
-        content: "+";
-        font-size: 1.2rem;
-        line-height: 1;
-    }
-
+    // The list is not a window of its own. A box that scrolls inside a box
+    // that scrolls means the wheel lands in whichever one the pointer
+    // happens to be over, and picking a flavour turned into a fight with
+    // the page. The flavours simply make the product taller and the panel
+    // is the one thing that scrolls.
     .gl-picker {
         margin-top: 10px;
-        max-height: 340px;
-        overflow-y: auto;
         border: 1px solid $gl-border;
         border-radius: 12px;
         background: $gl-bg-darker;
@@ -1468,22 +1389,58 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         text-transform: uppercase;
     }
 
+    // One flavour. The name fills most of the row and is the button; the
+    // count appears on the right the moment it goes in the box, where the
+    // thumb already is.
+    .gl-opt-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-right: 10px;
+        border-top: 1px solid $gl-border;
+
+        &:hover {
+            background: $gl-card-hover;
+        }
+    }
+
+    // In the box. Marked down the left edge so what is already chosen can
+    // be found at a glance in a long list, without reading the counts.
+    .gl-opt-taken {
+        background: rgba(132, 197, 195, .1);
+        box-shadow: inset 3px 0 0 $gl-accent;
+
+        &:hover {
+            background: rgba(132, 197, 195, .16);
+        }
+    }
+
+    .gl-opt-qty {
+        flex: 0 0 auto;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
     .gl-opt {
         display: flex;
         align-items: center;
         gap: 12px;
-        width: 100%;
+        flex: 1 1 auto;
+        min-width: 0;
         padding: 10px 14px;
         border: 0;
-        border-top: 1px solid $gl-border;
         background: transparent;
         color: $gl-text;
         font-family: $gl-sans;
         text-align: left;
         cursor: pointer;
 
-        &:hover {
-            background: $gl-card-hover;
+        // The box is full - this one can no longer be added to it.
+        &:disabled {
+            opacity: .35;
+            cursor: default;
         }
     }
 
@@ -1562,20 +1519,11 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         .gl-opt-sub {
             font-size: .7rem;
         }
-
-        .gl-row {
-            padding: 8px 10px;
-        }
-
-        .gl-add-btn {
-            padding: 10px 14px;
-            font-size: .9rem;
-        }
     }
 }
 
 // The theme's body colour washed the count out to near-invisible.
-.gl-page .gl-row .gl-qty-value {
+.gl-page .gl-opt-row .gl-qty-value {
     color: $gl-text;
 }
 
@@ -1853,9 +1801,26 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
     }
 
+    // Stays put at the bottom of the panel while the flavours scroll
+    // underneath. How much of the box is still free and the way out are
+    // the two things being looked for, and neither is worth scrolling to.
+    .gl-panel-foot {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        padding: 12px 18px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        border-top: 1px solid $gl-border;
+        background: $gl-bg-darker;
+
+        .gl-rz-hint {
+            margin: 0 0 8px;
+        }
+    }
+
     .gl-panel-add {
         width: 100%;
-        margin-top: 14px;
+        margin-top: 0;
 
         &:disabled {
             opacity: .4;
@@ -2034,39 +1999,64 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 // "Added" - one word across the middle of the screen, then gone.
 //
 // No box, no colour, nothing to dismiss: it is a confirmation, not a
-// message. It appears where the eye already is, holds for a second and
-// fades away growing slightly, so it reads as something leaving rather
-// than something that needs an answer.
+// message. It appears where the eye already is, holds a second and then
+// comes apart sideways: the letters drift away from each other and blur
+// out, the way a puff of steam thins into the air. Nothing about it asks
+// to be answered, and it never covers what is underneath for long.
 .gl-page .gl-toast {
     position: fixed;
     top: 50%;
     left: 50%;
     z-index: 1090;
     padding: 0;
-    // Muted, not white. It is a nod that the tap landed, not an
-    // announcement - at full white it shouted over the whole page.
-    color: $gl-muted;
+    // The mint the prices are written in, so the confirmation belongs to
+    // the same family as the figures it is confirming.
+    color: $gl-accent;
     font-family: $gl-sans;
     font-size: 2rem;
     font-weight: 600;
-    letter-spacing: .01em;
     text-align: center;
-    // Legible over a photo as well as over the dark page.
-    text-shadow: 0 2px 24px rgba(0, 0, 0, .65);
+    white-space: nowrap;
+    // Nothing behind the letters. A rim, in white or in black, was tried
+    // and both drew more attention than the word itself - and a glow
+    // around it made it look lit from within, which a quiet confirmation
+    // has no business doing. The mint alone carries it.
+    text-shadow: none;
     pointer-events: none;
 
-    transform: translate(-50%, -50%) scale(.92);
+    // Where it drifts to. Letter-spacing pulls the word apart from the
+    // inside while the blur takes its edges, so it thins out rather than
+    // simply vanishing. The negative margin cancels the space that
+    // letter-spacing leaves after the last letter, which would otherwise
+    // walk the word to the right as it goes.
+    transform: translate(-50%, -50%) scaleX(1.4);
+    letter-spacing: .5em;
+    margin-right: -.5em;
+    filter: blur(9px);
     opacity: 0;
-    transition: opacity .38s ease, transform .38s cubic-bezier(.2, .8, .3, 1);
+    transition:
+        opacity .5s ease-out,
+        transform .5s ease-out,
+        letter-spacing .5s ease-out,
+        filter .5s ease-out;
 
     &[hidden] {
         display: none;
     }
 
+    // Arrives gathered and sharp, and quickly - the drifting apart is
+    // the part worth watching.
     &.gl-toast-in {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scaleX(1);
+        letter-spacing: .01em;
+        margin-right: 0;
+        filter: blur(0);
         opacity: 1;
-        transition: opacity .16s ease, transform .16s cubic-bezier(.2, .8, .3, 1);
+        transition:
+            opacity .14s ease,
+            transform .14s ease,
+            letter-spacing .14s ease,
+            filter .14s ease;
     }
 }
 
@@ -2074,6 +2064,9 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     .gl-page .gl-toast {
         transition: opacity .15s linear;
         transform: translate(-50%, -50%);
+        letter-spacing: .01em;
+        margin-right: 0;
+        filter: none;
 
         &.gl-toast-in {
             transform: translate(-50%, -50%);

@@ -2991,8 +2991,13 @@ msgstr "Zavřít"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Add a flavour"
-msgstr "Vybrat příchuť"
+msgid "One portion less"
+msgstr "O porci méně"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "One portion more"
+msgstr "O porci více"
 
 #. module: gelato_delivery
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
@@ -3386,3 +3391,103 @@ msgstr ""
 "        <a href=\"tel:+420773095809\">+420 773 09 58 09</a>.\n"
 "    </p>\n"
 "</div>"
+
+#. module: gelato_delivery
+#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_bundle_action
+msgid "A bundle is a thermal box and a bottle together for one better price. It shows in the <b>Bundles at a better price</b> row on the delivery page, and the customer fills it with flavours just like a box."
+msgstr "Balíček je termobox a láhev dohromady za jednu výhodnější cenu. Na stránce rozvozu se ukazuje v řadě <b>Zvýhodněné balíčky</b> a zákazník si ho plní příchutěmi stejně jako box."
+
+#. module: gelato_delivery
+#: model:ir.model.constraint,message:gelato_delivery.constraint_gelato_delivery_order_flavor_flavor_once_per_item
+msgid "A flavour can only be in one box once - raise its count instead of adding it twice."
+msgstr "Stejná příchuť může být v jednom boxu jen jednou – místo druhého přidání jí zvyšte počet."
+
+#. module: gelato_delivery
+#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_addon_action
+msgid "An extra is a bottle of prosecco or anything else that goes into an order on its own, with no flavours to pick. It shows in the <b>Extras</b> row on the delivery page. The <b>Available</b> switch turns it on and off."
+msgstr "Doplněk je láhev prosecca nebo cokoliv dalšího, co jde do objednávky samo o sobě a nevybírají se k tomu příchutě. Na stránce rozvozu se ukazuje v řadě <b>Doplňky</b>. Přepínač <b>V nabídce</b> ho zapíná a vypíná."
+
+#. module: gelato_delivery
+#: model:ir.model.constraint,message:gelato_delivery.constraint_gelato_delivery_order_item_box_or_addon
+msgid "An item is either a thermal box or a bundle/extra, not both and not neither."
+msgstr "Položka je buď termobox, nebo balíček či doplněk – ne obojí a ne nic."
+
+#. module: gelato_delivery
+#: model:ir.model.constraint,message:gelato_delivery.constraint_gelato_delivery_order_item_quantity_positive
+msgid "An item with no quantity does not belong on the order."
+msgstr "Položka bez množství na objednávku nepatří."
+
+#. module: gelato_delivery
+#: model_terms:ir.actions.act_window,help:gelato_delivery.gelato_delivery_bundle_action
+msgid "Create your first bundle."
+msgstr "Založte první balíček."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__flavor_line_ids
+msgid "Every flavour in the order, across all the boxes. Filled in through the items."
+msgstr "Všechny příchutě v objednávce napříč všemi boxy. Plní se přes položky."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__amount_items
+msgid "Items total"
+msgstr "Položky celkem"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_delivery_order__item_ids
+msgid "Items"
+msgstr "Položky"
+
+#. module: gelato_delivery
+#: model:gelato.promo.code,description:gelato_delivery.promo_zima10
+msgid "Off-season 10% off the whole order."
+msgstr "Mimosezónní sleva 10 % na celou objednávku."
+
+#. module: gelato_delivery
+#: code:addons/gelato_delivery/static/src/xml/board_switch.xml:0
+msgid "Delivery service"
+msgstr "Rozvoz"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order_item__label
+msgid "The name with its flavours, for the list and the email."
+msgstr "Název i s příchutěmi, pro seznam a pro e-mail."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order__delivery_city
+msgid "The town the customer wrote on the delivery page. The field starts on Karlovy Vary, but they can put anything in it."
+msgstr "Město, které zákazník napsal na stránce rozvozu. Pole začíná na Karlových Varech, ale může do něj napsat cokoliv."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_box__flavor_note
+msgid "What the card says under the name. It is written for you from the number of flavours above; change it to anything you like."
+msgstr "Co je na kartě pod názvem. Vypíše se samo podle počtu příchutí výš; přepsat se dá na cokoliv."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_promo_code__scope_label
+msgid "What this code does, said the way you would say it on the phone."
+msgstr "Co kód dělá, řečeno tak, jak byste to řekli do telefonu."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_promo_code__addon_ids
+msgid "Which bundles and extras the discount comes off."
+msgstr "Ze kterých balíčků a doplňků se sleva strhává."
+
+#. module: gelato_delivery
+#: model:ir.model.fields,help:gelato_delivery.field_gelato_promo_code__box_ids
+msgid "Which thermal boxes the discount comes off."
+msgstr "Ze kterých termoboxů se sleva strhává."
+
+#. module: gelato_delivery
+#: model:gelato.delivery.box,flavor_note:gelato_delivery.box_05
+msgid "max 2 flavours"
+msgstr "max 2 příchutě"
+
+#. module: gelato_delivery
+#: model:gelato.delivery.box,flavor_note:gelato_delivery.box_1
+msgid "max 4 flavours"
+msgstr "max 4 příchutě"
+
+#. module: gelato_delivery
+#: model:gelato.delivery.box,flavor_note:gelato_delivery.box_15
+msgid "max 5 flavours in total"
+msgstr "max 5 příchutí"

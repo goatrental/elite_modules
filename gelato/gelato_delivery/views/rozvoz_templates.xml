@@ -245,55 +245,65 @@
                                          the line is clipped to keep the row
                                          short; here there is room for it. -->
                                     <p class="gl-panel-note" id="gelatoPanelNote" hidden="hidden"></p>
-                                    <p class="gl-rz-hint" id="gelatoPartsHint"></p>
 
                                     <t t-if="flavors">
-                                        <div class="gl-chosen" id="gelatoChosen"></div>
-
-                                        <!-- The plus sign is drawn in CSS on purpose:
-                                             with a span inside, Odoo hands the
-                                             translator the whole markup instead of
-                                             the three words that need translating. -->
-                                        <button type="button" class="gl-add-btn" id="gelatoAddFlavor">Add a flavour</button>
-
-                                        <div class="gl-picker" id="gelatoPicker" hidden="hidden">
+                                        <!-- The flavours are the screen, not a drawer
+                                             inside it. They used to sit behind an
+                                             "Add a flavour" button and shut again after
+                                             every pick, so filling a box for four meant
+                                             opening the same list four times and
+                                             scrolling back down to it each time.
+                                             Tapping a flavour now puts one in the box
+                                             and leaves the list exactly where it was. -->
+                                        <div class="gl-picker" id="gelatoPicker">
                                             <t t-foreach="flavors_by_category" t-as="group">
                                                 <div class="gl-picker-group" t-out="group['name']">Ice creams</div>
                                                 <t t-foreach="group['flavors']" t-as="flavor">
-                                                    <button type="button" class="gl-opt"
-                                                            t-att-data-flavor-id="flavor.id"
-                                                            t-att-data-flavor-name="flavor.name">
-                                                        <span class="gl-opt-photo">
-                                                            <img t-if="flavor.image"
-                                                                 t-att-src="website.image_url(flavor, 'image', &quot;96x96&quot;)"
-                                                                 t-att-alt="flavor.name" loading="lazy"/>
-                                                            <span t-else="" class="gl-opt-dot"
-                                                                  t-attf-style="background: #{flavor.display_color};"
-                                                                  aria-hidden="true"></span>
-                                                        </span>
-                                                        <!-- The tags sit under the name, not beside
-                                                             it: next to a long name they squeezed it
-                                                             into two lines and ran across it. -->
-                                                        <span class="gl-opt-text">
-                                                            <span class="gl-opt-name" t-field="flavor.name">Vanilla</span>
-                                                            <span class="gl-opt-sub">
-                                                                <t t-if="flavor.allergens">
-                                                                    Allergens: <t t-out="flavor.allergens">milk</t>
-                                                                </t>
-                                                                <t t-foreach="flavor.tag_ids" t-as="tag">
-                                                                    <span class="gl-rz-tag-mini"
-                                                                          t-attf-style="color: #{tag.color or '#84c5c3'}; border-color: #{tag.color or '#84c5c3'};"
-                                                                          t-field="tag.name">vegan</span>
-                                                                </t>
+                                                    <div class="gl-opt-row"
+                                                         t-att-data-flavor-id="flavor.id"
+                                                         t-att-data-flavor-name="flavor.name">
+                                                        <button type="button" class="gl-opt"
+                                                                t-att-data-flavor-id="flavor.id"
+                                                                t-att-data-flavor-name="flavor.name">
+                                                            <span class="gl-opt-photo">
+                                                                <img t-if="flavor.image"
+                                                                     t-att-src="website.image_url(flavor, 'image', &quot;96x96&quot;)"
+                                                                     t-att-alt="flavor.name" loading="lazy"/>
+                                                                <span t-else="" class="gl-opt-dot"
+                                                                      t-attf-style="background: #{flavor.display_color};"
+                                                                      aria-hidden="true"></span>
                                                             </span>
+                                                            <!-- The tags sit under the name, not beside
+                                                                 it: next to a long name they squeezed it
+                                                                 into two lines and ran across it. -->
+                                                            <span class="gl-opt-text">
+                                                                <span class="gl-opt-name" t-field="flavor.name">Vanilla</span>
+                                                                <span class="gl-opt-sub">
+                                                                    <t t-if="flavor.allergens">
+                                                                        Allergens: <t t-out="flavor.allergens">milk</t>
+                                                                    </t>
+                                                                    <t t-foreach="flavor.tag_ids" t-as="tag">
+                                                                        <span class="gl-rz-tag-mini"
+                                                                              t-attf-style="color: #{tag.color or '#84c5c3'}; border-color: #{tag.color or '#84c5c3'};"
+                                                                              t-field="tag.name">vegan</span>
+                                                                    </t>
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                        <!-- Appears on the first tap and stays
+                                                             put: one portion in the box, plus
+                                                             and minus right beside it. -->
+                                                        <span class="gl-qty gl-opt-qty" hidden="hidden">
+                                                            <button type="button" class="gl-qty-btn gl-row-minus"
+                                                                    aria-label="One portion less">−</button>
+                                                            <span class="gl-qty-value">1</span>
+                                                            <button type="button" class="gl-qty-btn gl-row-plus"
+                                                                    aria-label="One portion more">+</button>
                                                         </span>
-                                                    </button>
+                                                    </div>
                                                 </t>
                                             </t>
                                         </div>
-
-                                        <button type="button" class="gl-rz-btn gl-rz-btn-primary gl-panel-add"
-                                                id="gelatoAddToCart">Put in the order</button>
                                     </t>
                                     <t t-else="">
                                         <p class="gl-rz-empty">
@@ -302,6 +312,17 @@
                                             tell you what is ready.
                                         </p>
                                     </t>
+                                        </div>
+
+                                        <!-- Sits still while the flavours scroll under
+                                             it. How much of the box is still free and
+                                             the way out of here are the two things the
+                                             customer looks for, and neither should have
+                                             to be scrolled to. -->
+                                        <div class="gl-panel-foot" t-if="flavors">
+                                            <p class="gl-rz-hint" id="gelatoPartsHint"></p>
+                                            <button type="button" class="gl-rz-btn gl-rz-btn-primary gl-panel-add"
+                                                    id="gelatoAddToCart">Put in the order</button>
                                         </div>
                                     </div>
                                 </div>

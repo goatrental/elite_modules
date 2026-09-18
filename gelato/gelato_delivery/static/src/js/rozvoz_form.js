@@ -23,11 +23,9 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         "click .gl-card": "_onCardClick",
         "click #gelatoPanel": "_onPanelBackdrop",
         "click #gelatoPanelClose": "_onPanelClose",
-        "click #gelatoAddFlavor": "_onAddFlavor",
         "click .gl-opt": "_onPickFlavor",
         "click .gl-row-plus": "_onRowPlus",
         "click .gl-row-minus": "_onRowMinus",
-        "click .gl-row-drop": "_onRowDrop",
         "click #gelatoAddToCart": "_onAddToCart",
         "click .gl-cart-plus": "_onCartPlus",
         "click .gl-cart-minus": "_onCartMinus",
@@ -166,11 +164,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         }
 
         panel.hidden = false;
-        const picker = this.el.querySelector("#gelatoPicker");
-        if (picker) {
-            picker.hidden = true;
-        }
-        this._renderChosen();
+        this._renderQty();
         this._syncPartsHint();
         const dialog = panel.querySelector(".gl-panel-card");
         if (dialog) {
@@ -300,10 +294,6 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         setTimeout(finish, 400);
     },
 
-    _options() {
-        return Array.from(this.el.querySelectorAll(".gl-opt"));
-    },
-
     _handedOut() {
         return Object.values(this.flavorQty).reduce((sum, q) => sum + q, 0);
     },
@@ -321,48 +311,30 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         }
     },
 
-    _renderChosen() {
-        const box = this.el.querySelector("#gelatoChosen");
-        if (!box) {
-            return;
-        }
-        box.innerHTML = "";
-        for (const [id, quantity] of Object.entries(this.flavorQty)) {
-            const row = document.createElement("div");
-            row.className = "gl-row";
-            row.dataset.flavorId = id;
-
-            const name = document.createElement("span");
-            name.className = "gl-row-name";
-            name.textContent = this._flavorName(id);
-
-            const qty = document.createElement("span");
-            qty.className = "gl-qty";
-            qty.innerHTML =
-                '<button type="button" class="gl-qty-btn gl-row-minus">−</button>' +
-                '<span class="gl-qty-value"></span>' +
-                '<button type="button" class="gl-qty-btn gl-row-plus">+</button>';
-            qty.querySelector(".gl-qty-value").textContent = quantity;
-
-            const drop = document.createElement("button");
-            drop.type = "button";
-            drop.className = "gl-row-drop";
-            drop.setAttribute("aria-label", _t("Remove"));
-            drop.textContent = "×";
-
-            row.append(name, qty, drop);
-            box.append(row);
-        }
-    },
-
-    _onAddFlavor() {
-        const picker = this.el.querySelector("#gelatoPicker");
-        if (!picker) {
-            return;
-        }
-        picker.hidden = !picker.hidden;
-        if (!picker.hidden) {
-            picker.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    /**
+     * Write the counts back onto the list itself.
+     *
+     * There is nowhere else to look. A flavour that is in the box says how
+     * many and carries its own plus and minus, so the box gets filled
+     * without ever leaving the list - which is the whole point, because
+     * the list is long and scrolling back to it after every pick was the
+     * worst part of ordering.
+     */
+    _renderQty() {
+        const left = this.draft ? this.draft.parts - this._handedOut() : 0;
+        for (const row of this.el.querySelectorAll(".gl-opt-row")) {
+            const counter = row.querySelector(".gl-opt-qty");
+            if (!counter) {
+                continue;
+            }
+            const quantity = this.flavorQty[row.dataset.flavorId] || 0;
+            row.classList.toggle("gl-opt-taken", quantity > 0);
+            counter.hidden = quantity === 0;
+            counter.querySelector(".gl-qty-value").textContent = quantity;
+            // A full box takes no more of anything. Saying so on the
+            // buttons beats letting them be pressed and do nothing.
+            counter.querySelector(".gl-row-plus").disabled = left <= 0;
+            row.querySelector(".gl-opt").disabled = left <= 0 && quantity === 0;
         }
     },
 
@@ -372,33 +344,24 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             return;
         }
         this._setFlavorQty(id, (this.flavorQty[id] || 0) + 1);
-        // Closing straight after the pick is the point of the list.
-        this.el.querySelector("#gelatoPicker").hidden = true;
-        this._renderChosen();
+        this._renderQty();
         this._syncPartsHint();
     },
 
     _onRowPlus(ev) {
-        const id = ev.currentTarget.closest(".gl-row").dataset.flavorId;
+        const id = ev.currentTarget.closest(".gl-opt-row").dataset.flavorId;
         if (!this.draft || this._handedOut() >= this.draft.parts) {
             return;
         }
         this._setFlavorQty(id, (this.flavorQty[id] || 0) + 1);
-        this._renderChosen();
+        this._renderQty();
         this._syncPartsHint();
     },
 
     _onRowMinus(ev) {
-        const id = ev.currentTarget.closest(".gl-row").dataset.flavorId;
+        const id = ev.currentTarget.closest(".gl-opt-row").dataset.flavorId;
         this._setFlavorQty(id, (this.flavorQty[id] || 0) - 1);
-        this._renderChosen();
-        this._syncPartsHint();
-    },
-
-    _onRowDrop(ev) {
-        const id = ev.currentTarget.closest(".gl-row").dataset.flavorId;
-        this._setFlavorQty(id, 0);
-        this._renderChosen();
+        this._renderQty();
         this._syncPartsHint();
     },
 
@@ -409,8 +372,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             return;
         }
         const parts = this.draft.parts;
-        const given = this._handedOut();
-        const left = parts - given;
+        const left = parts - this._handedOut();
 
         if (left > 0) {
             hint.textContent = _t("%(left)s of %(parts)s still to hand out.", {
@@ -423,19 +385,6 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             hint.classList.remove("gl-rz-hint-warn");
         }
 
-        const add = this.el.querySelector("#gelatoAddFlavor");
-        if (add) {
-            add.disabled = left <= 0;
-            if (left <= 0) {
-                const picker = this.el.querySelector("#gelatoPicker");
-                if (picker) {
-                    picker.hidden = true;
-                }
-            }
-        }
-        this.el.querySelectorAll(".gl-row-plus").forEach((plus) => {
-            plus.disabled = left <= 0;
-        });
         const confirm = this.el.querySelector("#gelatoAddToCart");
         if (confirm) {
             confirm.disabled = left !== 0;
@@ -502,8 +451,8 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             toast.classList.remove("gl-toast-in");
             this.toastHideTimer = setTimeout(() => {
                 toast.hidden = true;
-            }, 380);
-        }, 500);
+            }, 560);
+        }, 1000);
     },
 
     _cartLine(ev) {
