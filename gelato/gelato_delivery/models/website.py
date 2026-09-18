@@ -1,4 +1,12 @@
-from odoo import _, fields, models
+import logging
+
+from odoo import _, api, fields, models
+
+_logger = logging.getLogger(__name__)
+
+# The delivery page, and the item in the top menu that points at it.
+GELATO_MENU_NAME = "Rozvoz"
+GELATO_MENU_URL = "/rozvoz"
 
 
 class Website(models.Model):
@@ -186,3 +194,72 @@ class Website(models.Model):
         return False, _(
             "We take orders %(hours)s. Come back then, or give us a ring."
         ) % {"hours": self.gelato_order_hours_label()}
+
+    # ------------------------------------------------------------------
+    # Which website the delivery belongs to
+    # ------------------------------------------------------------------
+    @api.model
+    def _gelato_claim_delivery_site(self):
+        """Pick the website the delivery lives on, at install time.
+
+        Only when there is exactly one - then there is nothing to guess.
+        A database that already hosts somebody else's site gets nothing
+        ticked, because putting the gelateria's order form on a stranger's
+        website is a worse outcome than the shop having to tick one box
+        under Website settings. The page itself refuses to answer on a
+        website that is not ticked, so nothing leaks either way.
+        """
+        websites = self.search([])
+        if len(websites) != 1:
+            _logger.info(
+                "gelato_delivery: %d websites in this database, so none was "
+                "claimed. Tick 'Delivery lives on this website' under "
+                "Website settings on the one that should serve /rozvoz.",
+                len(websites),
+            )
+            return self.browse()
+        # The write puts the menu item there as well.
+        websites.gelato_delivery_site = True
+        return websites
+
+    def _gelato_delivery_menu(self):
+        """The item pointing at /rozvoz, for the websites in self."""
+        return self.env["website.menu"].search([
+            ("website_id", "in", self.ids),
+            ("url", "=", GELATO_MENU_URL),
+        ])
+
+    def _gelato_sync_delivery_menu(self):
+        """Put the item in the top menu, or take it away again.
+
+        Hung off the switch rather than off the install, so a shop that
+        turns the delivery on later - or moves it to another website -
+        gets the menu without anybody touching the database. The item
+        always carries website_id: one without it shows up on every
+        website there is.
+        """
+        Menu = self.env["website.menu"]
+        for website in self:
+            existing = website._gelato_delivery_menu()
+            if not website.gelato_delivery_site:
+                existing.unlink()
+                continue
+            if existing:
+                continue
+            top = Menu.search(
+                [("website_id", "=", website.id), ("parent_id", "=", False)],
+                limit=1,
+            )
+            Menu.create({
+                "name": GELATO_MENU_NAME,
+                "url": GELATO_MENU_URL,
+                "parent_id": top.id if top else False,
+                "website_id": website.id,
+                "sequence": 15,
+            })
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "gelato_delivery_site" in vals:
+            self._gelato_sync_delivery_menu()
+        return res
