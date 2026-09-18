@@ -104,7 +104,7 @@
                                                 t-att-data-name="box.name">
                                             <span class="gl-card-photo">
                                                 <img t-if="box.image"
-                                                     t-att-src="image_data_uri(box.image)"
+                                                     t-att-src="website.image_url(box, 'image', &quot;512x384&quot;)"
                                                      t-att-style="box.image_style()"
                                                      t-att-alt="box.name" loading="lazy"/>
                                                 <span t-else="" class="gl-card-photo-empty" aria-hidden="true">
@@ -153,7 +153,7 @@
                                                     t-att-data-name="addon.name">
                                                 <span class="gl-card-photo">
                                                     <img t-if="addon.image"
-                                                         t-att-src="image_data_uri(addon.image)"
+                                                         t-att-src="website.image_url(addon, 'image', &quot;512x384&quot;)"
                                                          t-att-style="addon.image_style()"
                                                          t-att-alt="addon.name" loading="lazy"/>
                                                     <span t-else="" class="gl-card-photo-empty" aria-hidden="true">
@@ -201,7 +201,7 @@
                                                     t-att-data-name="addon.name">
                                                 <span class="gl-card-photo">
                                                     <img t-if="addon.image"
-                                                         t-att-src="image_data_uri(addon.image)"
+                                                         t-att-src="website.image_url(addon, 'image', &quot;512x384&quot;)"
                                                          t-att-style="addon.image_style()"
                                                          t-att-alt="addon.name" loading="lazy"/>
                                                     <span t-else="" class="gl-card-photo-empty" aria-hidden="true">
@@ -265,7 +265,7 @@
                                                             t-att-data-flavor-name="flavor.name">
                                                         <span class="gl-opt-photo">
                                                             <img t-if="flavor.image"
-                                                                 t-att-src="image_data_uri(flavor.image)"
+                                                                 t-att-src="website.image_url(flavor, 'image', &quot;128x128&quot;)"
                                                                  t-att-alt="flavor.name" loading="lazy"/>
                                                             <span t-else="" class="gl-opt-dot"
                                                                   t-attf-style="background: #{flavor.display_color};"
