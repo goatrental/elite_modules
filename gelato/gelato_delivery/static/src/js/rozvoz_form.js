@@ -174,44 +174,62 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     /**
-     * Grow the opened product out of the card that was tapped.
+     * Where the panel sits against the card it belongs to.
      *
-     * The dialog is measured where it will end up and then played
-     * backwards from the card's own place and size, so the two read as one
-     * object rather than a box appearing out of nowhere.
+     * Both directions need the same measurements, so they are worked out
+     * in one place: how much smaller the card is than the open panel and
+     * how far its middle sits from the panel's middle.
      */
-    _zoomFrom(card) {
+    _cardGeometry(card) {
         const panel = this.el.querySelector("#gelatoPanel");
-        const dialog = panel.querySelector(".gl-panel-card");
-        const backdrop = panel.querySelector(".gl-panel-backdrop");
-        if (!dialog || !card.getBoundingClientRect || this._reducedMotion()) {
-            return;
+        const dialog = panel && panel.querySelector(".gl-panel-card");
+        if (!dialog || !card || !card.isConnected || this._reducedMotion()) {
+            return null;
         }
         const from = card.getBoundingClientRect();
         const to = dialog.getBoundingClientRect();
-        if (!to.width || !to.height) {
+        if (!to.width || !to.height || !from.width || !from.height) {
+            return null;
+        }
+        return {
+            dialog: dialog,
+            backdrop: panel.querySelector(".gl-panel-backdrop"),
+            // Written out as one transform so the browser interpolates it
+            // in a single step; translate then scale keeps the card's
+            // middle on the panel's middle the whole way.
+            shrunk:
+                "translate(" +
+                (from.left + from.width / 2 - (to.left + to.width / 2)) + "px, " +
+                (from.top + from.height / 2 - (to.top + to.height / 2)) + "px) " +
+                "scale(" + from.width / to.width + ", " + from.height / to.height + ")",
+        };
+    },
+
+    /**
+     * Grow the opened product out of the card that was tapped.
+     *
+     * The panel is measured where it will end up and then played
+     * backwards from the card's own place and size, so the two read as
+     * one object rather than a box appearing out of nowhere. It is slow
+     * enough to be followed and eases into place rather than stopping
+     * dead, so it reads as being pulled open rather than switched on.
+     */
+    _zoomFrom(card) {
+        const g = this._cardGeometry(card);
+        if (!g) {
             return;
         }
-        const scaleX = from.width / to.width;
-        const scaleY = from.height / to.height;
-        const shiftX = from.left + from.width / 2 - (to.left + to.width / 2);
-        const shiftY = from.top + from.height / 2 - (to.top + to.height / 2);
-
-        const ease = "cubic-bezier(.22,.72,.26,1)";
-        dialog.animate(
+        g.dialog.animate(
             [
-                {
-                    transform: `translate(${shiftX}px, ${shiftY}px) scale(${scaleX}, ${scaleY})`,
-                    opacity: 0.5,
-                    borderRadius: "14px",
-                },
-                { transform: "none", opacity: 1, borderRadius: "18px" },
+                { transform: g.shrunk, opacity: 0.55, borderRadius: "16px", offset: 0 },
+                { opacity: 1, offset: 0.45 },
+                { transform: "none", opacity: 1, borderRadius: "18px", offset: 1 },
             ],
-            { duration: 340, easing: ease }
+            { duration: 520, easing: "cubic-bezier(.25,.7,.3,1)" }
         );
-        if (backdrop) {
-            backdrop.animate([{ opacity: 0 }, { opacity: 1 }], {
-                duration: 260,
+        if (g.backdrop) {
+            g.backdrop.animate([{ opacity: 0 }, { opacity: 1 }], {
+                duration: 380,
                 easing: "ease-out",
             });
         }
@@ -232,7 +250,17 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         }
     },
 
-    _closePanel() {
+    /**
+     * Fold the panel back down into its card.
+     *
+     * It has to stay solid nearly the whole way. An earlier version faded
+     * it out as it travelled, and because opacity falls faster than the
+     * eye follows movement, the panel read as vanishing on the spot
+     * rather than going home. Now it keeps its colour until the last
+     * third, by which point it is already small and sitting over the
+     * card, and only then lets go.
+     */
+    _closePanel(afterClose) {
         this.draft = null;
         this.flavorQty = {};
         const panel = this.el.querySelector("#gelatoPanel");
@@ -247,51 +275,43 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             closed = true;
             panel.hidden = true;
             this.sourceCard = null;
+            if (afterClose) {
+                afterClose();
+            }
         };
 
-        // Shrink back into the card it came out of. If anything is missing
-        // - no card, no animation support - it simply closes.
-        const dialog = panel.querySelector(".gl-panel-card");
-        const backdrop = panel.querySelector(".gl-panel-backdrop");
-        const card = this.sourceCard;
-        if (!dialog || !card || !card.isConnected || this._reducedMotion()) {
+        const g = this._cardGeometry(this.sourceCard);
+        if (!g) {
+            // No card to go back to, or animations turned off: just close.
             finish();
             return;
         }
-        const from = card.getBoundingClientRect();
-        const to = dialog.getBoundingClientRect();
-        if (!to.width || !to.height) {
-            finish();
-            return;
-        }
-        const scaleX = from.width / to.width;
-        const scaleY = from.height / to.height;
-        const shiftX = from.left + from.width / 2 - (to.left + to.width / 2);
-        const shiftY = from.top + from.height / 2 - (to.top + to.height / 2);
 
-        if (backdrop) {
-            backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
-                duration: 200,
-                easing: "ease-in",
-                fill: "forwards",
-            });
+        if (g.backdrop) {
+            // The dark holds while the panel is still big enough to be
+            // worth hiding the page behind, and lifts as it lands.
+            g.backdrop.animate(
+                [
+                    { opacity: 1, offset: 0 },
+                    { opacity: 1, offset: 0.45 },
+                    { opacity: 0, offset: 1 },
+                ],
+                { duration: 520, easing: "ease-in", fill: "forwards" }
+            );
         }
-        const closing = dialog.animate(
+        const closing = g.dialog.animate(
             [
-                { transform: "none", opacity: 1, borderRadius: "18px" },
-                {
-                    transform: `translate(${shiftX}px, ${shiftY}px) scale(${scaleX}, ${scaleY})`,
-                    opacity: 0,
-                    borderRadius: "14px",
-                },
+                { transform: "none", opacity: 1, borderRadius: "18px", offset: 0 },
+                { opacity: 1, offset: 0.62 },
+                { transform: g.shrunk, opacity: 0, borderRadius: "16px", offset: 1 },
             ],
-            { duration: 240, easing: "cubic-bezier(.4,0,.8,.4)" }
+            { duration: 520, easing: "cubic-bezier(.3,.05,.25,1)" }
         );
         closing.onfinish = finish;
         closing.oncancel = finish;
         // A timeline that never advances - a background tab, a browser
         // that skips animations - must not leave the overlay stuck open.
-        setTimeout(finish, 400);
+        setTimeout(finish, 700);
     },
 
     _handedOut() {
@@ -395,8 +415,14 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         if (!this.draft || this._handedOut() !== this.draft.parts) {
             return;
         }
-        this._addToCart({ ...this.draft, quantity: 1, flavors: { ...this.flavorQty } });
-        this._closePanel();
+        // The basket takes it quietly; "Added" waits until the panel has
+        // folded back into its card, so the two do not talk over each
+        // other and the word lands on a page the customer can see again.
+        this._addToCart(
+            { ...this.draft, quantity: 1, flavors: { ...this.flavorQty } },
+            false
+        );
+        this._closePanel(() => this._flashAdded());
     },
 
     // ------------------------------------------------------------------
@@ -411,7 +437,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         return `${entry.kind}-${entry.id}-${flavors}`;
     },
 
-    _addToCart(entry) {
+    _addToCart(entry, announce = true) {
         const key = this._cartKey(entry);
         const existing = this.cart.find((line) => this._cartKey(line) === key);
         if (existing) {
@@ -421,7 +447,9 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         }
         this._renderCart();
         this._recompute();
-        this._flashAdded();
+        if (announce) {
+            this._flashAdded();
+        }
     },
 
     /**

@@ -2004,11 +2004,16 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 // out, the way a puff of steam thins into the air. Nothing about it asks
 // to be answered, and it never covers what is underneath for long.
 .gl-page .gl-toast {
+    // Spans the screen and centres its own text. It used to be a
+    // shrink-to-wrap box pinned with translate(-50%), so its width - and
+    // with it the middle it was pinned by - changed on every frame that
+    // letter-spacing moved. On a phone that read as the word darting
+    // right, catching, and only then settling in the middle.
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 0;
+    right: 0;
     z-index: 1090;
-    padding: 0;
     // The mint the prices are written in, so the confirmation belongs to
     // the same family as the figures it is confirming.
     color: $gl-accent;
@@ -2026,18 +2031,20 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
     // Where it drifts to. Letter-spacing pulls the word apart from the
     // inside while the blur takes its edges, so it thins out rather than
-    // simply vanishing. The negative margin cancels the space that
-    // letter-spacing leaves after the last letter, which would otherwise
-    // walk the word to the right as it goes.
-    transform: translate(-50%, -50%) scaleX(1.4);
+    // simply vanishing. Letter-spacing also leaves a gap after the last
+    // letter, which would walk the word right; the matching padding on
+    // the right takes exactly that much off the box it centres in, and
+    // because both move on the same curve they never disagree.
+    transform: translateY(-50%) scaleX(1.4);
     letter-spacing: .5em;
-    margin-right: -.5em;
+    padding-right: .5em;
     filter: blur(9px);
     opacity: 0;
     transition:
         opacity .5s ease-out,
         transform .5s ease-out,
         letter-spacing .5s ease-out,
+        padding-right .5s ease-out,
         filter .5s ease-out;
 
     &[hidden] {
@@ -2047,15 +2054,16 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     // Arrives gathered and sharp, and quickly - the drifting apart is
     // the part worth watching.
     &.gl-toast-in {
-        transform: translate(-50%, -50%) scaleX(1);
+        transform: translateY(-50%) scaleX(1);
         letter-spacing: .01em;
-        margin-right: 0;
+        padding-right: .01em;
         filter: blur(0);
         opacity: 1;
         transition:
             opacity .14s ease,
             transform .14s ease,
             letter-spacing .14s ease,
+            padding-right .14s ease,
             filter .14s ease;
     }
 }
@@ -2063,13 +2071,13 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 @media (prefers-reduced-motion: reduce) {
     .gl-page .gl-toast {
         transition: opacity .15s linear;
-        transform: translate(-50%, -50%);
+        transform: translateY(-50%);
         letter-spacing: .01em;
-        margin-right: 0;
+        padding-right: .01em;
         filter: none;
 
         &.gl-toast-in {
-            transform: translate(-50%, -50%);
+            transform: translateY(-50%);
         }
     }
 }
