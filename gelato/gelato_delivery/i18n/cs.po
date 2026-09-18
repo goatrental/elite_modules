@@ -3165,3 +3165,204 @@ msgstr "Dolní část"
 #: model:ir.model,name:gelato_delivery.model_gelato_image_frame
 msgid "Photo framing on the website"
 msgstr "Umístění fotky na webu"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"Please drop by the gelateria at Sokolovská 101 in Rybáře,
+"
+"                                    or call us on"
+msgstr "Zastavte se prosím přímo v gelaterii na Sokolovské 101 v Rybářích, nebo nám zavolejte na"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span class=\"gl-card-cta\">Choose</span>"
+msgstr "<span class=\"gl-card-cta\">Vybrat</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Bundles at a better price"
+msgstr "Zvýhodněné balíčky"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span class=\"gl-card-cta\">Add</span>"
+msgstr "<span class=\"gl-card-cta\">Přidat</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Close"
+msgstr "Zavřít"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Add a flavour"
+msgstr "Vybrat příchuť"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Put in the order"
+msgstr "Přidat do objednávky"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"and we will
+"
+"                                            tell you what is ready."
+msgstr "a řekneme vám,                                co je zrovna hotové."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Nothing in it yet. Pick a box above."
+msgstr "Zatím prázdná. Vyberte si nahoře termobox."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Continue"
+msgstr "Pokračovat"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Who to call"
+msgstr "Komu zavolat"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Where to bring it"
+msgstr "Kam to přivezeme"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Your code"
+msgstr "Váš kód"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Your order"
+msgstr "Vaše objednávka"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"<span>Subtotal</span>
+"
+"                                            <span><span id=\"gelatoSubtotal\">0</span> Kč</span>"
+msgstr ""
+"<span>Mezisoučet</span>
+"
+"                                        <span><span id=\"gelatoSubtotal\">0</span> Kč</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"<span>Discount</span>
+"
+"                                            <span>−<span id=\"gelatoDiscount\">0</span> Kč</span>"
+msgstr ""
+"<span>Sleva</span>
+"
+"                                        <span>−<span id=\"gelatoDiscount\">0</span> Kč</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"<span>Delivery</span>
+"
+"                                            <span><span id=\"gelatoShipping\">0</span> Kč</span>"
+msgstr ""
+"<span>Doprava</span>
+"
+"                                        <span><span id=\"gelatoShipping\">0</span> Kč</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"<span>Total</span>
+"
+"                                            <strong><span id=\"gelatoTotal\">0</span> Kč</strong>"
+msgstr ""
+"<span>Celkem</span>
+"
+"                                        <strong><span id=\"gelatoTotal\">0</span> Kč</strong>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "We will confirm the price with you. You pay in cash when we hand it over."
+msgstr "Cenu vám ještě potvrdíme. Platíte hotově při předání."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Thank you, we have your order!"
+msgstr "Děkujeme, objednávku máme!"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"Order number
+"
+"                                    <strong id=\"gelatoOrderRef\">ROZ/2026/0001</strong>"
+msgstr ""
+"Číslo objednávky
+"
+"                                    <strong id=\"gelatoOrderRef\">ROZ/2026/0001</strong>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"We will ring you shortly to confirm it. You pay in
+"
+"                                    cash when we hand it over."
+msgstr "Za chvíli vám zavoláme a potvrdíme ji. Platí se hotově při předání."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Anything to change? Call us on"
+msgstr "Potřebujete něco změnit? Zavolejte nám na"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_box_view_form
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_form
+msgid "On the website"
+msgstr "Na webu"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_form
+msgid ""
+"Do not delete an extra when its season ends. Just switch
+"
+"                        <b>Available on the website</b> off and it disappears from the site.
+"
+"                        When its time comes, switch it back on and it is visible again."
+msgstr "Mimo sezónu doplněk nemažte. Stačí vypnout přepínač <b>V nabídce na webu</b> a z webu zmizí. Až přijde jeho čas, zapnete ho zpátky a je hned vidět."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_form
+msgid ""
+"For a bundle, fill in the <b>total price including the thermal box</b> -
+"
+"                        the one on your leaflet. Odoo works out the <b>surcharge</b> itself and
+"
+"                        recalculates it whenever you change the box price, so you never have to
+"
+"                        think about it.
+"
+"                        <br/>
+"
+"                        The customer fills a bundle with flavours the same way as the box above."
+msgstr "U balíčku vyplňte <b>celkovou cenu včetně termoboxu</b> – tu, kterou máte na letáku. <b>Příplatek</b> si Odoo dopočítá samo a přepočítá ho pokaždé, když změníte cenu boxu, takže to nemusíte řešit.<br/>Zákazník si do balíčku vybírá příchutě stejně jako do termoboxu."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_order_view_form
+msgid ""
+"The map was unreachable when this order came in,
+"
+"                                so no zone set the price. Confirm the delivery
+"
+"                                fee on the phone."
+msgstr "Když objednávka přišla, mapa byla nedostupná, takže cenu neurčila žádná zóna. Dopravné potvrďte telefonem."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Swipe"
+msgstr "Posuňte"

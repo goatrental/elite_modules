@@ -79,7 +79,20 @@
                                      stack: on a phone three stacked cards
                                      were a screen each. Tap one and it asks
                                      which flavours go in. -->
-                                <div class="gl-rz-step-label" id="termoboxy">Thermal boxes</div>
+                                <div class="gl-rz-step-label" id="termoboxy">
+                                    Thermal boxes
+                                    <!-- On a phone the next card only peeks
+                                         out at the edge, which is easy to
+                                         read as the end of the list. Said
+                                         once per row, and only where the row
+                                         really does scroll. -->
+                                    <span class="gl-swipe">
+                                        Swipe
+                                        <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                                            <path d="M5 12h14M13 6l6 6-6 6"/>
+                                        </svg>
+                                    </span>
+                                </div>
                                 <div class="gl-slider">
                                     <t t-foreach="boxes" t-as="box">
                                         <button type="button" class="gl-card gl-card-box"
@@ -119,7 +132,15 @@
 
                                 <!-- ===== 2: bundles ===== -->
                                 <t t-if="bundles">
-                                    <div class="gl-rz-step-label" id="balicky">Bundles at a better price</div>
+                                    <div class="gl-rz-step-label" id="balicky">
+                                        Bundles at a better price
+                                        <span class="gl-swipe">
+                                            Swipe
+                                            <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                                            </svg>
+                                        </span>
+                                    </div>
                                     <div class="gl-slider">
                                         <t t-foreach="bundles" t-as="addon">
                                             <button type="button" class="gl-card gl-card-bundle"
@@ -159,7 +180,15 @@
                                      Nothing to fill here, so one tap puts a
                                      bottle straight in the order. -->
                                 <t t-if="extras">
-                                    <div class="gl-rz-step-label" id="doplnky">Extras</div>
+                                    <div class="gl-rz-step-label" id="doplnky">
+                                        Extras
+                                        <span class="gl-swipe">
+                                            Swipe
+                                            <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
+                                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                                            </svg>
+                                        </span>
+                                    </div>
                                     <div class="gl-slider">
                                         <t t-foreach="extras" t-as="addon">
                                             <button type="button" class="gl-card gl-card-extra"

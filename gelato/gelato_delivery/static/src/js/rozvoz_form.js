@@ -62,6 +62,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             }
         };
         document.addEventListener("keydown", this._onKeyDown);
+        this._watchSliders();
 
         this._renderCart();
         this._recompute();
@@ -73,6 +74,33 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         clearTimeout(this.toastTimer);
         clearTimeout(this.toastHideTimer);
         return this._super(...arguments);
+    },
+
+    /**
+     * Drop the "Swipe" hint off a row once it has been swiped.
+     *
+     * It is there to say the row keeps going sideways. Somebody who has
+     * already moved it knows, and the hint sitting in the heading from
+     * then on is just clutter. A row short enough to fit loses the hint
+     * straight away - there is nothing to swipe.
+     */
+    _watchSliders() {
+        for (const slider of this.el.querySelectorAll(".gl-slider")) {
+            const label = slider.previousElementSibling;
+            const hint = label && label.querySelector(".gl-swipe");
+            if (!hint) {
+                continue;
+            }
+            if (slider.scrollWidth <= slider.clientWidth + 4) {
+                hint.classList.add("gl-swipe-done");
+                continue;
+            }
+            slider.addEventListener(
+                "scroll",
+                () => hint.classList.add("gl-swipe-done"),
+                { once: true, passive: true }
+            );
+        }
     },
 
     // ------------------------------------------------------------------
