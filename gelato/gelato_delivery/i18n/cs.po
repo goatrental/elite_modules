@@ -3491,3 +3491,48 @@ msgstr "max 4 příchutě"
 #: model:gelato.delivery.box,flavor_note:gelato_delivery.box_15
 msgid "max 5 flavours in total"
 msgstr "max 5 příchutí"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span>Delivery</span>\n                                            <span><span id=\"gelatoShipping\">0</span> Kč</span>"
+msgstr "<span>Doprava</span>\n                                            <span><span id=\"gelatoShipping\">0</span> Kč</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span>Discount</span>\n                                            <span>−<span id=\"gelatoDiscount\">0</span> Kč</span>"
+msgstr "<span>Sleva</span>\n                                            <span>−<span id=\"gelatoDiscount\">0</span> Kč</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span>Subtotal</span>\n                                            <span><span id=\"gelatoSubtotal\">0</span> Kč</span>"
+msgstr "<span>Mezisoučet</span>\n                                            <span><span id=\"gelatoSubtotal\">0</span> Kč</span>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span>Total</span>\n                                            <strong><span id=\"gelatoTotal\">0</span> Kč</strong>"
+msgstr "<span>Celkem</span>\n                                            <strong><span id=\"gelatoTotal\">0</span> Kč</strong>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Order number\n                                    <strong id=\"gelatoOrderRef\">ROZ/2026/0001</strong>"
+msgstr "Číslo objednávky\n                                    <strong id=\"gelatoOrderRef\">ROZ/2026/0001</strong>"
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "We take orders 11:00 – 20:00."
+msgstr "Objednávky bereme 11:00 – 20:00."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "We will ring you shortly to confirm it. You pay in\n                                    cash when we hand it over."
+msgstr "Ozveme se vám a objednávku potvrdíme. Platí se\n                                    hotově při předání."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "and we will\n                                            tell you what is ready."
+msgstr "a řekneme vám,\n                                            co je hotové."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_form
+msgid "For a bundle, fill in the <b>total price including the thermal box</b> -\n                        the one on your leaflet. Odoo works out the <b>surcharge</b> itself and\n                        recalculates it whenever you change the box price, so you never have to\n                        think about it.\n                        <br/>\n                        The customer fills a bundle with flavours the same way as the box above."
+msgstr "U balíčku vyplňte <b>celkovou cenu včetně termoboxu</b> –\n                        tu, kterou máte na letáku. Příplatek si Odoo spočítá samo a\n                        přepočítá ho pokaždé, když změníte cenu boxu, takže se tím\n                        nemusíte zabývat.\n                        <br/>\n                        Zákazník plní balíček příchutěmi stejně jako box výš."
