@@ -2381,3 +2381,53 @@ body.gl-lightbox-open {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+// ============================================================================
+// COOKIE BAR
+// ============================================================================
+//
+// Odoo's cookie bar takes its colours from the website palette. This theme
+// leaves that palette transparent and paints body text almost black, so the
+// bar arrived with no background and unreadable text - the sentence about
+// cookies floated loose across the products. It is switched off while
+// nothing is being tracked, but the moment somebody fills in a GTM or Pixel
+// id it comes back, and it has to look like a bar when it does.
+#website_cookies_bar {
+
+    .modal-content {
+        background: #1f1f1f;
+        border: 0;
+        border-top: 1px solid rgba(255, 255, 255, .12);
+        border-radius: 0;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, .5);
+    }
+
+    section,
+    .modal-content,
+    p,
+    span {
+        color: #fff;
+    }
+
+    // The palette classes are what paints it transparent.
+    section.o_cc,
+    section.o_cc1 {
+        background: transparent;
+    }
+
+    a:not(.btn) {
+        color: #84c5c3;
+    }
+
+    .btn-primary {
+        background: #84c5c3;
+        border-color: #84c5c3;
+        color: #1a1a1a;
+    }
+
+    .btn-outline-primary,
+    .btn-secondary {
+        border-color: rgba(255, 255, 255, .35);
+        color: #fff;
+    }
+}
