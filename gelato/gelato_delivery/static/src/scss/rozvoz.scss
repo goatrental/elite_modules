@@ -2147,6 +2147,17 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
 // =====================================================================
 
+
+// Objednáno: z formuláře zůstane jen košík v hlavičce.
+//
+// The whole form used to be hidden outright, which took the basket
+// with it - and then there was nothing for the confirmation to fly
+// into, and nothing to show being emptied. Only the ordering goes;
+// the basket stays until "Done" empties it.
+.gl-page .gl-rz-form.gl-ordered > *:not(.gl-cartbar):not(.gl-flyer) {
+    display: none;
+}
+
 // The copy of a card on its way to the basket.
 //
 // Laid over the real one at exactly its size, so the journey starts

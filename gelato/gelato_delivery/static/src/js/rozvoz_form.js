@@ -921,19 +921,45 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     /**
-     * Close the confirmation and start the page over.
+     * Put the finished order away and start the page over.
      *
-     * A reload rather than clearing the basket by hand: the order is
-     * gone from the server's point of view and half the page is in a
-     * state that only made sense while it was being filled in. Coming
-     * back to a clean page is both simpler and what the customer means
-     * by "done".
+     * The confirmation makes the same journey everything else makes:
+     * draws itself in, flies up to the basket, and as it lands the count
+     * falls away and the basket gives one last nudge. That is the order
+     * being filed rather than a screen being dismissed - and it leaves
+     * the basket visibly empty, which is the truth of it.
      *
-     * The browser would otherwise put them back where they were - at the
-     * bottom, staring at the empty form - so scroll restoring is turned
-     * off for this one navigation.
+     * Then a reload, because half the page is in a state that only made
+     * sense while the order was being filled in, and coming back to a
+     * clean page is both simpler and what "done" means.
      */
     _onDone() {
+        const done = document.getElementById("gelatoRozvozDone");
+        if (!done || this.restarting) {
+            this._restart();
+            return;
+        }
+        this.restarting = true;
+        this._flyToCart(done, () => {
+            // Emptied as it lands, so the count goes with it.
+            this.cart = [];
+            this._renderCart();
+            this._recompute();
+            this._bumpCart();
+            // Long enough for the nudge to be seen, short enough that
+            // nobody wonders whether the button worked.
+            setTimeout(() => this._restart(), 420);
+        });
+        // The copy is already in flight; the original would otherwise sit
+        // there while it goes.
+        done.hidden = true;
+    },
+
+    /** Back to a fresh page, at the top of it. */
+    _restart() {
+        // The browser would otherwise put them back where they were - at
+        // the bottom, staring at an empty form - so scroll restoring is
+        // turned off for this one navigation.
         if ("scrollRestoration" in window.history) {
             window.history.scrollRestoration = "manual";
         }
@@ -1149,7 +1175,10 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     _showSuccess(result) {
-        this.el.hidden = true;
+        // Everything to do with ordering goes, but the basket up in the
+        // header stays put: the order is still counted in it, and
+        // emptying it is what "Done" is about to show.
+        this.el.classList.add("gl-ordered");
         // "Put together your box" over a finished order reads as if
         // something still wants doing.
         const head = document.querySelector("#objednavka .gl-rz-head");
