@@ -8,7 +8,7 @@
             <list string="Tags" editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="color" placeholder="#84c5c3"/>
+                <field name="color" widget="color"/>
                 <field name="flavor_count" string="Flavours"/>
             </list>
         </field>
@@ -28,7 +28,7 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="color" placeholder="#84c5c3"/>
+                        <field name="color" widget="color"/>
                         <field name="sequence"/>
                         <field name="active" invisible="1"/>
                     </group>

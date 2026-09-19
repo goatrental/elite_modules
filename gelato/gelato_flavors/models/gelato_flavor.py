@@ -52,8 +52,9 @@ class GelatoFlavor(models.Model):
     # ------------------------------------------------------------------
     color = fields.Char(
         string="Colour",
-        help="Colour of the dot next to the flavour on the website "
-        "(HEX, for example #84c5c3). When empty, the category colour is used.",
+        help="The dot beside the flavour on the website. Left alone, the "
+        "flavour takes the colour of its category - an untouched picker "
+        "shows black, and the line below says what is really used.",
     )
     image = fields.Image(
         string="Photo",

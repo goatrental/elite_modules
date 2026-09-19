@@ -59,6 +59,12 @@
                 <field name="available" widget="boolean_toggle" string="On the menu today"/>
                 <field name="name"/>
                 <field name="category_id"/>
+                <!-- Right here in the list, because the list edits in place:
+                     clicking a flavour never opens its form, so a colour that
+                     lived only there could not be reached at all. And all the
+                     dots side by side is how you tell whether they go
+                     together. -->
+                <field name="color" widget="color" optional="show"/>
                 <field name="description" optional="show"/>
                 <field name="allergens" optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags" optional="show"/>
@@ -93,7 +99,12 @@
                         <group string="Filing">
                             <field name="category_id"/>
                             <field name="sequence"/>
-                            <field name="color" placeholder="#84c5c3"/>
+                            <field name="color" widget="color"/>
+                            <!-- What the customer actually sees. A flavour
+                                 with no colour of its own borrows the
+                                 category's, and the picker above cannot show
+                                 that - an empty colour looks black in it. -->
+                            <field name="display_color" widget="color" readonly="1"/>
                             <field name="active" invisible="1"/>
                         </group>
                         <group string="For customers">

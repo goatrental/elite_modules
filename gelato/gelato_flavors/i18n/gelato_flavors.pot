@@ -6,23 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 14:57+0000\n"
-"PO-Revision-Date: 2026-09-18 14:57+0000\n"
+"POT-Creation-Date: 2026-09-19 14:22+0000\n"
+"PO-Revision-Date: 2026-09-19 14:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: gelato_flavors
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_category_view_form
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_category_view_list
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_tag_view_form
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_tag_view_list
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_view_form
-msgid "#84c5c3"
-msgstr ""
 
 #. module: gelato_flavors
 #: model:gelato.flavor,description:gelato_flavors.flavor_hruska_becherovka
@@ -150,13 +141,6 @@ msgstr ""
 #: model:ir.model.fields,help:gelato_flavors.field_gelato_flavor_tag__color
 msgid ""
 "Colour of the badge on the website. Use a HEX value, for example #84c5c3."
-msgstr ""
-
-#. module: gelato_flavors
-#: model:ir.model.fields,help:gelato_flavors.field_gelato_flavor__color
-msgid ""
-"Colour of the dot next to the flavour on the website (HEX, for example "
-"#84c5c3). When empty, the category colour is used."
 msgstr ""
 
 #. module: gelato_flavors
@@ -555,6 +539,14 @@ msgstr ""
 msgid ""
 "Tags are the small badges next to a flavour on the website - vegan, lactose "
 "free, no added sugar. You choose what they say."
+msgstr ""
+
+#. module: gelato_flavors
+#: model:ir.model.fields,help:gelato_flavors.field_gelato_flavor__color
+msgid ""
+"The dot beside the flavour on the website. Left alone, the flavour takes the"
+" colour of its category - an untouched picker shows black, and the line "
+"below says what is really used."
 msgstr ""
 
 #. module: gelato_flavors

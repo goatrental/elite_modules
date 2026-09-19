@@ -17,15 +17,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : n%1==0 ? 2 : 3);\n"
 
 #. module: gelato_flavors
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_category_view_form
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_category_view_list
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_tag_view_form
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_tag_view_list
-#: model_terms:ir.ui.view,arch_db:gelato_flavors.gelato_flavor_view_form
-msgid "#84c5c3"
-msgstr "#84c5c3"
-
-#. module: gelato_flavors
 #: model:gelato.flavor,description:gelato_flavors.flavor_hruska_becherovka
 msgid "A Karlovy Vary classic, only frozen."
 msgstr "Karlovarská klasika, jen ve zmrzlině."
@@ -161,9 +152,10 @@ msgstr "Barva štítku na webu. Zadává se jako HEX, např. #84c5c3."
 #. module: gelato_flavors
 #: model:ir.model.fields,help:gelato_flavors.field_gelato_flavor__color
 msgid ""
-"Colour of the dot next to the flavour on the website (HEX, for example "
-"#84c5c3). When empty, the category colour is used."
-msgstr "Barva puntíku u příchutě na webu (HEX, např. #84c5c3). Když je prázdná, použije se barva kategorie."
+"The dot beside the flavour on the website. Left alone, the flavour takes the "
+"colour of its category - an untouched picker shows black, and the line below "
+"says what is really used."
+msgstr "Puntík u příchutě na webu. Když ho necháte být, vezme si příchuť barvu své kategorie – nedotčený výběr pak ukazuje černou a řádek pod ním říká, co se opravdu použije."
 
 #. module: gelato_flavors
 #: model:ir.model.fields,help:gelato_flavors.field_gelato_flavor_category__color
