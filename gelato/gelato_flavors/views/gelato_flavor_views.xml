@@ -27,11 +27,20 @@
                             <!-- The dot is the colour picker. On a phone Odoo
                                  always opens this board instead of the list,
                                  so a colour that lived only in the list could
-                                 not be changed from a phone at all. Tapping it
-                                 saves straight away - no edit mode, no save
-                                 button to hunt for. -->
-                            <field name="color" widget="color" class="o_gelato_tile_dot"
-                                   options="{'autosave': true}"/>
+                                 not be changed from a phone at all.
+
+                                 The "dropdown" class is not decoration. Tiles
+                                 can be dragged to reorder them, and on a touch
+                                 screen that drag swallowed the tap before the
+                                 colour dialog could open - it worked with a
+                                 mouse and did nothing on a phone. Odoo skips
+                                 the drag for anything inside ".dropdown,select"
+                                 (kanban_renderer.js), and that is the only
+                                 hook a view has to say "not here". -->
+                            <span class="dropdown o_gelato_tile_dot_slot">
+                                <field name="color" widget="color" class="o_gelato_tile_dot"
+                                       options="{'autosave': true}"/>
+                            </span>
                             <div class="o_gelato_tile_body">
                                 <div class="o_gelato_tile_name">
                                     <field name="name"/>

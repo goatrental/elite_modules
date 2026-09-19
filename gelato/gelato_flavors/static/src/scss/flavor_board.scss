@@ -24,33 +24,32 @@
         transition: border-color .15s ease, background-color .15s ease;
     }
 
-    // The dot is a colour input now, so the round swatch has to be made
-    // out of the input itself - browsers draw one as a bordered box.
+    // The wrapper only exists so the tile drag can be told to keep off
+    // it; it must not change how the dot sits in the row.
+    .o_gelato_tile_dot_slot {
+        display: flex;
+        flex: 0 0 auto;
+    }
+
+    // The colour widget paints its own swatch and lays a transparent
+    // input over the top, so the round dot has to be made on the swatch.
+    // Styling the input shows nothing at all - it has opacity 0.
     .o_gelato_tile_dot {
         width: 26px;
         height: 26px;
         flex: 0 0 auto;
-        padding: 0;
-        border: 2px solid rgba(0, 0, 0, .12);
-        border-radius: 50%;
-        overflow: hidden;
-        cursor: pointer;
-        background: none;
-        -webkit-appearance: none;
-        appearance: none;
 
-        &::-webkit-color-swatch-wrapper {
-            padding: 0;
+        .o_field_color {
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(0, 0, 0, .12);
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
         }
 
-        &::-webkit-color-swatch {
-            border: 0;
-            border-radius: 50%;
-        }
-
-        &::-moz-color-swatch {
-            border: 0;
-            border-radius: 50%;
+        input {
+            cursor: pointer;
         }
     }
 
