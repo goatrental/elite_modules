@@ -861,9 +861,18 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         const panels = document.querySelectorAll(".offcanvas, .modal");
         if (panels.length) {
             const step = () => {
+                // "showing" matters as much as "show". Bootstrap adds it
+                // the moment the panel starts sliding in and only swaps
+                // it for "show" when the slide has finished - about a
+                // third of a second later. Waiting for "show" left the
+                // basket sitting on top of the menu for the whole slide.
+                // On the way out it keeps "show" until the panel has
+                // gone, so the basket stays away until the screen is
+                // clear again.
                 let open = false;
                 for (const panel of panels) {
-                    if (panel.classList.contains("show")) {
+                    if (panel.classList.contains("show") ||
+                        panel.classList.contains("showing")) {
                         open = true;
                         break;
                     }

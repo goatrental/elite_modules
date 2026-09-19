@@ -2182,7 +2182,9 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 // button lines up with the right-hand edge of the menu at every width
 // rather than with the edge of the screen.
 .gl-page .gl-cartbar {
-    transition: opacity .18s ease;
+    // Quick: the menu is already on its way in, so the basket has to be
+    // out of the picture before it arrives.
+    transition: opacity .12s ease;
     position: fixed;
     top: 0;
     left: 0;
