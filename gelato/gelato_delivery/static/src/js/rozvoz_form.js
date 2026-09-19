@@ -87,6 +87,9 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
 
     destroy() {
         document.removeEventListener("keydown", this._onKeyDown);
+        if (this._menuWatcher) {
+            this._menuWatcher.disconnect();
+        }
         if (this._onHeaderMove) {
             window.removeEventListener("scroll", this._onHeaderMove);
             window.removeEventListener("resize", this._onHeaderMove);
@@ -635,14 +638,22 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         if (foot) {
             foot.hidden = !filled;
         }
-        // An empty basket in the header is furniture. The button turns up
-        // with the first thing ordered and goes away with the last.
-        const bar = this.el.querySelector("#gelatoCartBar");
-        if (bar) {
-            bar.hidden = !filled;
+        // The button in the header stays put whether anything is in it or
+        // not - it is where the order lives, and saying so before there is
+        // one is the point. Only the count comes and goes.
+        const badge = this.el.querySelector(".gl-cartbtn-count");
+        if (badge) {
+            badge.hidden = !things;
+        }
+        const drawerEmpty = this.el.querySelector("#gelatoDrawerEmpty");
+        if (drawerEmpty) {
+            drawerEmpty.hidden = filled;
+        }
+        const onwards = this.el.querySelector("#gelatoDrawerContinue");
+        if (onwards) {
+            onwards.disabled = !filled;
         }
         if (!filled) {
-            this._closeDrawer();
             const checkout = this.el.querySelector("#gelatoCheckout");
             if (checkout) {
                 checkout.hidden = true;
@@ -733,6 +744,35 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         };
         window.addEventListener("scroll", this._onHeaderMove, { passive: true });
         window.addEventListener("resize", this._onHeaderMove, { passive: true });
+
+        // Step aside for the slide-out menu.
+        //
+        // The header is its own layer and the menu lives inside it, so no
+        // amount of stacking gets the menu in front of a strip that sits
+        // outside the header - the basket ended up floating over the open
+        // menu next to its close button. Rather than fight it, the basket
+        // simply gets out of the way while the menu is open.
+        const panels = document.querySelectorAll(".offcanvas, .modal");
+        if (panels.length) {
+            const step = () => {
+                let open = false;
+                for (const panel of panels) {
+                    if (panel.classList.contains("show")) {
+                        open = true;
+                        break;
+                    }
+                }
+                bar.classList.toggle("gl-cartbar-away", open);
+            };
+            this._menuWatcher = new MutationObserver(step);
+            for (const panel of panels) {
+                this._menuWatcher.observe(panel, {
+                    attributes: true,
+                    attributeFilter: ["class"],
+                });
+            }
+            step();
+        }
     },
 
     _onCartBtn() {

@@ -344,9 +344,10 @@
                                      page, so once a few things are in it there
                                      is no way to check what without scrolling
                                      past everything. This rides along in the
-                                     header band instead, and only once there is
-                                     something to show. -->
-                                <div class="gl-cartbar" id="gelatoCartBar" hidden="hidden">
+                                     header band instead. It is there from the
+                                     start, empty, so the customer knows where
+                                     the order will be before there is one. -->
+                                <div class="gl-cartbar" id="gelatoCartBar">
                                     <div class="container gl-cartbar-inner">
                                         <button type="button" class="gl-cartbtn" id="gelatoCartBtn"
                                                 aria-label="Your order">
@@ -369,6 +370,9 @@
                                                     id="gelatoDrawerClose" aria-label="Close">&#215;</button>
                                         </div>
                                         <div class="gl-cart gl-cart-list" id="gelatoDrawerCart"></div>
+                                        <p class="gl-rz-empty gl-drawer-empty" id="gelatoDrawerEmpty">
+                                            Nothing in it yet. Pick a box above.
+                                        </p>
                                         <div class="gl-drawer-foot">
                                             <span class="gl-cart-sum">
                                                 <span class="js-cart-count"></span>

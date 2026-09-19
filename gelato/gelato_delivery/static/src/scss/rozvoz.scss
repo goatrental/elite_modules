@@ -2254,6 +2254,7 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 // button lines up with the right-hand edge of the menu at every width
 // rather than with the edge of the screen.
 .gl-page .gl-cartbar {
+    transition: opacity .18s ease;
     position: fixed;
     top: 0;
     left: 0;
@@ -2270,6 +2271,12 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     &[hidden] {
         display: none;
     }
+}
+
+// Out of the way while the slide-out menu is open.
+.gl-page .gl-cartbar.gl-cartbar-away {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .gl-page .gl-cartbar-inner {
@@ -2309,6 +2316,11 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
 // How many things are in it, on the rim of the button.
 .gl-page .gl-cartbtn-count {
+    // display:flex below would otherwise beat the hidden attribute.
+    &[hidden] {
+        display: none;
+    }
+
     position: absolute;
     top: -4px;
     right: -4px;
@@ -2411,6 +2423,7 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 }
 
+// Nothing ordered yet - said in the drawer as well, otherwise opening an// empty basket shows a heading and a zero and nothing to do about it..gl-page .gl-drawer-empty {    margin: 28px 0;    text-align: center;    &[hidden] {        display: none;    }}
 .gl-page .gl-drawer-foot {
     display: flex;
     align-items: center;
