@@ -31,7 +31,10 @@ class GelatoFlavorCategory(models.Model):
         string="Flavours",
     )
     flavor_count = fields.Integer(
-        string="Flavours",
+        # A different label from flavor_ids above on purpose: two fields
+        # with the same one confuse the place that shows them, and Odoo
+        # says so out loud on every install.
+        string="How many flavours",
         compute="_compute_flavor_count",
     )
 

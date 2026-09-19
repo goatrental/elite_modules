@@ -24,7 +24,14 @@
                 <templates>
                     <t t-name="card">
                         <div class="o_gelato_tile" t-attf-class="#{record.available.raw_value ? 'o_gelato_on' : 'o_gelato_off'}">
-                            <div class="o_gelato_tile_dot" t-attf-style="background: #{record.display_color.raw_value};"/>
+                            <!-- The dot is the colour picker. On a phone Odoo
+                                 always opens this board instead of the list,
+                                 so a colour that lived only in the list could
+                                 not be changed from a phone at all. Tapping it
+                                 saves straight away - no edit mode, no save
+                                 button to hunt for. -->
+                            <field name="color" widget="color" class="o_gelato_tile_dot"
+                                   options="{'autosave': true}"/>
                             <div class="o_gelato_tile_body">
                                 <div class="o_gelato_tile_name">
                                     <field name="name"/>

@@ -631,3 +631,9 @@ msgstr "vegan, bez laktózy..."
 #: model:gelato.flavor.tag,name:gelato_flavors.tag_alcohol
 msgid "with alcohol"
 msgstr "s alkoholem"
+
+#. module: gelato_flavors
+#: model:ir.model.fields,field_description:gelato_flavors.field_gelato_flavor_category__flavor_count
+#: model:ir.model.fields,field_description:gelato_flavors.field_gelato_flavor_tag__flavor_count
+msgid "How many flavours"
+msgstr "Kolik příchutí"

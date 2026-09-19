@@ -44,7 +44,7 @@ class GelatoFlavorTag(models.Model):
         string="Flavours",
     )
     flavor_count = fields.Integer(
-        string="Flavours",
+        string="How many flavours",
         compute="_compute_flavor_count",
     )
 

@@ -3536,3 +3536,8 @@ msgstr "U balíčku vyplňte <b>celkovou cenu včetně termoboxu</b> –\n      
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid "Done"
 msgstr "Hotovo"
+
+#. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__order_count
+msgid "How many orders"
+msgstr "Kolik objednávek"

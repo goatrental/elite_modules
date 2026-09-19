@@ -35,7 +35,7 @@ class GelatoCustomer(models.Model):
         string="Orders",
     )
     order_count = fields.Integer(
-        string="Orders",
+        string="How many orders",
         compute="_compute_orders",
         store=True,
     )

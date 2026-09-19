@@ -24,12 +24,34 @@
         transition: border-color .15s ease, background-color .15s ease;
     }
 
+    // The dot is a colour input now, so the round swatch has to be made
+    // out of the input itself - browsers draw one as a bordered box.
     .o_gelato_tile_dot {
         width: 26px;
         height: 26px;
-        border-radius: 50%;
-        border: 2px solid rgba(0, 0, 0, .12);
         flex: 0 0 auto;
+        padding: 0;
+        border: 2px solid rgba(0, 0, 0, .12);
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+        background: none;
+        -webkit-appearance: none;
+        appearance: none;
+
+        &::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        &::-webkit-color-swatch {
+            border: 0;
+            border-radius: 50%;
+        }
+
+        &::-moz-color-swatch {
+            border: 0;
+            border-radius: 50%;
+        }
     }
 
     .o_gelato_tile_body {

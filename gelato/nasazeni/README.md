@@ -66,19 +66,25 @@ docker exec -it NAZEV_KONTEJNERU odoo \
   -d NAZEV_DB \
   --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons \
   -i gelato_delivery \
-  --i18n-overwrite --without-demo=all --stop-after-init
+  --without-demo=all --stop-after-init
 docker restart NAZEV_KONTEJNERU
 ```
 
 Ve výpisu se musí objevit `Module gelato_delivery loaded in ...`.
 
-`--i18n-overwrite` tam patří: bez něj zůstanou popisky polí v adminu
-anglické. Čeština je v `i18n/cs.po`, ne v databázi.
+**Čeština se natáhne sama**, protože na webu Gelato! už aktivní je —
+instalace bere překlady pro jazyky, které v databázi jsou. Ověřeno na
+čisté české databázi: popisky polí, poznámky u termoboxů i názvy příchutí
+naskočí česky.
 
-**`-i` jen napoprvé.** Při další aktualizaci se použije `-u gelato_delivery`.
-Druhé `-i` na ostré databázi by přepsalo výchozí data — termoboxy, ceny,
-texty e-mailů — a smazalo by, co si obsluha nastavila.
+**`--i18n-overwrite` sem nepatří** — Odoo ho s `-i` rovnou odmítne
+(`cannot be used without the i18n-import option or without the update
+option`). Přidává se až k `-u` při pozdější aktualizaci.
 
+**`-i` jen napoprvé.** Při další aktualizaci se použije
+`-u gelato_delivery --i18n-overwrite`. Druhé `-i` na ostré databázi by
+přepsalo výchozí data — termoboxy, ceny, texty e-mailů — a smazalo by, co
+si obsluha nastavila.
 ## A4. Co po instalaci přibylo
 
 Na webu:
@@ -220,7 +226,7 @@ docker exec -it NAZEV_KONTEJNERU odoo \
   -d NAZEV_DB \
   --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons \
   -i theme_gelato,gelato_flavors,gelato_delivery,gelato_tracking \
-  --load-language=cs_CZ --i18n-overwrite --without-demo=all --stop-after-init
+  --load-language=cs_CZ --without-demo=all --stop-after-init
 docker restart NAZEV_KONTEJNERU
 ```
 

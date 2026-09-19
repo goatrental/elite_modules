@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-19 13:29+0000\n"
-"PO-Revision-Date: 2026-09-19 13:29+0000\n"
+"POT-Creation-Date: 2026-09-19 14:54+0000\n"
+"PO-Revision-Date: 2026-09-19 14:54+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -231,15 +231,6 @@ msgid ""
 "                                                <span class=\"js-cart-count\"/>\n"
 "                                                <span class=\"js-cart-total\">0</span> Kč\n"
 "                                            </span>"
-msgstr ""
-
-#. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid ""
-"<span class=\"gl-cart-sum\">\n"
-"                                        <span class=\"js-cart-count\"/>\n"
-"                                        <span class=\"js-cart-total\">0</span> Kč\n"
-"                                    </span>"
 msgstr ""
 
 #. module: gelato_delivery
@@ -1211,6 +1202,11 @@ msgid ""
 msgstr ""
 
 #. module: gelato_delivery
+#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__order_count
+msgid "How many orders"
+msgstr ""
+
+#. module: gelato_delivery
 #: model:ir.model.fields,help:gelato_delivery.field_gelato_delivery_order_flavor__quantity
 msgid "How many parts of the box this flavour takes."
 msgstr ""
@@ -1723,7 +1719,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/gelato_delivery/models/gelato_customer.py:0
 #: model:ir.actions.act_window,name:gelato_delivery.gelato_delivery_order_list_action
-#: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__order_count
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_customer__order_ids
 #: model:ir.ui.menu,name:gelato_delivery.menu_gelato_orders_list
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_customer_view_form
