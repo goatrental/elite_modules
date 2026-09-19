@@ -40,6 +40,7 @@ mode.
     "assets": {
         "web.assets_backend": [
             "gelato_flavors/static/src/scss/flavor_board.scss",
+            "gelato_flavors/static/src/js/gelato_color_field.js",
         ],
     },
     "installable": True,

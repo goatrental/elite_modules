@@ -38,7 +38,7 @@
                                  (kanban_renderer.js), and that is the only
                                  hook a view has to say "not here". -->
                             <span class="dropdown o_gelato_tile_dot_slot">
-                                <field name="color" widget="color" class="o_gelato_tile_dot"
+                                <field name="color" widget="gelato_color" class="o_gelato_tile_dot"
                                        options="{'autosave': true}"/>
                             </span>
                             <div class="o_gelato_tile_body">
@@ -80,7 +80,7 @@
                      lived only there could not be reached at all. And all the
                      dots side by side is how you tell whether they go
                      together. -->
-                <field name="color" widget="color" optional="show"/>
+                <field name="color" widget="gelato_color" optional="show"/>
                 <field name="description" optional="show"/>
                 <field name="allergens" optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags" optional="show"/>
@@ -115,7 +115,7 @@
                         <group string="Filing">
                             <field name="category_id"/>
                             <field name="sequence"/>
-                            <field name="color" widget="color"/>
+                            <field name="color" widget="gelato_color"/>
                             <!-- What the customer actually sees. A flavour
                                  with no colour of its own borrows the
                                  category's, and the picker above cannot show

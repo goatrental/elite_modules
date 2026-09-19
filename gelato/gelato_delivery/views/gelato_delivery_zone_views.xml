@@ -40,7 +40,7 @@
                         </group>
                         <group string="Zone">
                             <field name="sequence"/>
-                            <field name="color" widget="color"/>
+                            <field name="color" widget="gelato_color"/>
                             <field name="active" invisible="1"/>
                             <field name="point_count" readonly="1"/>
                         </group>
