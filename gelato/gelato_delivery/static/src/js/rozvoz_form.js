@@ -4,6 +4,10 @@ import publicWidget from "@web/legacy/js/public/public_widget";
 import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 
+// Where the basket is kept between visits. One key for the whole page;
+// there is only ever one basket on it.
+const CART_KEY = "gelato.rozvoz.kosik";
+
 /**
  * The delivery form.
  *
@@ -79,6 +83,8 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         }
         this._followHeader();
         this._watchSliders();
+        // Whatever was in the basket when the page was last closed.
+        this._loadCart();
 
         this._renderCart();
         this._recompute();
@@ -87,6 +93,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
 
     destroy() {
         document.removeEventListener("keydown", this._onKeyDown);
+        document.body.classList.remove("gl-has-cartbar");
         if (this._menuWatcher) {
             this._menuWatcher.disconnect();
         }
@@ -569,6 +576,102 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             .join(", ");
     },
 
+    // ------------------------------------------------------------------
+    // Keeping the basket across a reload
+    // ------------------------------------------------------------------
+    /**
+     * Read back the basket from the last visit.
+     *
+     * Every line is checked against what is actually on the page today:
+     * a box that has been taken off the site, or a flavour that is not
+     * being made any more, is dropped rather than carried along, and the
+     * name and price are taken from the card rather than from what was
+     * stored - the shop may have changed them since. Nothing here is
+     * trusted for money anyway; the server prices the order again.
+     */
+    _loadCart() {
+        let raw = null;
+        try {
+            raw = window.localStorage.getItem(CART_KEY);
+        } catch (error) {
+            // Private window, storage switched off - the basket simply
+            // does not survive a reload, which is no reason to break.
+            return;
+        }
+        if (!raw) {
+            return;
+        }
+        let stored = null;
+        try {
+            stored = JSON.parse(raw);
+        } catch (error) {
+            this._forgetCart();
+            return;
+        }
+        if (!Array.isArray(stored)) {
+            this._forgetCart();
+            return;
+        }
+        for (const line of stored) {
+            const card = this.el.querySelector(
+                `.gl-card[data-kind="${line.kind}"][data-id="${line.id}"]`
+            );
+            if (!card) {
+                continue;
+            }
+            const flavors = {};
+            for (const [id, qty] of Object.entries(line.flavors || {})) {
+                if (this.el.querySelector(`.gl-opt[data-flavor-id="${id}"]`)) {
+                    flavors[id] = qty;
+                }
+            }
+            const parts = parseInt(card.dataset.parts || "0", 10);
+            // A box that came back half filled is no use - it cannot be
+            // ordered and cannot be topped up from the basket.
+            const handed = Object.values(flavors).reduce((s, q) => s + q, 0);
+            if (parts && handed !== parts) {
+                continue;
+            }
+            this.cart.push({
+                kind: line.kind,
+                id: line.id,
+                name: card.dataset.name || "",
+                price: parseFloat(card.dataset.price || "0"),
+                parts: parts,
+                quantity: Math.max(1, parseInt(line.quantity, 10) || 1),
+                flavors: flavors,
+                uid: this.nextUid++,
+            });
+        }
+    },
+
+    /** Write the basket down after every change to it. */
+    _saveCart() {
+        try {
+            window.localStorage.setItem(
+                CART_KEY,
+                JSON.stringify(
+                    this.cart.map((line) => ({
+                        kind: line.kind,
+                        id: line.id,
+                        quantity: line.quantity,
+                        flavors: line.flavors,
+                    }))
+                )
+            );
+        } catch (error) {
+            // Full or blocked storage is not worth an error on screen.
+        }
+    },
+
+    _forgetCart() {
+        try {
+            window.localStorage.removeItem(CART_KEY);
+        } catch (error) {
+            // Nothing to do about it.
+        }
+    },
+
     /**
      * One row of the basket.
      *
@@ -626,6 +729,9 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     _renderCart() {
+        // Every change to the basket comes through here, so this is the
+        // one place it needs writing down.
+        this._saveCart();
         for (const box of this.el.querySelectorAll(".gl-cart-list")) {
             box.innerHTML = "";
             for (const line of this.cart) {
@@ -703,37 +809,19 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         if (!header || !bar) {
             return;
         }
-        const inner = bar.querySelector(".gl-cartbar-inner");
+        // The page says it has a basket, and the stylesheet keeps the
+        // header's own content clear of it. Measuring where the menu
+        // happens to end and squeezing in beside it was the earlier
+        // attempt: it put the button somewhere different on every width,
+        // and somewhere different again once somebody logged in and the
+        // menu grew. Reserving the space is the other way round and the
+        // button lands in the same spot every time.
+        document.body.classList.add("gl-has-cartbar");
+
         const follow = () => {
             const box = header.getBoundingClientRect();
             bar.style.transform = `translateY(${Math.round(box.top)}px)`;
             bar.style.height = `${Math.round(box.height)}px`;
-
-            // Sit to the left of whatever the header already keeps on the
-            // right - the hamburger on a phone, the last menu item on a
-            // desktop, the editor's own menu when somebody is logged in.
-            // Measuring beats guessing per breakpoint: one rule holds at
-            // every width and survives the menu getting another item.
-            if (!inner) {
-                return;
-            }
-            const edge = document.documentElement.clientWidth;
-            let rightmost = null;
-            for (const el of header.querySelectorAll("a.nav-link, button, .navbar-toggler")) {
-                const r = el.getBoundingClientRect();
-                // Skip what is parked off-screen - the slide-out menu
-                // and its close button live out there until opened, and
-                // they would otherwise win as the "rightmost" thing.
-                if (r.width < 4 || r.height < 4 || r.right > edge + 2 || r.left < 0) {
-                    continue;
-                }
-                if (rightmost === null || r.right > rightmost.right) {
-                    rightmost = r;
-                }
-            }
-            inner.style.paddingRight = rightmost
-                ? `${Math.round(edge - rightmost.left) + 14}px`
-                : "16px";
         };
         follow();
 
@@ -1175,6 +1263,10 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     _showSuccess(result) {
+        // The order is in; the basket must not come back on the next
+        // visit. It stays in memory so "Done" can be seen emptying it,
+        // but nothing written down survives this point.
+        this._forgetCart();
         // Everything to do with ordering goes, but the basket up in the
         // header stays put: the order is still counted in it, and
         // emptying it is what "Done" is about to show.

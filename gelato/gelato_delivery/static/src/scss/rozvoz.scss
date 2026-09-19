@@ -2207,9 +2207,28 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     pointer-events: none;
 }
 
+// The basket rides on the same grid as the header's own content - it is
+// a .container like the menu is - so it lands on the menu's right-hand
+// edge at every width instead of at a pixel measured once.
 .gl-page .gl-cartbar-inner {
     display: flex;
     justify-content: flex-end;
+}
+
+// ...and the header keeps out of its way. Reserving the space is what
+// makes the button land in the same spot every time; the earlier version
+// measured where the menu happened to end and squeezed in beside it,
+// which moved with every width and again when somebody logged in and the
+// menu grew an item.
+//
+// Hung off a class on <body> because this stylesheet is loaded on every
+// page of the site and only the delivery page has a basket.
+body.gl-has-cartbar header .container,
+body.gl-has-cartbar header .container-fluid {
+    // Added to the container's own gutter, not instead of it: the
+    // basket sits at the gutter edge like the menu used to, so the
+    // header has to stop a whole button-width plus a gap earlier.
+    padding-right: calc(var(--bs-gutter-x, 1.5rem) * .5 + 56px);
 }
 
 .gl-page .gl-cartbtn {
