@@ -363,6 +363,13 @@ class GelatoDeliveryOrder(models.Model):
         short confirmation that it arrived. Sent straight from here, not out
         of any workflow - an order has no states to walk through.
 
+        Sent there and then, not left in the queue. Queued mail waits for
+        Odoo's scheduler, which runs once an hour: an order placed at ten
+        past would sit unseen until eleven, and gelato ordered for now
+        does not keep. The order is already saved by the time this runs,
+        so a mail server having a bad day costs a notification, never an
+        order.
+
         A missing template or a bad address must never block an order, so
         each is attempted on its own and failures are only logged.
         """
@@ -379,10 +386,10 @@ class GelatoDeliveryOrder(models.Model):
                 if not template or (needs_address and not order.customer_email):
                     continue
                 try:
-                    template.sudo().send_mail(order.id, force_send=False)
+                    template.sudo().send_mail(order.id, force_send=True)
                 except Exception as error:
                     _logger.warning(
-                        "Order %s: could not queue %s: %s",
+                        "Order %s: could not send %s: %s",
                         order.name, template.name, error,
                     )
         return True

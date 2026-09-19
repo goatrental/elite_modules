@@ -163,12 +163,18 @@ Na cestě je nachystaný.
 
 Web už nejspíš e-maily posílá, ale stojí za to to ověřit — **bez funkční pošty
 se objednávky vytvoří, ale potvrzení zákazníkovi ani přehled do obchodu
-neodejde**, jen se odloží do fronty.
+neodejde**.
 
 Nastavení → Technické → **Odchozí poštovní servery** → *Otestovat spojení*.
 
 Odesílatele bere Odoo z e-mailu firmy, proto Nastavení → Uživatelé a firmy →
 **Firmy** musí mít vyplněný e-mail.
+
+**Jak poznáte, že server chybí:** objednávky chodí, ale Nastavení → Technické
+→ E-maily je plné zpráv ve stavu **Výjimka** s důvodem `111 Connection
+refused`. Když není nastavený žádný odchozí server, Odoo zkouší poslat poštu
+přes localhost, kde nikdo neposlouchá. Na samotném modulu to nepoznáte —
+texty i adresy jsou v pořádku, jen se nemají kudy odeslat.
 
 ## A8. Ověřit, že to jede
 
