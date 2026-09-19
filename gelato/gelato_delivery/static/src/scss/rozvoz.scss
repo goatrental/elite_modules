@@ -2170,71 +2170,32 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     pointer-events: none;
 }
 
-// The basket up in the header band
+// The basket in the header
 //
-// The order is written out at the bottom of a long page, so after a few
-// taps there is no way to see what is in it without scrolling past
-// everything. This button rides in the header instead.
+// The script moves this into the header's own row of buttons, so it is
+// an ordinary item there: it takes real space, sits in the same line as
+// the search and the burger at every width, slides away when the header
+// slides, and is covered when the menu covers the header. There is no
+// position to keep in step with and nothing to fade out of the way.
 //
-// It is not part of the header markup - that belongs to the theme, and
-// the delivery has to work without it. Instead it is a fixed strip of
-// the same height laid over the header, with its own container so the
-// button lines up with the right-hand edge of the menu at every width
-// rather than with the edge of the screen.
-.gl-page .gl-cartbar {
-    // Quick: the menu is already on its way in, so the basket has to be
-    // out of the picture before it arrives.
-    transition: opacity .12s ease;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    // A fallback only - the real height is copied off the header below.
-    height: 70px;
-    z-index: 1031;
+// The rules are not under .gl-page, because by the time they matter the
+// button is no longer inside it.
+.gl-cartbar {
     display: flex;
     align-items: center;
-    // The strip covers the whole header, so it has to let clicks fall
-    // through to the menu underneath. Only the button itself catches.
-    pointer-events: none;
-
-    &[hidden] {
-        display: none;
-    }
+    list-style: none;
 }
 
-// Out of the way while the slide-out menu is open.
-.gl-page .gl-cartbar.gl-cartbar-away {
-    opacity: 0;
-    pointer-events: none;
+// No header to move into - then it stays a floating button in the
+// corner rather than vanishing into the page.
+.gl-cartbar.gl-cartbar-loose {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    z-index: 1031;
 }
 
-// The basket rides on the same grid as the header's own content - it is
-// a .container like the menu is - so it lands on the menu's right-hand
-// edge at every width instead of at a pixel measured once.
-.gl-page .gl-cartbar-inner {
-    display: flex;
-    justify-content: flex-end;
-}
-
-// ...and the header keeps out of its way. Reserving the space is what
-// makes the button land in the same spot every time; the earlier version
-// measured where the menu happened to end and squeezed in beside it,
-// which moved with every width and again when somebody logged in and the
-// menu grew an item.
-//
-// Hung off a class on <body> because this stylesheet is loaded on every
-// page of the site and only the delivery page has a basket.
-body.gl-has-cartbar header .container,
-body.gl-has-cartbar header .container-fluid {
-    // Added to the container's own gutter, not instead of it: the
-    // basket sits at the gutter edge like the menu used to, so the
-    // header has to stop a whole button-width plus a gap earlier.
-    padding-right: calc(var(--bs-gutter-x, 1.5rem) * .5 + 56px);
-}
-
-.gl-page .gl-cartbtn {
-    pointer-events: auto;
+.gl-cartbtn {
     position: relative;
     display: flex;
     align-items: center;
@@ -2263,9 +2224,8 @@ body.gl-has-cartbar header .container-fluid {
     }
 }
 
-// How many things are in it, on the rim of the button.
 // The nudge when the panel lands in it.
-.gl-page .gl-cartbtn-bump {
+.gl-cartbtn-bump {
     animation: gl-cart-bump .42s cubic-bezier(.3, 1.4, .5, 1);
 }
 
@@ -2276,17 +2236,13 @@ body.gl-has-cartbar header .container-fluid {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .gl-page .gl-cartbtn-bump {
+    .gl-cartbtn-bump {
         animation: none;
     }
 }
 
-.gl-page .gl-cartbtn-count {
-    // display:flex below would otherwise beat the hidden attribute.
-    &[hidden] {
-        display: none;
-    }
-
+// How many things are in it, on the rim of the button.
+.gl-cartbtn-count {
     position: absolute;
     top: -4px;
     right: -4px;
@@ -2303,6 +2259,11 @@ body.gl-has-cartbar header .container-fluid {
     font-size: .7rem;
     font-weight: 700;
     line-height: 1;
+
+    // display:flex above would otherwise beat the hidden attribute.
+    &[hidden] {
+        display: none;
+    }
 }
 
 // ----- what the button opens -----

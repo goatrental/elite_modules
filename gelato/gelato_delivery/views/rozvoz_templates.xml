@@ -335,23 +335,28 @@
                                      The order is listed at the bottom of a long
                                      page, so once a few things are in it there
                                      is no way to check what without scrolling
-                                     past everything. This rides along in the
-                                     header band instead. It is there from the
-                                     start, empty, so the customer knows where
-                                     the order will be before there is one. -->
-                                <div class="gl-cartbar" id="gelatoCartBar">
-                                    <div class="container gl-cartbar-inner">
-                                        <button type="button" class="gl-cartbtn" id="gelatoCartBtn"
-                                                aria-label="Your order">
-                                            <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
-                                                <path d="M3 3h2.2l2.1 10.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 7H6"/>
-                                                <circle cx="10" cy="19.5" r="1.3"/>
-                                                <circle cx="17" cy="19.5" r="1.3"/>
-                                            </svg>
-                                            <span class="gl-cartbtn-count js-cart-things">0</span>
-                                        </button>
-                                    </div>
-                                </div>
+                                     past everything. This goes up into the
+                                     header instead. It is there from the start,
+                                     empty, so the customer knows where the
+                                     order will be before there is one.
+
+                                     It is written here as a list item because
+                                     the script moves it into the header's own
+                                     row of buttons on load. Being part of the
+                                     header is the whole point: it then slides,
+                                     hides and gets covered along with it, with
+                                     nothing to keep in step. -->
+                                <li class="nav-item gl-cartbar">
+                                    <button type="button" class="gl-cartbtn"
+                                            aria-label="Your order">
+                                        <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+                                            <path d="M3 3h2.2l2.1 10.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 7H6"/>
+                                            <circle cx="10" cy="19.5" r="1.3"/>
+                                            <circle cx="17" cy="19.5" r="1.3"/>
+                                        </svg>
+                                        <span class="gl-cartbtn-count js-cart-things">0</span>
+                                    </button>
+                                </li>
 
                                 <div class="gl-drawer" id="gelatoCartDrawer" hidden="hidden">
                                     <div class="gl-drawer-backdrop" id="gelatoDrawerBackdrop"></div>

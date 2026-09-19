@@ -35,7 +35,6 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         "click .gl-cart-minus": "_onCartMinus",
         "click .gl-cart-drop": "_onCartDrop",
         "click #gelatoContinue": "_onContinue",
-        "click #gelatoCartBtn": "_onCartBtn",
         "click #gelatoDrawerClose": "_onDrawerClose",
         "click #gelatoDrawerBackdrop": "_onDrawerClose",
         "click #gelatoDrawerContinue": "_onDrawerContinue",
@@ -81,7 +80,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             this._onDoneClick = () => this._onDone();
             this._doneButton.addEventListener("click", this._onDoneClick);
         }
-        this._followHeader();
+        this._placeCartInHeader();
         this._watchSliders();
         // Whatever was in the basket when the page was last closed.
         this._loadCart();
@@ -93,13 +92,14 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
 
     destroy() {
         document.removeEventListener("keydown", this._onKeyDown);
-        document.body.classList.remove("gl-has-cartbar");
-        if (this._menuWatcher) {
-            this._menuWatcher.disconnect();
-        }
-        if (this._onHeaderMove) {
-            window.removeEventListener("scroll", this._onHeaderMove);
-            window.removeEventListener("resize", this._onHeaderMove);
+        // The baskets were moved into the header, which is not ours to
+        // leave things in.
+        for (const bar of this.cartBars || []) {
+            const button = bar.querySelector(".gl-cartbtn");
+            if (button) {
+                button.removeEventListener("click", this._onCartButtonClick);
+            }
+            bar.remove();
         }
         if (this._doneButton) {
             this._doneButton.removeEventListener("click", this._onDoneClick);
@@ -508,7 +508,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             flavors: { ...this.flavorQty },
         });
         // Into the basket, not back to the shelf.
-        const basket = this.el.querySelector("#gelatoCartBtn");
+        const basket = this._cartButton();
         this._closePanel(() => this._bumpCart(), basket);
     },
 
@@ -721,9 +721,14 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         return row;
     },
 
-    /** The same figure wherever it is shown. */
+    /**
+     * The same figure wherever it is shown.
+     *
+     * Across the document, not just this widget: the basket lives up in
+     * the header now, outside it.
+     */
     _setTextAll(selector, text) {
-        for (const node of this.el.querySelectorAll(selector)) {
+        for (const node of document.querySelectorAll(selector)) {
             node.textContent = text;
         }
     },
@@ -765,8 +770,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         // The button in the header stays put whether anything is in it or
         // not - it is where the order lives, and saying so before there is
         // one is the point. Only the count comes and goes.
-        const badge = this.el.querySelector(".gl-cartbtn-count");
-        if (badge) {
+        for (const badge of document.querySelectorAll(".gl-cartbtn-count")) {
             badge.hidden = !things;
         }
         const drawerEmpty = this.el.querySelector("#gelatoDrawerEmpty");
@@ -790,104 +794,72 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     // ------------------------------------------------------------------
 
     /**
-     * Keep the basket button sitting in the header.
+     * Move the basket up into the header.
      *
-     * The header belongs to the theme and this module has to work
-     * without it, so the button is not part of it - it is a strip of its
-     * own laid over the top. The theme slides the header out of the way
-     * when the page is scrolled down and brings it back on the way up,
-     * and a button left behind hanging over the page would look like a
-     * mistake. So the strip simply copies wherever the header currently
-     * is, and takes its height while it is at it.
+     * The first version left it in the page and copied the header's
+     * position onto it on every scroll frame. That can only ever be a
+     * chase: the header slides under a CSS transition, the copy is made
+     * a frame later, and the button visibly jitters behind it. The
+     * slide-out menu needed watching too, so the button could be faded
+     * out of its way in time.
      *
-     * With no header on the page the strip stays where the stylesheet
-     * put it, which is the top.
+     * Being a real child of the header settles all of it at once. It
+     * slides when the header slides, it is covered when the menu covers
+     * the header, it sits in the row with the search and the burger at
+     * every width, and none of that costs a line of script.
+     *
+     * This theme carries two headers, one for wide screens and one for
+     * phones, and hides whichever does not apply. The basket therefore
+     * goes in both; the stylesheet hides the one in the header that is
+     * hidden anyway, and the counts are written to every copy. With no
+     * header at all it stays a floating button in the corner.
      */
-    _followHeader() {
-        const header = document.querySelector("header");
-        const bar = this.el.querySelector("#gelatoCartBar");
-        if (!header || !bar) {
+    _placeCartInHeader() {
+        const source = this.el.querySelector(".gl-cartbar");
+        if (!source) {
             return;
         }
-        // The page says it has a basket, and the stylesheet keeps the
-        // header's own content clear of it. Measuring where the menu
-        // happens to end and squeezing in beside it was the earlier
-        // attempt: it put the button somewhere different on every width,
-        // and somewhere different again once somebody logged in and the
-        // menu grew. Reserving the space is the other way round and the
-        // button lands in the same spot every time.
-        document.body.classList.add("gl-has-cartbar");
-
-        const follow = () => {
-            const box = header.getBoundingClientRect();
-            bar.style.transform = `translateY(${Math.round(box.top)}px)`;
-            bar.style.height = `${Math.round(box.height)}px`;
-        };
-        follow();
-
-        // The header does not jump out of the way, it slides, and the
-        // slide carries on after the last scroll event. Following only on
-        // the event left the button a step behind - sitting at the top
-        // while the header had already gone. So each scroll keeps the
-        // strip following for a moment longer than the scroll itself,
-        // and then it stops and costs nothing.
-        let until = 0;
-        let running = false;
-        const pump = () => {
-            follow();
-            if (performance.now() < until) {
-                window.requestAnimationFrame(pump);
-            } else {
-                running = false;
-            }
-        };
-        this._onHeaderMove = () => {
-            until = performance.now() + 700;
-            if (!running) {
-                running = true;
-                window.requestAnimationFrame(pump);
-            }
-        };
-        window.addEventListener("scroll", this._onHeaderMove, { passive: true });
-        window.addEventListener("resize", this._onHeaderMove, { passive: true });
-
-        // Step aside for the slide-out menu.
-        //
-        // The header is its own layer and the menu lives inside it, so no
-        // amount of stacking gets the menu in front of a strip that sits
-        // outside the header - the basket ended up floating over the open
-        // menu next to its close button. Rather than fight it, the basket
-        // simply gets out of the way while the menu is open.
-        const panels = document.querySelectorAll(".offcanvas, .modal");
-        if (panels.length) {
-            const step = () => {
-                // "showing" matters as much as "show". Bootstrap adds it
-                // the moment the panel starts sliding in and only swaps
-                // it for "show" when the slide has finished - about a
-                // third of a second later. Waiting for "show" left the
-                // basket sitting on top of the menu for the whole slide.
-                // On the way out it keeps "show" until the panel has
-                // gone, so the basket stays away until the screen is
-                // clear again.
-                let open = false;
-                for (const panel of panels) {
-                    if (panel.classList.contains("show") ||
-                        panel.classList.contains("showing")) {
-                        open = true;
-                        break;
-                    }
-                }
-                bar.classList.toggle("gl-cartbar-away", open);
-            };
-            this._menuWatcher = new MutationObserver(step);
-            for (const panel of panels) {
-                this._menuWatcher.observe(panel, {
-                    attributes: true,
-                    attributeFilter: ["class"],
-                });
-            }
-            step();
+        const header = document.querySelector("header");
+        const groups = header
+            ? [
+                  // The row of buttons a phone header keeps on the right.
+                  ...header.querySelectorAll(".o_header_mobile_buttons_wrap"),
+                  // ...and the same on a wide one.
+                  ...header.querySelectorAll("ul.navbar-nav.flex-shrink-0"),
+              ]
+            : [];
+        this.cartBars = [];
+        if (!groups.length) {
+            source.classList.add("gl-cartbar-loose");
+            this.cartBars.push(source);
+        } else {
+            groups.forEach((group, i) => {
+                const bar = i === 0 ? source : source.cloneNode(true);
+                group.prepend(bar);
+                this.cartBars.push(bar);
+            });
         }
+
+        // They have left the widget, so the delegated click no longer
+        // reaches them and each has to be tied on by hand.
+        this._onCartButtonClick = () => this._onCartBtn();
+        for (const bar of this.cartBars) {
+            const button = bar.querySelector(".gl-cartbtn");
+            if (button) {
+                button.addEventListener("click", this._onCartButtonClick);
+            }
+        }
+    },
+
+    /** The copy the customer can actually see right now. */
+    _cartButton() {
+        for (const bar of this.cartBars || []) {
+            const button = bar.querySelector(".gl-cartbtn");
+            if (button && button.getBoundingClientRect().width > 0) {
+                return button;
+            }
+        }
+        return null;
     },
 
     /**
@@ -903,7 +875,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
      * is more than one bottle to be had.
      */
     _flyToCart(source, done) {
-        const basket = this.el.querySelector("#gelatoCartBtn");
+        const basket = this._cartButton();
         const land = () => {
             if (done) {
                 done();
@@ -982,7 +954,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
      * something arriving.
      */
     _bumpCart() {
-        const btn = this.el.querySelector("#gelatoCartBtn");
+        const btn = this._cartButton();
         if (!btn) {
             return;
         }
