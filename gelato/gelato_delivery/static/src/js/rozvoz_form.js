@@ -221,17 +221,22 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         if (!to.width || !to.height || !from.width || !from.height) {
             return null;
         }
+        const shift =
+            "translate(" +
+            (from.left + from.width / 2 - (to.left + to.width / 2)) + "px, " +
+            (from.top + from.height / 2 - (to.top + to.height / 2)) + "px)";
         return {
             dialog: dialog,
             backdrop: panel.querySelector(".gl-panel-backdrop"),
+            // Just the journey, with no resizing - the closing animation
+            // shrinks on its own schedule and needs the two apart.
+            shift: shift,
             // Written out as one transform so the browser interpolates it
-            // in a single step; translate then scale keeps the card's
+            // in a single step; translate then scale keeps the target's
             // middle on the panel's middle the whole way.
             shrunk:
-                "translate(" +
-                (from.left + from.width / 2 - (to.left + to.width / 2)) + "px, " +
-                (from.top + from.height / 2 - (to.top + to.height / 2)) + "px) " +
-                "scale(" + from.width / to.width + ", " + from.height / to.height + ")",
+                shift + " scale(" +
+                from.width / to.width + ", " + from.height / to.height + ")",
         };
     },
 
@@ -331,22 +336,60 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
                     { opacity: 1, offset: 0.45 },
                     { opacity: 0, offset: 1 },
                 ],
-                { duration: 520, easing: "ease-in", fill: "forwards" }
+                { duration: target ? 640 : 520, easing: "ease-in", fill: "forwards" }
             );
         }
-        const closing = g.dialog.animate(
-            [
+        // Going to the basket is two moves, not one. The panel first
+        // draws itself in where it stands, down to a bit under half, and
+        // only then sets off. Straight from full size towards the corner
+        // made the whole screen lurch sideways, because at that size the
+        // travel is the only thing the eye can follow. Shrinking first
+        // turns it into an object small enough to watch being carried,
+        // and it keeps shrinking on the way until there is nothing left
+        // of it but the basket.
+        //
+        // Going back to its card is one move: it folds down onto
+        // something its own sort of size, so there is nothing to carry
+        // and no reason to pass through the middle first.
+        const kroky = target
+            ? [
+                {
+                    transform: "none",
+                    opacity: 1,
+                    borderRadius: "18px",
+                    offset: 0,
+                    easing: "cubic-bezier(.4,0,.6,1)",
+                },
+                {
+                    // Still in the middle of the screen, just smaller.
+                    transform: "scale(.4)",
+                    opacity: 1,
+                    borderRadius: "16px",
+                    offset: 0.4,
+                    easing: "cubic-bezier(.35,0,.25,1)",
+                },
+                { opacity: 1, offset: 0.85 },
+                {
+                    transform: `${g.shift} scale(.05)`,
+                    opacity: 0,
+                    borderRadius: "14px",
+                    offset: 1,
+                },
+            ]
+            : [
                 { transform: "none", opacity: 1, borderRadius: "18px", offset: 0 },
                 { opacity: 1, offset: 0.62 },
                 { transform: g.shrunk, opacity: 0, borderRadius: "16px", offset: 1 },
-            ],
-            { duration: 520, easing: "cubic-bezier(.3,.05,.25,1)" }
-        );
+            ];
+        const closing = g.dialog.animate(kroky, {
+            duration: target ? 640 : 520,
+            easing: target ? "linear" : "cubic-bezier(.3,.05,.25,1)",
+        });
         closing.onfinish = finish;
         closing.oncancel = finish;
         // A timeline that never advances - a background tab, a browser
         // that skips animations - must not leave the overlay stuck open.
-        setTimeout(finish, 700);
+        setTimeout(finish, 820);
     },
 
     _handedOut() {
