@@ -202,19 +202,21 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     /**
-     * Where the panel sits against the card it belongs to.
+     * Where the panel sits against the thing it flies to or from.
      *
      * Both directions need the same measurements, so they are worked out
-     * in one place: how much smaller the card is than the open panel and
-     * how far its middle sits from the panel's middle.
+     * in one place: how much smaller the target is than the open panel
+     * and how far its middle sits from the panel's middle. On the way in
+     * that target is the card that was tapped; on the way out it can be
+     * the basket instead.
      */
-    _cardGeometry(card) {
+    _cardGeometry(target) {
         const panel = this.el.querySelector("#gelatoPanel");
         const dialog = panel && panel.querySelector(".gl-panel-card");
-        if (!dialog || !card || !card.isConnected || this._reducedMotion()) {
+        if (!dialog || !target || !target.isConnected || this._reducedMotion()) {
             return null;
         }
-        const from = card.getBoundingClientRect();
+        const from = target.getBoundingClientRect();
         const to = dialog.getBoundingClientRect();
         if (!to.width || !to.height || !from.width || !from.height) {
             return null;
@@ -279,16 +281,21 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     /**
-     * Fold the panel back down into its card.
+     * Fold the panel down into wherever the product just went.
+     *
+     * Closed without ordering, it goes back to the card it came from -
+     * nothing happened, so nothing moved. Ordered, it flies into the
+     * basket in the header instead, because that is where the box now
+     * is. Telling those two apart is the whole point of the animation.
      *
      * It has to stay solid nearly the whole way. An earlier version faded
      * it out as it travelled, and because opacity falls faster than the
      * eye follows movement, the panel read as vanishing on the spot
-     * rather than going home. Now it keeps its colour until the last
-     * third, by which point it is already small and sitting over the
-     * card, and only then lets go.
+     * rather than going anywhere. Now it keeps its colour until the last
+     * third, by which point it is small and sitting over its target, and
+     * only then lets go.
      */
-    _closePanel(afterClose) {
+    _closePanel(afterClose, target) {
         this.draft = null;
         this.flavorQty = {};
         const panel = this.el.querySelector("#gelatoPanel");
@@ -308,9 +315,9 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             }
         };
 
-        const g = this._cardGeometry(this.sourceCard);
+        const g = this._cardGeometry(target || this.sourceCard);
         if (!g) {
-            // No card to go back to, or animations turned off: just close.
+            // Nowhere to fly to, or animations turned off: just close.
             finish();
             return;
         }
@@ -444,13 +451,18 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             return;
         }
         // The basket takes it quietly; "Added" waits until the panel has
-        // folded back into its card, so the two do not talk over each
-        // other and the word lands on a page the customer can see again.
+        // landed, so the two do not talk over each other and the word
+        // lands on a page the customer can see again.
         this._addToCart(
             { ...this.draft, quantity: 1, flavors: { ...this.flavorQty } },
             false
         );
-        this._closePanel(() => this._flashAdded());
+        // Into the basket, not back to the shelf.
+        const basket = this.el.querySelector("#gelatoCartBtn");
+        this._closePanel(() => {
+            this._bumpCart();
+            this._flashAdded();
+        }, basket);
     },
 
     // ------------------------------------------------------------------
@@ -773,6 +785,25 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             }
             step();
         }
+    },
+
+    /**
+     * A nudge on the basket when something lands in it.
+     *
+     * The panel flies there and disappears; without the basket reacting,
+     * the last thing the eye sees is something vanishing rather than
+     * something arriving.
+     */
+    _bumpCart() {
+        const btn = this.el.querySelector("#gelatoCartBtn");
+        if (!btn) {
+            return;
+        }
+        // Restart the animation even when one is still running, so two
+        // things ordered quickly nudge it twice.
+        btn.classList.remove("gl-cartbtn-bump");
+        void btn.offsetWidth;
+        btn.classList.add("gl-cartbtn-bump");
     },
 
     _onCartBtn() {
