@@ -331,14 +331,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Flashes up for a second whenever something
-                                     lands in the order. An extra goes in on one
-                                     tap with nothing else moving on the screen,
-                                     so without this there is no telling whether
-                                     the tap registered. -->
-                                <div class="gl-toast" id="gelatoToast" role="status"
-                                     aria-live="polite" hidden="hidden">Added</div>
-
                                 <!-- ===== the basket, reachable from anywhere =====
                                      The order is listed at the bottom of a long
                                      page, so once a few things are in it there

@@ -1996,98 +1996,6 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 }
 
-// "Added" - one word across the middle of the screen, then gone.
-//
-// No box, no colour, nothing to dismiss: it is a confirmation, not a
-// message. It appears where the eye already is, holds a second and then
-// comes apart sideways: the letters drift away from each other and blur
-// out, the way a puff of steam thins into the air. Nothing about it asks
-// to be answered, and it never covers what is underneath for long.
-.gl-page .gl-toast {
-    // Spans the screen and centres its own text. It used to be a
-    // shrink-to-wrap box pinned with translate(-50%), so its width - and
-    // with it the middle it was pinned by - changed on every frame that
-    // letter-spacing moved. On a phone that read as the word darting
-    // right, catching, and only then settling in the middle.
-    position: fixed;
-    top: 50%;
-    left: 0;
-    right: 0;
-    z-index: 1090;
-    // The mint the prices are written in, so the confirmation belongs to
-    // the same family as the figures it is confirming.
-    color: $gl-accent;
-    font-family: $gl-sans;
-    font-size: 2rem;
-    font-weight: 600;
-    text-align: center;
-    white-space: nowrap;
-    // Nothing behind the letters. A rim, in white or in black, was tried
-    // and both drew more attention than the word itself - and a glow
-    // around it made it look lit from within, which a quiet confirmation
-    // has no business doing. The mint alone carries it.
-    text-shadow: none;
-    pointer-events: none;
-
-    // Where it drifts to. Letter-spacing pulls the word apart from the
-    // inside while the blur takes its edges, so it thins out rather than
-    // simply vanishing. Letter-spacing also leaves a gap after the last
-    // letter, which would walk the word right; the matching padding on
-    // the right takes exactly that much off the box it centres in, and
-    // because both move on the same curve they never disagree.
-    transform: translateY(-50%) scaleX(1.4);
-    letter-spacing: .5em;
-    padding-right: .5em;
-    filter: blur(9px);
-    opacity: 0;
-    transition:
-        opacity .5s ease-out,
-        transform .5s ease-out,
-        letter-spacing .5s ease-out,
-        padding-right .5s ease-out,
-        filter .5s ease-out;
-
-    &[hidden] {
-        display: none;
-    }
-
-    // Arrives gathered and sharp, and quickly - the drifting apart is
-    // the part worth watching.
-    &.gl-toast-in {
-        transform: translateY(-50%) scaleX(1);
-        letter-spacing: .01em;
-        padding-right: .01em;
-        filter: blur(0);
-        opacity: 1;
-        transition:
-            opacity .14s ease,
-            transform .14s ease,
-            letter-spacing .14s ease,
-            padding-right .14s ease,
-            filter .14s ease;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .gl-page .gl-toast {
-        transition: opacity .15s linear;
-        transform: translateY(-50%);
-        letter-spacing: .01em;
-        padding-right: .01em;
-        filter: none;
-
-        &.gl-toast-in {
-            transform: translateY(-50%);
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .gl-page .gl-toast {
-        font-size: 1.7rem;
-    }
-}
-
 // ---------------------------------------------------------------------
 // "Thank you, we have your order"
 //
@@ -2242,6 +2150,19 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 // =====================================================================
+
+// The copy of a card on its way to the basket.
+//
+// Laid over the real one at exactly its size, so the journey starts
+// from where the finger was rather than from somewhere nearby. Under
+// the drawer, over everything else, and deaf to clicks.
+.gl-page .gl-flyer {
+    position: fixed;
+    z-index: 1085;
+    margin: 0;
+    pointer-events: none;
+}
+
 // The basket up in the header band
 //
 // The order is written out at the bottom of a long page, so after a few

@@ -97,8 +97,6 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         if (this._doneButton) {
             this._doneButton.removeEventListener("click", this._onDoneClick);
         }
-        clearTimeout(this.toastTimer);
-        clearTimeout(this.toastHideTimer);
         return this._super(...arguments);
     },
 
@@ -147,7 +145,11 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             parts: parts,
         };
         if (!parts) {
+            // A bottle needs nothing filling in, so it goes straight in -
+            // but it still flies to the basket like everything else, or
+            // the tap would look like it did nothing at all.
             this._addToCart({ ...product, quantity: 1, flavors: {} });
+            this._flyToCart(card, () => this._bumpCart());
             return;
         }
         this._openPanel(product, card);
@@ -493,19 +495,14 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         if (!this.draft || this._handedOut() !== this.draft.parts) {
             return;
         }
-        // The basket takes it quietly; "Added" waits until the panel has
-        // landed, so the two do not talk over each other and the word
-        // lands on a page the customer can see again.
-        this._addToCart(
-            { ...this.draft, quantity: 1, flavors: { ...this.flavorQty } },
-            false
-        );
+        this._addToCart({
+            ...this.draft,
+            quantity: 1,
+            flavors: { ...this.flavorQty },
+        });
         // Into the basket, not back to the shelf.
         const basket = this.el.querySelector("#gelatoCartBtn");
-        this._closePanel(() => {
-            this._bumpCart();
-            this._flashAdded();
-        }, basket);
+        this._closePanel(() => this._bumpCart(), basket);
     },
 
     // ------------------------------------------------------------------
@@ -520,7 +517,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         return `${entry.kind}-${entry.id}-${flavors}`;
     },
 
-    _addToCart(entry, announce = true) {
+    _addToCart(entry) {
         const key = this._cartKey(entry);
         const existing = this.cart.find((line) => this._cartKey(line) === key);
         if (existing) {
@@ -530,40 +527,6 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         }
         this._renderCart();
         this._recompute();
-        if (announce) {
-            this._flashAdded();
-        }
-    },
-
-    /**
-     * Say out loud that it went in.
-     *
-     * The order is listed further down the page, so from where the
-     * customer is standing a tap changes nothing they can see. A second of
-     * "Added" across the middle of the screen is the difference between
-     * ordering once and ordering three times because nothing seemed to
-     * happen. One word, no box around it - it is a confirmation, not a
-     * thing to read.
-     */
-    _flashAdded() {
-        const toast = this.el.querySelector("#gelatoToast");
-        if (!toast) {
-            return;
-        }
-        clearTimeout(this.toastTimer);
-        toast.hidden = false;
-        // Restart the animation even when one is still running, so a
-        // second tap flashes again instead of sitting there.
-        toast.classList.remove("gl-toast-in");
-        void toast.offsetWidth;
-        toast.classList.add("gl-toast-in");
-        this.toastTimer = setTimeout(() => {
-            // Dropping the class fades it out and lets it drift away.
-            toast.classList.remove("gl-toast-in");
-            this.toastHideTimer = setTimeout(() => {
-                toast.hidden = true;
-            }, 560);
-        }, 1000);
     },
 
     _cartLine(ev) {
@@ -828,6 +791,90 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             }
             step();
         }
+    },
+
+    /**
+     * Send a copy of the card itself up into the basket.
+     *
+     * A box goes there as the open panel, which the customer is already
+     * looking at. A bottle has no panel - one tap and it is in - so
+     * there would be nothing to watch at all. A copy of the card makes
+     * the same journey instead: shrinks where it stands, then travels
+     * and thins out into the basket. Same two moves, same reason.
+     *
+     * It is a copy because the real card has to stay on the shelf; there
+     * is more than one bottle to be had.
+     */
+    _flyToCart(source, done) {
+        const basket = this.el.querySelector("#gelatoCartBtn");
+        const land = () => {
+            if (done) {
+                done();
+            }
+        };
+        if (!source || !basket || this._reducedMotion()) {
+            land();
+            return;
+        }
+        const from = source.getBoundingClientRect();
+        const to = basket.getBoundingClientRect();
+        if (!from.width || !from.height || !to.width) {
+            land();
+            return;
+        }
+
+        const ghost = source.cloneNode(true);
+        ghost.classList.add("gl-flyer");
+        ghost.removeAttribute("id");
+        ghost.setAttribute("aria-hidden", "true");
+        ghost.style.left = `${from.left}px`;
+        ghost.style.top = `${from.top}px`;
+        ghost.style.width = `${from.width}px`;
+        ghost.style.height = `${from.height}px`;
+        // Inside the widget rather than on the body, so it keeps the
+        // card styling that hangs off .gl-page.
+        this.el.append(ghost);
+
+        const dx = to.left + to.width / 2 - (from.left + from.width / 2);
+        const dy = to.top + to.height / 2 - (from.top + from.height / 2);
+
+        let gone = false;
+        const clear = () => {
+            if (gone) {
+                return;
+            }
+            gone = true;
+            ghost.remove();
+            land();
+        };
+        const flight = ghost.animate(
+            [
+                {
+                    transform: "none",
+                    opacity: 1,
+                    offset: 0,
+                    easing: "cubic-bezier(.4,0,.6,1)",
+                },
+                {
+                    transform: "scale(.4)",
+                    opacity: 1,
+                    offset: 0.4,
+                    easing: "cubic-bezier(.35,0,.25,1)",
+                },
+                { opacity: 1, offset: 0.85 },
+                {
+                    transform: `translate(${dx}px, ${dy}px) scale(.05)`,
+                    opacity: 0,
+                    offset: 1,
+                },
+            ],
+            { duration: 640 }
+        );
+        flight.onfinish = clear;
+        flight.oncancel = clear;
+        // A timeline that never advances must not leave a copy of a card
+        // sitting on the page.
+        setTimeout(clear, 820);
     },
 
     /**

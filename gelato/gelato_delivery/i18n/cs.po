@@ -2759,11 +2759,6 @@ msgstr ""
 "takže to bývá dřív než zavíračka."
 
 #. module: gelato_delivery
-#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
-msgid "Added"
-msgstr "Přidáno"
-
-#. module: gelato_delivery
 #: model:ir.model.fields,field_description:gelato_delivery.field_gelato_promo_code__scope
 msgid "Applies to"
 msgstr "Platí na"
