@@ -8,6 +8,19 @@ import { _t } from "@web/core/l10n/translation";
 // there is only ever one basket on it.
 const CART_KEY = "gelato.rozvoz.kosik";
 
+// ...and what was typed into the contact details. Kept apart from the
+// basket: the two are cleared at different moments.
+const FORM_KEY = "gelato.rozvoz.udaje";
+const FORM_FIELDS = [
+    "gelatoName",
+    "gelatoPhone",
+    "gelatoEmail",
+    "gelatoAddress",
+    "gelatoPostcode",
+    "gelatoCity",
+    "gelatoNote",
+];
+
 /**
  * The delivery form.
  *
@@ -40,6 +53,10 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         "click #gelatoDrawerContinue": "_onDrawerContinue",
         "click #gelatoPromoBtn": "_onPromoClick",
         "input #gelatoPromo": "_onPromoInput",
+        // Event first, then the selector - Odoo splits on the first
+        // space, so this is "input" on "input, textarea".
+        "input input, textarea": "_onFieldInput",
+        "change input, textarea": "_onFieldInput",
         "blur #gelatoAddress": "_onAddressBlur",
         "blur #gelatoPostcode": "_onAddressBlur",
         "submit": "_onSubmit",
@@ -84,6 +101,8 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         this._watchSliders();
         // Whatever was in the basket when the page was last closed.
         this._loadCart();
+        // ...and what was typed into the form last time.
+        this._loadForm();
 
         this._renderCart();
         this._recompute();
@@ -574,6 +593,74 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         return Object.entries(line.flavors)
             .map(([id, q]) => (q > 1 ? `${q}× ${this._flavorName(id)}` : this._flavorName(id)))
             .join(", ");
+    },
+
+    /**
+     * Put back what was typed last time.
+     *
+     * The promo code is deliberately not among them: it has to be
+     * checked against the server to mean anything, and a code sitting in
+     * the box with no discount behind it reads as if it had been
+     * accepted.
+     */
+    _loadForm() {
+        let raw = null;
+        try {
+            raw = window.localStorage.getItem(FORM_KEY);
+        } catch (error) {
+            return;
+        }
+        if (!raw) {
+            return;
+        }
+        let stored = null;
+        try {
+            stored = JSON.parse(raw);
+        } catch (error) {
+            this._forgetForm();
+            return;
+        }
+        if (!stored || typeof stored !== "object") {
+            this._forgetForm();
+            return;
+        }
+        for (const id of FORM_FIELDS) {
+            const field = this.el.querySelector(`#${id}`);
+            if (field && typeof stored[id] === "string") {
+                field.value = stored[id];
+            }
+        }
+    },
+
+    /** Write down what is in the form now. */
+    _saveForm() {
+        const values = {};
+        for (const id of FORM_FIELDS) {
+            const field = this.el.querySelector(`#${id}`);
+            if (field) {
+                values[id] = field.value;
+            }
+        }
+        try {
+            window.localStorage.setItem(FORM_KEY, JSON.stringify(values));
+        } catch (error) {
+            // Full or blocked storage is not worth an error on screen.
+        }
+    },
+
+    _forgetForm() {
+        try {
+            window.localStorage.removeItem(FORM_KEY);
+        } catch (error) {
+            // Nothing to do about it.
+        }
+    },
+
+    /** Anything typed into the contact details is worth keeping. */
+    _onFieldInput(ev) {
+        if (FORM_FIELDS.includes(ev.target.id)) {
+            this._saveForm();
+        }
     },
 
     // ------------------------------------------------------------------
@@ -1248,6 +1335,13 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         // visit. It stays in memory so "Done" can be seen emptying it,
         // but nothing written down survives this point.
         this._forgetCart();
+        // The note was about this delivery, not the next one, so it is
+        // not kept; the name, the phone number and the address are.
+        const note = this.el.querySelector("#gelatoNote");
+        if (note) {
+            note.value = "";
+            this._saveForm();
+        }
         // Everything to do with ordering goes, but the basket up in the
         // header stays put: the order is still counted in it, and
         // emptying it is what "Done" is about to show.
