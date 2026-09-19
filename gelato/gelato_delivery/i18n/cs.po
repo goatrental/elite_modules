@@ -3536,3 +3536,8 @@ msgstr "a řekneme vám,\n                                            co je hoto
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.gelato_delivery_addon_view_form
 msgid "For a bundle, fill in the <b>total price including the thermal box</b> -\n                        the one on your leaflet. Odoo works out the <b>surcharge</b> itself and\n                        recalculates it whenever you change the box price, so you never have to\n                        think about it.\n                        <br/>\n                        The customer fills a bundle with flavours the same way as the box above."
 msgstr "U balíčku vyplňte <b>celkovou cenu včetně termoboxu</b> –\n                        tu, kterou máte na letáku. Příplatek si Odoo spočítá samo a\n                        přepočítá ho pokaždé, když změníte cenu boxu, takže se tím\n                        nemusíte zabývat.\n                        <br/>\n                        Zákazník plní balíček příchutěmi stejně jako box výš."
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Done"
+msgstr "Hotovo"

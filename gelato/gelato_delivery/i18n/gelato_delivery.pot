@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0-20260609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 14:59+0000\n"
-"PO-Revision-Date: 2026-09-18 14:59+0000\n"
+"POT-Creation-Date: 2026-09-19 12:39+0000\n"
+"PO-Revision-Date: 2026-09-19 12:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -228,9 +228,23 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
 msgid ""
 "<span class=\"gl-cart-sum\">\n"
-"                                        <span id=\"gelatoCartCount\"/>\n"
-"                                        <span id=\"gelatoCartTotal\">0</span> Kč\n"
+"                                                <span class=\"js-cart-count\"/>\n"
+"                                                <span class=\"js-cart-total\">0</span> Kč\n"
+"                                            </span>"
+msgstr ""
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid ""
+"<span class=\"gl-cart-sum\">\n"
+"                                        <span class=\"js-cart-count\"/>\n"
+"                                        <span class=\"js-cart-total\">0</span> Kč\n"
 "                                    </span>"
+msgstr ""
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "<span class=\"gl-cartbtn-count js-cart-things\">0</span>"
 msgstr ""
 
 #. module: gelato_delivery
@@ -889,6 +903,11 @@ msgstr ""
 #. module: gelato_delivery
 #: model:gelato.delivery.addon,name:gelato_delivery.addon_bundle_dolce_vita
 msgid "Dolce Vita bundle"
+msgstr ""
+
+#. module: gelato_delivery
+#: model_terms:ir.ui.view,arch_db:gelato_delivery.rozvoz
+msgid "Done"
 msgstr ""
 
 #. module: gelato_delivery

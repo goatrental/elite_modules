@@ -339,6 +339,47 @@
                                 <div class="gl-toast" id="gelatoToast" role="status"
                                      aria-live="polite" hidden="hidden">Added</div>
 
+                                <!-- ===== the basket, reachable from anywhere =====
+                                     The order is listed at the bottom of a long
+                                     page, so once a few things are in it there
+                                     is no way to check what without scrolling
+                                     past everything. This rides along in the
+                                     header band instead, and only once there is
+                                     something to show. -->
+                                <div class="gl-cartbar" id="gelatoCartBar" hidden="hidden">
+                                    <div class="container gl-cartbar-inner">
+                                        <button type="button" class="gl-cartbtn" id="gelatoCartBtn"
+                                                aria-label="Your order">
+                                            <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true">
+                                                <path d="M3 3h2.2l2.1 10.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 7H6"/>
+                                                <circle cx="10" cy="19.5" r="1.3"/>
+                                                <circle cx="17" cy="19.5" r="1.3"/>
+                                            </svg>
+                                            <span class="gl-cartbtn-count js-cart-things">0</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="gl-drawer" id="gelatoCartDrawer" hidden="hidden">
+                                    <div class="gl-drawer-backdrop" id="gelatoDrawerBackdrop"></div>
+                                    <div class="gl-drawer-card">
+                                        <div class="gl-drawer-head">
+                                            <h3>Your order</h3>
+                                            <button type="button" class="gl-drawer-close"
+                                                    id="gelatoDrawerClose" aria-label="Close">&#215;</button>
+                                        </div>
+                                        <div class="gl-cart gl-cart-list" id="gelatoDrawerCart"></div>
+                                        <div class="gl-drawer-foot">
+                                            <span class="gl-cart-sum">
+                                                <span class="js-cart-count"></span>
+                                                <span class="js-cart-total">0</span> Kč
+                                            </span>
+                                            <button type="button" class="gl-rz-btn gl-rz-btn-primary"
+                                                    id="gelatoDrawerContinue">Continue</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- ===== on to the form =====
                                      Only the running total here. The list of
                                      what was picked is spelled out at the very
@@ -349,8 +390,8 @@
                                 </p>
                                 <div class="gl-cart-foot" id="gelatoCartFoot" hidden="hidden">
                                     <span class="gl-cart-sum">
-                                        <span id="gelatoCartCount"></span>
-                                        <span id="gelatoCartTotal">0</span> Kč
+                                        <span class="js-cart-count"></span>
+                                        <span class="js-cart-total">0</span> Kč
                                     </span>
                                     <button type="button" class="gl-rz-btn gl-rz-btn-primary"
                                             id="gelatoContinue">Continue</button>
@@ -429,7 +470,7 @@
                                          editable - this is the only place the
                                          basket is listed. -->
                                     <div class="gl-rz-step-label" id="kosik">Your order</div>
-                                    <div class="gl-cart" id="gelatoCart"></div>
+                                    <div class="gl-cart gl-cart-list" id="gelatoCart"></div>
 
                                     <div class="gl-rz-summary">
                                         <div class="gl-rz-summary-row">
@@ -492,6 +533,13 @@
                                     Anything to change? Call us on
                                     <a href="tel:+420773095809">+420 773 09 58 09</a>.
                                 </p>
+
+                                <!-- A way out. Without it the confirmation is
+                                     a dead end: the order is placed, the form
+                                     is gone, and the only thing left to do is
+                                     find the browser's back button. -->
+                                <button type="button" class="gl-rz-btn gl-rz-btn-ghost gl-rz-done-btn"
+                                        id="gelatoDone">Done</button>
                             </div>
                         </t>
                     </div>

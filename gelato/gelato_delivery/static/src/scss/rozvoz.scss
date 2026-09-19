@@ -2177,6 +2177,14 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: .85rem;
 }
 
+// The way out of the confirmation. Deliberately small and outlined: the
+// order is already placed, so this is housekeeping, not a step.
+.gl-page .gl-rz-done-btn {
+    margin-top: 26px;
+    padding: 9px 26px;
+    font-size: .82rem;
+}
+
 // "Swipe →" beside a row heading.
 //
 // Only on a phone, where a card and a half fit on screen and the peek at
@@ -2230,5 +2238,199 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     // Scrolled already? Then they know.
     .gl-page .gl-swipe-done {
         opacity: 0;
+    }
+}
+
+// =====================================================================
+// The basket up in the header band
+//
+// The order is written out at the bottom of a long page, so after a few
+// taps there is no way to see what is in it without scrolling past
+// everything. This button rides in the header instead.
+//
+// It is not part of the header markup - that belongs to the theme, and
+// the delivery has to work without it. Instead it is a fixed strip of
+// the same height laid over the header, with its own container so the
+// button lines up with the right-hand edge of the menu at every width
+// rather than with the edge of the screen.
+.gl-page .gl-cartbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    // A fallback only - the real height is copied off the header below.
+    height: 70px;
+    z-index: 1031;
+    display: flex;
+    align-items: center;
+    // The strip covers the whole header, so it has to let clicks fall
+    // through to the menu underneath. Only the button itself catches.
+    pointer-events: none;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.gl-page .gl-cartbar-inner {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.gl-page .gl-cartbtn {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid rgba(132, 197, 195, .45);
+    border-radius: 50%;
+    background: rgba(26, 26, 26, .75);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    transition: border-color .25s ease, background .25s ease;
+
+    &:hover {
+        border-color: $gl-accent;
+        background: rgba(26, 26, 26, .9);
+    }
+
+    svg {
+        fill: none;
+        stroke: $gl-accent;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+// How many things are in it, on the rim of the button.
+.gl-page .gl-cartbtn-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: $gl-accent;
+    color: #1a1a1a;
+    font-family: $gl-sans;
+    font-size: .7rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+// ----- what the button opens -----
+.gl-page .gl-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 1090;
+    display: flex;
+    justify-content: flex-end;
+
+    &[hidden] {
+        display: none;
+    }
+}
+
+.gl-page .gl-drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .6);
+    backdrop-filter: blur(2px);
+}
+
+.gl-page .gl-drawer-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    padding: 20px;
+    border-left: 1px solid $gl-border;
+    background: $gl-bg-darker;
+    // The theme paints body text almost black; on this dark panel the
+    // colour has to be said out loud.
+    color: $gl-text;
+    box-shadow: -20px 0 50px rgba(0, 0, 0, .5);
+    // Scrolling to the end of the order must not carry on into the page
+    // behind it.
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: gl-drawer-in .28s cubic-bezier(.25, .7, .3, 1);
+}
+
+@keyframes gl-drawer-in {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+}
+
+.gl-page .gl-drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+
+    h3 {
+        margin: 0;
+        font-family: $gl-serif;
+        font-weight: 400;
+        font-size: 1.5rem;
+        color: $gl-text;
+    }
+}
+
+.gl-page .gl-drawer-close {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .06);
+    color: $gl-muted;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+        color: $gl-text;
+        background: rgba(255, 255, 255, .12);
+    }
+}
+
+.gl-page .gl-drawer-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid $gl-border;
+}
+
+
+@media (max-width: 575px) {
+    .gl-page .gl-drawer-card {
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gl-page .gl-drawer-card {
+        animation: none;
     }
 }

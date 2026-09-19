@@ -31,6 +31,10 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         "click .gl-cart-minus": "_onCartMinus",
         "click .gl-cart-drop": "_onCartDrop",
         "click #gelatoContinue": "_onContinue",
+        "click #gelatoCartBtn": "_onCartBtn",
+        "click #gelatoDrawerClose": "_onDrawerClose",
+        "click #gelatoDrawerBackdrop": "_onDrawerClose",
+        "click #gelatoDrawerContinue": "_onDrawerContinue",
         "click #gelatoPromoBtn": "_onPromoClick",
         "input #gelatoPromo": "_onPromoInput",
         "blur #gelatoAddress": "_onAddressBlur",
@@ -53,13 +57,27 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         this.freeFrom = config ? parseFloat(config.dataset.freeFrom || "0") : 0;
         this.feeBase = config ? config.dataset.feeBase || "before_discount" : "before_discount";
 
-        // Escape closes the open product the way every other dialog does.
+        // Escape closes whatever is open, the way every other dialog does.
         this._onKeyDown = (ev) => {
-            if (ev.key === "Escape" && this.draft) {
+            if (ev.key !== "Escape") {
+                return;
+            }
+            if (this.draft) {
                 this._closePanel();
+            } else {
+                this._closeDrawer();
             }
         };
         document.addEventListener("keydown", this._onKeyDown);
+
+        // The confirmation screen is a sibling of this widget, not a child
+        // of it, so the delegated handlers never reach the button on it.
+        this._doneButton = document.getElementById("gelatoDone");
+        if (this._doneButton) {
+            this._onDoneClick = () => this._onDone();
+            this._doneButton.addEventListener("click", this._onDoneClick);
+        }
+        this._followHeader();
         this._watchSliders();
 
         this._renderCart();
@@ -69,6 +87,13 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
 
     destroy() {
         document.removeEventListener("keydown", this._onKeyDown);
+        if (this._onHeaderMove) {
+            window.removeEventListener("scroll", this._onHeaderMove);
+            window.removeEventListener("resize", this._onHeaderMove);
+        }
+        if (this._doneButton) {
+            this._doneButton.removeEventListener("click", this._onDoneClick);
+        }
         clearTimeout(this.toastTimer);
         clearTimeout(this.toastHideTimer);
         return this._super(...arguments);
@@ -523,58 +548,72 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             .join(", ");
     },
 
+    /**
+     * One row of the basket.
+     *
+     * Built fresh for each list that shows it - the same node cannot hang
+     * in two places at once, and the basket is now on the page twice: at
+     * the bottom where the order is finished, and in the drawer that the
+     * button in the header band opens.
+     */
+    _cartRow(line) {
+        const row = document.createElement("div");
+        row.className = "gl-cart-line";
+        row.dataset.uid = line.uid;
+
+        const body = document.createElement("span");
+        body.className = "gl-cart-body";
+        const name = document.createElement("span");
+        name.className = "gl-cart-name";
+        name.textContent = line.name;
+        body.append(name);
+        const flavors = this._flavorSummary(line);
+        if (flavors) {
+            const sub = document.createElement("span");
+            sub.className = "gl-cart-sub";
+            sub.textContent = flavors;
+            body.append(sub);
+        }
+
+        const qty = document.createElement("span");
+        qty.className = "gl-qty";
+        qty.innerHTML =
+            '<button type="button" class="gl-qty-btn gl-cart-minus">−</button>' +
+            '<span class="gl-qty-value"></span>' +
+            '<button type="button" class="gl-qty-btn gl-cart-plus">+</button>';
+        qty.querySelector(".gl-qty-value").textContent = line.quantity;
+
+        const price = document.createElement("span");
+        price.className = "gl-cart-price";
+        price.textContent = `${this._money(line.price * line.quantity)} Kč`;
+
+        const drop = document.createElement("button");
+        drop.type = "button";
+        drop.className = "gl-cart-drop";
+        drop.setAttribute("aria-label", _t("Remove"));
+        drop.textContent = "×";
+
+        row.append(body, qty, price, drop);
+        return row;
+    },
+
+    /** The same figure wherever it is shown. */
+    _setTextAll(selector, text) {
+        for (const node of this.el.querySelectorAll(selector)) {
+            node.textContent = text;
+        }
+    },
+
     _renderCart() {
-        const box = this.el.querySelector("#gelatoCart");
-        const empty = this.el.querySelector("#gelatoCartEmpty");
-        const foot = this.el.querySelector("#gelatoCartFoot");
-        if (!box) {
-            return;
-        }
-        box.innerHTML = "";
-
-        for (const line of this.cart) {
-            const row = document.createElement("div");
-            row.className = "gl-cart-line";
-            row.dataset.uid = line.uid;
-
-            const body = document.createElement("span");
-            body.className = "gl-cart-body";
-            const name = document.createElement("span");
-            name.className = "gl-cart-name";
-            name.textContent = line.name;
-            body.append(name);
-            const flavors = this._flavorSummary(line);
-            if (flavors) {
-                const sub = document.createElement("span");
-                sub.className = "gl-cart-sub";
-                sub.textContent = flavors;
-                body.append(sub);
+        for (const box of this.el.querySelectorAll(".gl-cart-list")) {
+            box.innerHTML = "";
+            for (const line of this.cart) {
+                box.append(this._cartRow(line));
             }
-
-            const qty = document.createElement("span");
-            qty.className = "gl-qty";
-            qty.innerHTML =
-                '<button type="button" class="gl-qty-btn gl-cart-minus">−</button>' +
-                '<span class="gl-qty-value"></span>' +
-                '<button type="button" class="gl-qty-btn gl-cart-plus">+</button>';
-            qty.querySelector(".gl-qty-value").textContent = line.quantity;
-
-            const price = document.createElement("span");
-            price.className = "gl-cart-price";
-            price.textContent = `${this._money(line.price * line.quantity)} Kč`;
-
-            const drop = document.createElement("button");
-            drop.type = "button";
-            drop.className = "gl-cart-drop";
-            drop.setAttribute("aria-label", _t("Remove"));
-            drop.textContent = "×";
-
-            row.append(body, qty, price, drop);
-            box.append(row);
         }
 
-        // The list itself is further down the page, so the bare total needs
-        // saying how many things it covers.
+        // The list at the bottom is a long way down, so the bare total
+        // needs saying how many things it covers.
         const things = this.cart.reduce((sum, line) => sum + line.quantity, 0);
         let count = "";
         if (things === 1) {
@@ -584,21 +623,161 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
         } else if (things) {
             count = _t("%s items in total ·", things);
         }
-        this._setText("gelatoCartCount", count);
+        this._setTextAll(".js-cart-count", count);
+        this._setTextAll(".js-cart-things", things);
 
         const filled = this.cart.length > 0;
+        const empty = this.el.querySelector("#gelatoCartEmpty");
         if (empty) {
             empty.hidden = filled;
         }
+        const foot = this.el.querySelector("#gelatoCartFoot");
         if (foot) {
             foot.hidden = !filled;
         }
+        // An empty basket in the header is furniture. The button turns up
+        // with the first thing ordered and goes away with the last.
+        const bar = this.el.querySelector("#gelatoCartBar");
+        if (bar) {
+            bar.hidden = !filled;
+        }
         if (!filled) {
+            this._closeDrawer();
             const checkout = this.el.querySelector("#gelatoCheckout");
             if (checkout) {
                 checkout.hidden = true;
             }
         }
+    },
+
+    // ------------------------------------------------------------------
+    // The basket drawer
+    // ------------------------------------------------------------------
+
+    /**
+     * Keep the basket button sitting in the header.
+     *
+     * The header belongs to the theme and this module has to work
+     * without it, so the button is not part of it - it is a strip of its
+     * own laid over the top. The theme slides the header out of the way
+     * when the page is scrolled down and brings it back on the way up,
+     * and a button left behind hanging over the page would look like a
+     * mistake. So the strip simply copies wherever the header currently
+     * is, and takes its height while it is at it.
+     *
+     * With no header on the page the strip stays where the stylesheet
+     * put it, which is the top.
+     */
+    _followHeader() {
+        const header = document.querySelector("header");
+        const bar = this.el.querySelector("#gelatoCartBar");
+        if (!header || !bar) {
+            return;
+        }
+        const inner = bar.querySelector(".gl-cartbar-inner");
+        const follow = () => {
+            const box = header.getBoundingClientRect();
+            bar.style.transform = `translateY(${Math.round(box.top)}px)`;
+            bar.style.height = `${Math.round(box.height)}px`;
+
+            // Sit to the left of whatever the header already keeps on the
+            // right - the hamburger on a phone, the last menu item on a
+            // desktop, the editor's own menu when somebody is logged in.
+            // Measuring beats guessing per breakpoint: one rule holds at
+            // every width and survives the menu getting another item.
+            if (!inner) {
+                return;
+            }
+            const edge = document.documentElement.clientWidth;
+            let rightmost = null;
+            for (const el of header.querySelectorAll("a.nav-link, button, .navbar-toggler")) {
+                const r = el.getBoundingClientRect();
+                // Skip what is parked off-screen - the slide-out menu
+                // and its close button live out there until opened, and
+                // they would otherwise win as the "rightmost" thing.
+                if (r.width < 4 || r.height < 4 || r.right > edge + 2 || r.left < 0) {
+                    continue;
+                }
+                if (rightmost === null || r.right > rightmost.right) {
+                    rightmost = r;
+                }
+            }
+            inner.style.paddingRight = rightmost
+                ? `${Math.round(edge - rightmost.left) + 14}px`
+                : "16px";
+        };
+        follow();
+
+        // The header does not jump out of the way, it slides, and the
+        // slide carries on after the last scroll event. Following only on
+        // the event left the button a step behind - sitting at the top
+        // while the header had already gone. So each scroll keeps the
+        // strip following for a moment longer than the scroll itself,
+        // and then it stops and costs nothing.
+        let until = 0;
+        let running = false;
+        const pump = () => {
+            follow();
+            if (performance.now() < until) {
+                window.requestAnimationFrame(pump);
+            } else {
+                running = false;
+            }
+        };
+        this._onHeaderMove = () => {
+            until = performance.now() + 700;
+            if (!running) {
+                running = true;
+                window.requestAnimationFrame(pump);
+            }
+        };
+        window.addEventListener("scroll", this._onHeaderMove, { passive: true });
+        window.addEventListener("resize", this._onHeaderMove, { passive: true });
+    },
+
+    _onCartBtn() {
+        const drawer = this.el.querySelector("#gelatoCartDrawer");
+        if (drawer) {
+            drawer.hidden = false;
+        }
+    },
+
+    _closeDrawer() {
+        const drawer = this.el.querySelector("#gelatoCartDrawer");
+        if (drawer) {
+            drawer.hidden = true;
+        }
+    },
+
+    _onDrawerClose() {
+        this._closeDrawer();
+    },
+
+    /** Straight from the drawer into filling in the address. */
+    _onDrawerContinue() {
+        this._closeDrawer();
+        this._onContinue();
+    },
+
+    /**
+     * Close the confirmation and start the page over.
+     *
+     * A reload rather than clearing the basket by hand: the order is
+     * gone from the server's point of view and half the page is in a
+     * state that only made sense while it was being filled in. Coming
+     * back to a clean page is both simpler and what the customer means
+     * by "done".
+     *
+     * The browser would otherwise put them back where they were - at the
+     * bottom, staring at the empty form - so scroll restoring is turned
+     * off for this one navigation.
+     */
+    _onDone() {
+        if ("scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+        window.scrollTo(0, 0);
+        window.location.assign(window.location.pathname);
     },
 
     _onContinue() {
@@ -757,7 +936,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             discount = shipping * percent;
         }
 
-        this._setText("gelatoCartTotal", this._money(subtotal));
+        this._setTextAll(".js-cart-total", this._money(subtotal));
         this._setText("gelatoSubtotal", this._money(subtotal));
         this._setText("gelatoDiscount", this._money(discount));
         this._setText("gelatoShipping", this._money(shipping));
