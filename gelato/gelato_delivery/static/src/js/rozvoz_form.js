@@ -921,7 +921,7 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
     },
 
     /**
-     * Put the finished order away and start the page over.
+     * Put the finished order away.
      *
      * The confirmation makes the same journey everything else makes:
      * draws itself in, flies up to the basket, and as it lands the count
@@ -929,14 +929,14 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
      * being filed rather than a screen being dismissed - and it leaves
      * the basket visibly empty, which is the truth of it.
      *
-     * Then a reload, because half the page is in a state that only made
-     * sense while the order was being filled in, and coming back to a
-     * clean page is both simpler and what "done" means.
+     * Nothing reloads. The page is simply itself again, with the
+     * products back and an empty basket, which is where anybody who
+     * wants to order a second time would want to be anyway.
      */
     _onDone() {
         const done = document.getElementById("gelatoRozvozDone");
         if (!done || this.restarting) {
-            this._restart();
+            this._reopenOrdering();
             return;
         }
         this.restarting = true;
@@ -946,25 +946,25 @@ publicWidget.registry.GelatoRozvozForm = publicWidget.Widget.extend({
             this._renderCart();
             this._recompute();
             this._bumpCart();
-            // Long enough for the nudge to be seen, short enough that
-            // nobody wonders whether the button worked.
-            setTimeout(() => this._restart(), 420);
+            this._reopenOrdering();
         });
         // The copy is already in flight; the original would otherwise sit
         // there while it goes.
         done.hidden = true;
     },
 
-    /** Back to a fresh page, at the top of it. */
-    _restart() {
-        // The browser would otherwise put them back where they were - at
-        // the bottom, staring at an empty form - so scroll restoring is
-        // turned off for this one navigation.
-        if ("scrollRestoration" in window.history) {
-            window.history.scrollRestoration = "manual";
+    /** The ordering side of the page, back the way it was. */
+    _reopenOrdering() {
+        this.restarting = false;
+        this.el.classList.remove("gl-ordered");
+        const done = document.getElementById("gelatoRozvozDone");
+        if (done) {
+            done.hidden = true;
         }
-        window.scrollTo(0, 0);
-        window.location.assign(window.location.pathname);
+        const head = document.querySelector("#objednavka .gl-rz-head");
+        if (head) {
+            head.hidden = false;
+        }
     },
 
     _onContinue() {
