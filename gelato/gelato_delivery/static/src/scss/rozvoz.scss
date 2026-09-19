@@ -1896,12 +1896,13 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
     }
 
+    // Only the way onwards lives here now. The running total used to sit
+    // beside it, under the last product, where it read as that product's
+    // price; the order is added up in the basket and again above the
+    // button that sends it, and twice was already once too many.
     .gl-cart-foot {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
+        justify-content: center;
         margin-top: 16px;
 
         &[hidden] {
@@ -1964,11 +1965,6 @@ $gl-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             font-size: .88rem;
         }
 
-        .gl-cart-foot {
-            flex-direction: column;
-            align-items: stretch;
-            text-align: center;
-        }
     }
 }
 

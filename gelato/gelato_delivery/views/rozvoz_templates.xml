@@ -385,10 +385,6 @@
                                     Nothing in it yet. Pick a box above.
                                 </p>
                                 <div class="gl-cart-foot" id="gelatoCartFoot" hidden="hidden">
-                                    <span class="gl-cart-sum">
-                                        <span class="js-cart-count"></span>
-                                        <span class="js-cart-total">0</span> Kč
-                                    </span>
                                     <button type="button" class="gl-rz-btn gl-rz-btn-primary"
                                             id="gelatoContinue">Continue</button>
                                 </div>
