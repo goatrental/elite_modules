@@ -46,7 +46,11 @@
                 <!-- ═══════════ ORDER: everything is picked here ═══════════ -->
                 <section class="gl-rz-sec gl-rz-dark gl-rz-order" id="objednavka">
                     <div class="container">
-                        <div class="gl-rz-head">
+                        <!-- The invitation only belongs above something you
+                             can actually order from. With the delivery shut
+                             it read as an offer and then took it away in the
+                             next breath, so it goes with the products. -->
+                        <div class="gl-rz-head" t-if="orders_open">
                             <h2>Put together your <span>box</span>.</h2>
                             <p>The order is not binding. We will get back to you and confirm it.</p>
                         </div>
